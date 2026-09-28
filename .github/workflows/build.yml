@@ -1,0 +1,57 @@
+# Автосборка и публикация страницы.
+# При каждом изменении в main: собрать index.html и edit.html из content/*.md, сохранить их в main
+# (если изменились) и опубликовать сайт на GitHub Pages.
+# Нужна настройка: Settings → Pages → Build and deployment → Source: GitHub Actions.
+name: Сборка и публикация
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write   # сохранить собранные файлы в main
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml
+      - name: Собрать страницу
+        run: python scripts/build_site.py
+      - name: Сохранить собранные файлы в main
+        # коммит от GITHUB_TOKEN новых запусков не вызывает — цикла нет
+        run: |
+          if [ -n "$(git status --porcelain -- index.html edit.html)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html edit.html
+            git commit -m "Автосборка страницы из content/"
+            git push || echo "main ушёл вперёд — свежую версию соберёт следующий запуск"
+          else
+            echo "Собранные файлы не изменились"
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

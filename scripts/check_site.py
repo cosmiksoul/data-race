@@ -12,7 +12,7 @@
 нулевой высоты (фоновая вкладка, превью) и потом раскладывается.
 Код выхода 1, если есть замечания.
 """
-import asyncio, sys
+import asyncio, subprocess, sys, tempfile
 from collections import Counter
 from pathlib import Path
 from playwright.async_api import async_playwright
@@ -201,6 +201,77 @@ async def check_view(b, name, size, scheme, rm, issues):
     await ctx.close()
 
 
+async def check_edit(b, name, size, issues):
+    """edit.html: правка на месте, правка в окне, журнал, сохранение после перезагрузки,
+    выгрузка и проверка выгрузки скриптом apply_edits.py (без записи в пакеты)."""
+    name = f"правка {name}"
+    ctx = await b.new_context(viewport={"width": size[0], "height": size[1]}, is_mobile=size[0] < 720,
+                              has_touch=size[0] < 720, device_scale_factor=1)
+    pg = await ctx.new_page()
+    watch(pg, name, issues)
+    shot = lambda lab: pg.screenshot(path=str(SHOTS / f"edit-{size[0]}_{lab}.png"))
+    await pg.goto((ROOT / "edit.html").as_uri())
+    await pg.wait_for_timeout(1200)
+    if "data-ed=" in (ROOT / "index.html").read_text(encoding="utf-8"):
+        issues.append(f"[{name}] отметки режима правки попали в index.html")
+    n_units = await pg.evaluate("window.__edits.units.length")
+    n_els = await pg.evaluate("document.querySelectorAll('[data-ed]').length")
+    if n_units < 50 or n_els < n_units - 10:
+        issues.append(f"[{name}] мало редактируемого текста: кусков {n_units}, на странице {n_els}")
+    log_n = "Object.keys(window.__edits.log()).length"
+
+    async def click(sel):
+        await scroll_to(pg, f'document.querySelector("{sel}").getBoundingClientRect().top + scrollY - innerHeight * .3', 300)
+        await pg.click(sel)
+        await pg.wait_for_timeout(150)
+
+    # 1. абзац без разметки — правка на месте
+    plain = await pg.evaluate("""(() => { const U = window.__edits.units;
+        const el = [...document.querySelectorAll('#b06 p[data-ed]')].find(e => !U[+e.dataset.ed].markup); return el && el.dataset.ed; })()""")
+    await click(f"[data-ed='{plain}']")
+    if await pg.evaluate("id => !document.querySelector(`[data-ed='${id}']`).isContentEditable", plain):
+        issues.append(f"[{name}] абзац не стал редактируемым по щелчку")
+    await pg.keyboard.press("Control+End"); await pg.keyboard.type(" ПРОВЕРКА")
+    await shot("01-inline")
+    await pg.keyboard.press("Enter"); await pg.wait_for_timeout(150)
+    if await pg.evaluate(log_n) != 1:
+        issues.append(f"[{name}] правка на месте не попала в журнал")
+    # 2. абзац с терминами и ссылками — правка в окне, в разметке пакета
+    marked = await pg.evaluate("""(() => { const U = window.__edits.units;
+        const el = [...document.querySelectorAll('#b06 p[data-ed]')].find(e => U[+e.dataset.ed].markup); return el && el.dataset.ed; })()""")
+    await click(f"[data-ed='{marked}']")
+    if not await pg.evaluate("document.getElementById('edDlg').open"):
+        issues.append(f"[{name}] окно правки не открылось для текста с разметкой")
+    else:
+        await pg.fill("#edDlgT", (await pg.input_value("#edDlgT")) + " ПРОВЕРКА-2")
+        await pg.fill("#edDlgN", "пометка из проверки")
+        await shot("02-dialog")
+        await pg.click("#edDlgS"); await pg.wait_for_timeout(150)
+    # 3. заголовок блока — поле YAML
+    await click("#b06 h2[data-ed]")
+    await pg.keyboard.press("Control+End"); await pg.keyboard.type(" (проверка)"); await pg.keyboard.press("Enter")
+    await pg.wait_for_timeout(150)
+    if await pg.evaluate(log_n) != 3:
+        issues.append(f"[{name}] в журнале {await pg.evaluate(log_n)} правок вместо 3")
+    await pg.click("#edBtn"); await pg.wait_for_timeout(200)
+    await shot("03-panel")
+    if await pg.evaluate("document.documentElement.scrollWidth > innerWidth"):
+        issues.append(f"[{name}] горизонтальная прокрутка")
+    # журнал переживает перезагрузку, выгрузка читается скриптом применения
+    await pg.reload(); await pg.wait_for_timeout(1000)
+    if await pg.evaluate("document.querySelectorAll('.ed-changed').length") < 3:
+        issues.append(f"[{name}] правки не восстановились после перезагрузки")
+    md = await pg.evaluate("window.__edits.exportMd()")
+    with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False, encoding="utf-8") as fh:
+        fh.write(md)
+    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "apply_edits.py"), fh.name, "--dry-run"],
+                       capture_output=True, text=True)
+    Path(fh.name).unlink()
+    if r.returncode or "применимы: 3" not in r.stdout:
+        issues.append(f"[{name}] выгрузка не применяется: {r.stdout.strip().splitlines()[-1:] or r.stderr.strip()}")
+    await ctx.close()
+
+
 async def main():
     SHOTS.mkdir(exist_ok=True)
     for f in SHOTS.glob("*.png"):
@@ -213,6 +284,9 @@ async def main():
             print(f"  {v[0]}: готово")
         await check_hidden_start(b, issues)
         print("  фрейм 0→700: готово")
+        for nm, size in (("1440", (1440, 900)), ("390", (390, 844))):
+            await check_edit(b, nm, size, issues)
+            print(f"  режим правки {nm}: готово")
         await b.close()
     kb = (ROOT / "index.html").stat().st_size // 1024
     print(f"Кадров: {len(list(SHOTS.glob('*.png')))} в {SHOTS.relative_to(ROOT)}/ · размер страницы {kb} КБ")
