@@ -8,9 +8,12 @@
 1024×768 и 390×844: холодный старт, середина и финал перехода, блоки, графики,
 счёт. Проверяет: ошибки консоли, горизонтальную прокрутку, наезды подписей
 графиков друг на друга и на точки, что счёт помещается в экран, что ссылки
-на источники и подсказки не битые. Код выхода 1, если есть замечания.
+на источники и подсказки не битые, что страница без ошибок открывается в окне
+нулевой высоты (фоновая вкладка, превью) и потом раскладывается.
+Код выхода 1, если есть замечания.
 """
 import asyncio, sys
+from collections import Counter
 from pathlib import Path
 from playwright.async_api import async_playwright
 
@@ -64,13 +67,47 @@ async def scroll_to(pg, js_y, wait=450):
     await pg.wait_for_timeout(wait)
 
 
+def watch(pg, name, issues):
+    """Ошибки и предупреждения консоли (в том числе сообщения браузера о разборе SVG) и исключения JS."""
+    pg.on("console", lambda m: issues.append(f"[{name}] консоль {m.type}: {m.text}") if m.type in ("error", "warning") else None)
+    pg.on("pageerror", lambda e: issues.append(f"[{name}] ошибка JS: {e}"))
+
+
+async def check_hidden_start(b, issues):
+    """Страница открыта в окне нулевой высоты (фоновая вкладка, превью, скрытый фрейм),
+    затем окно получает размер: ошибок быть не должно, сетка штаба раскладывается."""
+    name = "фрейм 0→700"
+    ctx = await b.new_context(viewport={"width": 1100, "height": 760})
+    pg = await ctx.new_page()
+    watch(pg, name, issues)
+    site = (ROOT / "site" / "index.html").read_bytes()
+
+    async def serve(route):
+        if route.request.url.endswith("/site/"):
+            await route.fulfill(body=site, content_type="text/html; charset=utf-8")
+        else:
+            await route.fulfill(body='<body style="margin:0"><iframe id="f" src="/site/" style="width:1024px;height:0;border:0"></iframe>',
+                                content_type="text/html; charset=utf-8")
+    await pg.route("http://check.test/**", serve)
+    await pg.goto("http://check.test/")
+    await pg.wait_for_timeout(2500)
+    await pg.evaluate("document.getElementById('f').style.height = '700px'")
+    await pg.wait_for_timeout(7500)
+    st = await pg.frames[1].evaluate("""(() => { const cs = [...document.querySelectorAll('#stageSvg circle')];
+        return { dots: cs.length, grid: !!window.__sch.grid(),
+                 bad: cs.filter(c => ['cx', 'cy'].some(a => c.hasAttribute(a) && !isFinite(parseFloat(c.getAttribute(a))))).length }; })()""")
+    if not st["grid"] or st["dots"] < 484 or st["bad"]:
+        issues.append(f"[{name}] сетка штаба не разложилась после появления размера: {st}")
+    await pg.screenshot(path=str(SHOTS / "hidden-start_00-cold.png"))
+    await ctx.close()
+
+
 async def check_view(b, name, size, scheme, rm, issues):
     ctx = await b.new_context(viewport={"width": size[0], "height": size[1]}, color_scheme=scheme,
                               reduced_motion="reduce" if rm else "no-preference",
                               is_mobile=size[0] < 720, has_touch=size[0] < 720, device_scale_factor=1)
     pg = await ctx.new_page()
-    pg.on("console", lambda m: issues.append(f"[{name}] консоль {m.type}: {m.text}") if m.type in ("error", "warning") else None)
-    pg.on("pageerror", lambda e: issues.append(f"[{name}] ошибка JS: {e}"))
+    watch(pg, name, issues)
     shot = lambda lab: pg.screenshot(path=str(SHOTS / f"{name}_{lab}.png"))
 
     async def hscroll(where):
@@ -167,11 +204,15 @@ async def main():
         for v in VIEWS:
             await check_view(b, *v, issues)
             print(f"  {v[0]}: готово")
+        await check_hidden_start(b, issues)
+        print("  фрейм 0→700: готово")
         await b.close()
     kb = (ROOT / "site" / "index.html").stat().st_size // 1024
     print(f"Кадров: {len(list(SHOTS.glob('*.png')))} в {SHOTS.relative_to(ROOT)}/ · размер страницы {kb} КБ")
     if issues:
-        print(f"Замечаний: {len(issues)}"); print("\n".join("  " + i for i in issues)); sys.exit(1)
+        uniq = Counter(issues)  # одна ошибка в каждом кадре анимации даёт тысячи одинаковых строк
+        print(f"Замечаний: {len(issues)}, разных: {len(uniq)}")
+        print("\n".join(f"  {i}" + (f"  (×{n})" if n > 1 else "") for i, n in uniq.most_common(40))); sys.exit(1)
     print("Замечаний нет: консоль чистая, горизонтальной прокрутки нет, подписи не наезжают, счёт помещается в экран")
 
 
