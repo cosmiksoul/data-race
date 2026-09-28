@@ -4,7 +4,7 @@
 1. Скачивает свежий архив Epoch AI (AI data centers) и страницу Satellite Explorer,
    из которой берутся координаты площадок (в CSV их нет).
 2. Собирает компактный data/data.json.
-3. Встраивает D3, topojson и картосновы в src/template.html → index.html
+3. Встраивает D3, topojson и картосновы в src/template.html → mockup/index.html
    (один самодостаточный файл, открывается без интернета).
 
 Запуск из корня проекта:  python scripts/build.py [--offline]
@@ -135,8 +135,8 @@ def assemble(data_json):
     out = (t.replace("/*__D3__*/", rd("d3.min.js")).replace("/*__TOPO__*/", rd("topojson-client.min.js"))
             .replace("/*__DATA__*/", data_json.replace("</", "<\\/"))
             .replace("/*__US__*/", rd("states-10m.json")).replace("/*__WORLD__*/", rd("countries-110m.json")))
-    (ROOT / "index.html").write_text(out, encoding="utf-8")
-    print(f"index.html: {len(out)//1024} КБ")
+    (ROOT / "mockup" / "index.html").write_text(out, encoding="utf-8")
+    print(f"mockup/index.html: {len(out)//1024} КБ")
 
 
 if __name__ == "__main__":
