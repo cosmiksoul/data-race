@@ -49,6 +49,8 @@ MANIFEST = [
 DISPLAY_NO = {"00": "00", **{it[1]: f"{n:02d}" for n, it in
                             enumerate((it for it in MANIFEST if it[0] == "block"), 1)}}
 SIDE = {"debit": "Дебет", "credit": "Кредит"}
+GLOSS = "content/glossary.yml"
+EDIT_OUT = ROOT / "edit.html"   # вариант для редактуры: python scripts/build_site.py собирает оба файла
 MONTHS = "январь февраль март апрель май июнь июль август сентябрь октябрь ноябрь декабрь".split()
 
 RANGES = {
@@ -100,10 +102,39 @@ def load_packages():
 class Page:
     """Состояние сборки: глоссарий, сквозная нумерация источников."""
 
-    def __init__(self, gloss, packages):
+    def __init__(self, gloss, packages, edit=False):
         self.gloss, self.pk = gloss, packages
         self.src_num, self.src_order = {}, []   # "06:s3" → 3
         self.terms_used = set()
+        self.edit, self.edits, self.ed_skip, self._files = edit, [], 0, {}
+
+    # ── режим правки (edit.html): где в исходнике лежит каждый кусок текста ──
+    def ed(self, where_file, value, where, key=None, raw=None, prefix=""):
+        """Атрибут data-ed для edit.html. Кусок редактируемый, только если его исходник
+        находится в файле ровно один раз: тогда scripts/apply_edits.py заменит его без догадок.
+        key — поле YAML (`key: "значение"`), raw — строки абзаца Markdown как в файле."""
+        if not self.edit:
+            return ""
+        path = "content/" + self.pk[where_file]["_file"] if where_file in self.pk else where_file
+        src = self._files.setdefault(path, rd(ROOT / path))
+        value = str(value).strip()
+        find = None
+        if key is not None:
+            # в файле значение либо в двойных кавычках (с экранированием \\ и \"), либо без кавычек
+            for q, lit in (('"', value.replace("\\", "\\\\").replace('"', '\\"')), ("", value)):
+                ms = list(re.finditer(rf'(?m)^[ \t]*({re.escape(key)}:[ \t]*{q}{re.escape(lit)}{q})[ \t]*(?:#.*)?$', src))
+                if len(ms) == 1:
+                    find, kind, pre, suf = ms[0].group(1), "yaml", f'{key}: "', '"'
+                    break
+        elif raw is not None:
+            find, kind, pre, suf = raw, "md", prefix, ""
+        if not find or src.count(find) != 1:
+            self.ed_skip += 1
+            return ""
+        markup = bool(re.search(r"\[\[|\[\^|\]\(|\{(факт|оценка|прогноз)\}|\*\*", value))
+        self.edits.append({"file": path, "kind": kind, "find": find, "pre": pre, "suf": suf,
+                           "orig": value, "markup": markup, "where": where})
+        return f' data-ed="{len(self.edits) - 1}"'
 
     # ── инлайн-разметка ──
     def inline(self, text, block):
@@ -133,8 +164,13 @@ class Page:
         n = self.src_num[key]
         return f'<sup class="ref"><a href="#src-{n}" aria-label="Источник {n}">{n}</a></sup>'
 
-    def paras(self, text, block):
-        return "\n".join(f"<p>{self.inline(p, block)}</p>" for p in re.split(r"\n\s*\n", text.strip()) if p.strip())
+    def paras(self, text, block, where=None):
+        out = []
+        for p in re.split(r"\n\s*\n", text.strip()):
+            if p.strip():
+                a = self.ed(block, " ".join(x.strip() for x in p.split("\n")), where, raw=p) if where else ""
+                out.append(f"<p{a}>{self.inline(p, block)}</p>")
+        return "\n".join(out)
 
     # ── тело пакета ──
     def body(self, p):
@@ -148,13 +184,14 @@ class Page:
             if not para:
                 return
             txt = " ".join(x.strip() for x in para)
+            raw = "\n".join(para)
             para.clear()
             if txt.startswith("> "):
-                out.append(f"<blockquote>{self.inline(txt[2:], block)}</blockquote>")
+                out.append(f"<blockquote{self.ed(block, txt[2:], f'блок {block} · цитата', raw=raw, prefix='> ')}>{self.inline(txt[2:], block)}</blockquote>")
             elif txt.startswith("### "):
-                out.append(f"<h3>{self.inline(txt[4:], block)}</h3>")
+                out.append(f"<h3{self.ed(block, txt[4:], f'блок {block} · подзаголовок', raw=raw, prefix='### ')}>{self.inline(txt[4:], block)}</h3>")
             else:
-                attrs = ""
+                attrs = self.ed(block, txt, f"блок {block} · абзац", raw=raw)
                 for k in marks:
                     if k == "lead":
                         attrs += ' class="lead"'
@@ -201,9 +238,11 @@ class Page:
         if kind == "bigfig":
             d = yaml.safe_load(raw)
             return (f'<div class="bigfig {p.get("side", "")}"><div class="n">{html.escape(str(d["n"]))}'
-                    f'<small>{html.escape(d["unit"])}</small></div><div class="c">{self.inline(d["caption"], block)}</div></div>')
+                    f'<small>{html.escape(d["unit"])}</small></div>'
+                    f'<div class="c"{self.ed(block, d["caption"], f"блок {block} · вынос", key="caption")}>{self.inline(d["caption"], block)}</div></div>')
         if kind == "rowsum":
-            return f'<div class="rowsum">{self.inline(raw, block)}</div>'
+            a = self.ed(block, " ".join(x.strip() for x in raw.split("\n")), f"блок {block} · итог строки", raw=raw)
+            return f'<div class="rowsum"{a}>{self.inline(raw, block)}</div>'
         if kind == "chart":
             return self.chart(arg, yaml.safe_load(raw), block)
         fail(f"блок {block}: неизвестная директива ::: {kind}")
@@ -222,11 +261,12 @@ class Page:
                             **{k: d.get(k) for k in ("labels", "annotations", "tooltip", "form")}}
         sub = legend_icons(self.inline(d["subtitle"], block))
         wide = " wide-fig" if d.get("wide") else ""
+        e = lambda k, w: self.ed(block, d[k], f"блок {block} · график {cid} · {w}", key=k)
         return (f'<figure class="card{wide}" id="{cid}" data-chart="{cid}">\n'
-                f'<div class="ct">{self.inline(d["title"], block)}</div>\n'
-                f'<div class="cs">{sub}</div>\n'
+                f'<div class="ct"{e("title", "заголовок")}>{self.inline(d["title"], block)}</div>\n'
+                f'<div class="cs"{e("subtitle", "подзаголовок")}>{sub}</div>\n'
                 f'<svg id="chart-{cid}" role="img" aria-label="{html.escape(d["aria"])}"></svg>\n'
-                f'<figcaption class="csrc">{self.inline(d["source"], block)}</figcaption>\n</figure>')
+                f'<figcaption class="csrc"{e("source", "источник")}>{self.inline(d["source"], block)}</figcaption>\n</figure>')
 
 
 def legend_icons(s):
@@ -294,20 +334,23 @@ def fonts_css():
     return "\n".join(faces)
 
 
-def rowline(side, no, text):
+def rowline(side, no, text, ed=""):
     s = f'<span class="side {side}">{SIDE[side]}</span>' if side in SIDE else ""
-    return f'<div class="rowline">{s}<span>строка {no}</span><span>{html.escape(text)}</span></div>'
+    return f'<div class="rowline">{s}<span>строка {no}</span><span{ed}>{html.escape(text)}</span></div>'
 
 
-def main():
+def build(edit=False):
+    """Собирает страницу. edit=True — вариант для редактуры (edit.html): у текста отметки источника
+    и журнал правок; основная index.html собирается без них."""
     pk = load_packages()
     gloss = yaml.safe_load(rd(CONTENT / "glossary.yml"))
-    page = Page(gloss, pk)
+    page = Page(gloss, pk, edit)
+    ed = page.ed
     page.charts = {}
     sites = build_sites()
     ready = {k: v for k, v in pk.items() if v.get("status") == READY}
     for k, v in pk.items():
-        if k not in ready:
+        if k not in ready and not edit:
             print(f"  пропущен пакет {v['_file']}: статус «{v.get('status')}»")
 
     # 00 — штаб и подпись к сетке единиц
@@ -318,7 +361,8 @@ def main():
     hq, gc = p0["hq"], yaml.safe_load(sp0["grid-caption"])
     legend = "".join(f'<span><i class="{c}"></i>{html.escape(t)}</span>' for c, t in zip(("f", "h"), gc["legend"]))
     # преамбула (план v1.3) — в левой колонке сцены, карта справа
-    pre = f'<div class="hq-pre">{page.paras(p0["preamble"], "00")}</div>' if p0.get("preamble") else ""
+    pre = (f'<div class="hq-pre"><p{ed("00", p0["preamble"], "блок 00 · преамбула", key="preamble")}>'
+           f'{page.inline(p0["preamble"], "00")}</p></div>') if p0.get("preamble") else ""
     # подзаголовок штаба: описание из пакета + месяц выгрузки данных (вместо «2021 → сегодня»)
     y, mo = sites["today"].split("-")[:2]
     hq_sub = f'{hq["sub"].split(" · ")[0]} · ' + f'данные за {MONTHS[int(mo) - 1]} {y}'.replace(" ", "\u00a0")
@@ -331,21 +375,21 @@ def main():
         <div class="hq-sub">{html.escape(hq_sub)}</div>
       </div>
       {pre}
-      <div class="hq-hero"><div class="lbl">{html.escape(hq['counter_label'])}</div><div class="num" id="hqNum">0<small>ГВт</small></div></div>
-      <a class="hq-link" href="{MAP_LINK}">{html.escape(hq['link'])}</a>
-      <div class="hq-cta">{html.escape(hq['cta'])} <span aria-hidden="true">↓</span></div>
+      <div class="hq-hero"><div class="lbl"{ed("00", hq['counter_label'], "блок 00 · штаб, подпись счётчика", key="counter_label")}>{html.escape(hq['counter_label'])}</div><div class="num" id="hqNum">0<small>ГВт</small></div></div>
+      <a class="hq-link" href="{MAP_LINK}"{ed("00", hq['link'], "блок 00 · штаб, ссылка на карту", key="link")}>{html.escape(hq['link'])}</a>
+      <div class="hq-cta"><span{ed("00", hq['cta'], "блок 00 · штаб, призыв", key="cta")}>{html.escape(hq['cta'])}</span> <span aria-hidden="true">↓</span></div>
     </div>
     <div class="opening" id="opening">
       <div class="intro">
-        <div class="kicker">{html.escape(p0['kicker'])}</div>
-        <h1>{html.escape(p0['title'])}</h1>
-        <p class="dek">{html.escape(p0['dek'])}</p>
+        <div class="kicker"{ed("00", p0['kicker'], "блок 00 · надзаголовок", key="kicker")}>{html.escape(p0['kicker'])}</div>
+        <h1{ed("00", p0['title'], "блок 00 · название", key="title")}>{html.escape(p0['title'])}</h1>
+        <p class="dek"{ed("00", p0['dek'], "блок 00 · подзаголовок", key="dek")}>{html.escape(p0['dek'])}</p>
       </div>
       <div class="cap" data-bill="00">
-        <div class="rl">{html.escape(gc['rowline'])}</div>
-        {page.inline(gc['text'], '00')}
+        <div class="rl"{ed("00", gc['rowline'], "блок 00 · подпись к сетке, строка", key="rowline")}>{html.escape(gc['rowline'])}</div>
+        <span{ed("00", gc['text'], "блок 00 · подпись к сетке", key="text")}>{page.inline(gc['text'], '00')}</span>
         <div class="key">{legend}</div>
-        <div class="src">{page.inline(gc['source'], '00')}</div>
+        <div class="src"{ed("00", gc['source'], "блок 00 · подпись к сетке, источник", key="source")}>{page.inline(gc['source'], '00')}</div>
       </div>
     </div>
   </div>
@@ -353,7 +397,7 @@ def main():
 
     parts = []
     if "howto" in sp0:
-        parts.append(f'<div class="howto">{page.paras(sp0["howto"], "00")}</div>')
+        parts.append(f'<div class="howto">{page.paras(sp0["howto"], "00", "блок 00 · как читать")}</div>')
     for item in MANIFEST:
         if item[0] == "divider":
             _, label, side, note = item
@@ -363,8 +407,9 @@ def main():
         p = ready.get(no)
         if p:
             body, _ = page.body(p)
-            parts.append(f'<article class="block" id="b{no}">\n{rowline(p.get("side"), DISPLAY_NO[no], p.get("rowline", name))}\n'
-                         f'<h2>{html.escape(p["title"])}</h2>\n{body}\n</article>')
+            rl = ed(no, p["rowline"], f"блок {no} · строка счёта в шапке", key="rowline") if p.get("rowline") else ""
+            parts.append(f'<article class="block" id="b{no}">\n{rowline(p.get("side"), DISPLAY_NO[no], p.get("rowline", name), rl)}\n'
+                         f'<h2{ed(no, p["title"], f"блок {no} · заголовок", key="title")}>{html.escape(p["title"])}</h2>\n{body}\n</article>')
         else:
             parts.append(f'<article class="block stub" id="b{no}">\n{rowline(side, DISPLAY_NO[no], name)}\n'
                          f'<h2>{html.escape(name)}</h2>\n'
@@ -373,7 +418,8 @@ def main():
     # глоссарий: сначала термины в порядке употребления на странице, затем остальные
     keys = [k for k in gloss if k in page.terms_used] + [k for k in gloss if k not in page.terms_used]
     parts.append('<section id="glossary" aria-labelledby="gl-h"><h2 id="gl-h">Глоссарий</h2><dl>' +
-                 "".join(f'<div><dt>{html.escape(gloss[k]["title"])}</dt><dd>{html.escape(gloss[k]["text"])}</dd></div>' for k in keys) +
+                 "".join(f'<div><dt{ed(GLOSS, gloss[k]["title"], f"глоссарий · {k} · термин", key="title")}>{html.escape(gloss[k]["title"])}</dt>'
+                         f'<dd{ed(GLOSS, gloss[k]["text"], f"глоссарий · {k} · пояснение", key="text")}>{html.escape(gloss[k]["text"])}</dd></div>' for k in keys) +
                  "</dl></section>")
 
     # источники: упомянутые — по порядку первого упоминания, затем остальные по блокам
@@ -382,11 +428,12 @@ def main():
             key = f"{b}:{sid}"
             if key not in page.src_num:
                 page.src_order.append(key); page.src_num[key] = len(page.src_order)
-                print(f"  источник {key} нигде не упомянут в тексте — добавлен в конец списка")
+                if not edit:
+                    print(f"  источник {key} нигде не упомянут в тексте — добавлен в конец списка")
     lis = []
     for n, key in enumerate(page.src_order, 1):
         b, sid = key.split(":")
-        lis.append(f'<li id="src-{n}">{page.inline(ready[b]["sources"][sid], b)}</li>')
+        lis.append(f'<li id="src-{n}"{ed(b, ready[b]["sources"][sid], f"блок {b} · источник {sid}", key=sid)}>{page.inline(ready[b]["sources"][sid], b)}</li>')
     parts.append('<section id="sources" aria-labelledby="src-h"><h2 id="src-h">Источники</h2><ol>' + "\n".join(lis) + "</ol></section>")
     parts.append(f"""<footer class="colophon">«{html.escape(p0['title'])}» · выпуск {ru_date(EDITION)}. Данные о площадках — Epoch AI (CC BY 4.0).
 Шрифты Source Serif 4 и IBM Plex (SIL Open Font License). Картографическая основа — us-atlas (US Census).
@@ -427,12 +474,30 @@ def main():
         if k not in t:
             fail(f"в шаблоне нет метки {k}")
         t = t.replace(k, v)
+    if edit:
+        # режим правки: отметки источника, журнал и панель; поисковикам не показываем
+        ejs = rd(SRC / "edit.js")
+        if "</script" in ejs.lower():
+            fail("edit.js: внутри встречается </script")
+        t = t.replace("<head>", '<head>\n<meta name="robots" content="noindex">', 1)
+        t = t.replace("<title>", "<title>Правка · ", 1)
+        t = t.replace("</body>", f'<script type="application/json" id="d-edits">{jsn({"edition": EDITION, "units": page.edits})}</script>\n'
+                                 f"<script>\n{ejs}\n</script>\n</body>", 1)
+        EDIT_OUT.write_text(t, encoding="utf-8", newline="\n")
+        print(f"{EDIT_OUT.relative_to(ROOT)}: {EDIT_OUT.stat().st_size // 1024} КБ · редактируемых кусков текста: {len(page.edits)}"
+              + (f" · не найдено в исходнике однозначно: {page.ed_skip}" if page.ed_skip else ""))
+        return
     OUT.write_text(t, encoding="utf-8", newline="\n")
     kb = OUT.stat().st_size // 1024
     print(f"{OUT.relative_to(ROOT)}: {kb} КБ · пакетов свёрстано: {len(ready)} · строк счёта: {len(bill)} · "
           f"источников: {len(page.src_order)} · графиков: {len(page.charts)} · сетка: {total_f} + {total_h} точек")
     if kb > 3072:
         print("  внимание: файл больше 3 МБ")
+
+
+def main():
+    build()
+    build(edit=True)
 
 
 if __name__ == "__main__":
