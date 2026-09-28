@@ -14,7 +14,7 @@
 | Инструкция для фактчекера (формат реестра, статусы, правила) | `docs/fact-check/instructions.md` | использовать для новых блоков |
 | Правки редактора по блоку 06 | `docs/review-06.md` | образец редактуры |
 | Прототип: переход «штаб → бумага» и блок 06 | `prototype/index.html` | принят |
-| Контент-пакеты | `content/00-kholodnyi-start.md`, `content/06-intellekt.md`, формат — `content/README.md` | 00 и 06 готовы к вёрстке |
+| Контент-пакеты | `content/00-kholodnyi-start.md`, `content/06-intellekt.md`, `content/07-strany.md`, формат — `content/README.md` | 00, 06 и 07 готовы к вёрстке |
 | Отчёт об инцидентах ИИ (основа блока 13) | `docs/sources/ai-risk-report-2026-09.pdf` | v1.3, 14.09.2026 |
 
 ## Порядок работы над блоком
@@ -33,8 +33,8 @@
 
 | № | Задача | Что на входе | Что на выходе |
 |---|---|---|---|
-| 1 | Блок 07 «Гонка стран» | план, строки `07-*` и `RE-*`, `data/recalc/epoch/derived/kw_per_h100e_*.csv`, `chip_owners_*.csv` | `content/07-strany.md` + данные графиков «Пять способов» и «Тот же гигаватт» |
-| 2 | Блок 12 «Деньги по кругу» (новый) | план, строки `05s-07…05s-10`, `RU6-*`; проверить сделки из списка в плане, собрать таблицу рёбер | `content/12-dengi-po-krugu.md`, `content/data/12-deals.csv` (from, to, type, amount_usd, date, status, source) |
+| 1 | ✓ Блок 07 «Гонка стран» — готов 28.09.2026 (`content/07-strany.md`, `docs/review-07.md`) | план, строки `07-*` и `RE-*`, `data/recalc/epoch/derived/kw_per_h100e_*.csv`, `chip_owners_*.csv` | `content/07-strany.md` + данные графиков «Пять способов» и «Тот же гигаватт» |
+| 2 | ✓ Блок 12 «Деньги по кругу» — черновик 28.09.2026 (`content/12-dengi-po-krugu.md`), глубокая редактура позже | план, строки `05s-07…05s-10`, `RU6-*`; проверить сделки из списка в плане, собрать таблицу рёбер | `content/12-dengi-po-krugu.md`, `content/data/12-deals.csv` (from, to, type, amount_usd, date, status, source) |
 | 3 | Блок 13 «Инциденты и риски» (новый) | план, отчёт `docs/sources/ai-risk-report-2026-09.pdf`; перенести ключевые утверждения в реестр и перепроверить кейсы 2026 года | `content/13-riski.md`, `content/data/13-incidents.csv` (date, type, severity, source, verified) |
 | 4 | Блок 11 «Двигатель гонки» (новый) | план, `content/data/06-flagships.csv`, наборы Epoch по моделям, `hub_timeseries_quarterly.csv` | `content/11-releases.md`, `content/data/11-releases.csv` |
 | 5 | Блок 03 «Счёт за свет» | строки `03-*`; EIA table 5.6.A по штатам PJM | `content/03-svet.md` + данные «Лестницы цен» и «Калькулятора» |

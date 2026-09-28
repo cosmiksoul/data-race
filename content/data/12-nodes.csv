@@ -1,0 +1,26 @@
+company,node_type,value_usd_bn,value_kind,date,source
+Nvidia,чипы,5434,капитализация,2026-09-25,https://companiesmarketcap.com/
+Google (Alphabet),облако,4171,капитализация,2026-09-25,https://companiesmarketcap.com/
+Microsoft,облако,3832,капитализация,2026-09-25,https://companiesmarketcap.com/
+Amazon,облако,2693,капитализация,2026-09-25,https://companiesmarketcap.com/
+SpaceX,лаборатория,1959,капитализация,2026-09-25,https://companiesmarketcap.com/spacex/marketcap/
+Meta,лаборатория,1914,капитализация,2026-09-25,https://companiesmarketcap.com/
+Broadcom,чипы,1740,капитализация,2026-09-22,https://stockanalysis.com/stocks/avgo/market-cap/
+AMD,чипы,1029,капитализация,2026-09-25,https://companiesmarketcap.com/amd/marketcap/
+Anthropic,лаборатория,965,оценка раунда,2026-05-28,https://www.anthropic.com/news/series-h
+OpenAI,лаборатория,852,оценка раунда,2026-03-31,https://openai.com/index/accelerating-the-next-phase-ai/
+Intel,чипы,650.19,капитализация,2026-09-25,https://companiesmarketcap.com/amd/marketcap/
+Oracle,облако,414.6,капитализация,2026-09-25,https://companiesmarketcap.com/oracle/marketcap/
+xAI,лаборатория,250,оценка раунда,2026-02-02,https://finance.yahoo.com/markets/stocks/articles/spacex-absorbed-xai-combined-1-080100015.html
+SoftBank Group,инвестор,225.59,капитализация,2026-09,https://companiesmarketcap.com/softbank/marketcap/
+Nebius,облако,61.27,капитализация,2026-09-18,https://stockanalysis.com/stocks/nbis/market-cap/
+Cerebras,чипы,49.12,капитализация,2026-09-25,https://stockanalysis.com/stocks/cbrs/market-cap/
+CoreWeave,облако,48.31,капитализация,2026-09-25,https://stockanalysis.com/stocks/crwv/market-cap/
+Mistral AI,лаборатория,24.4,оценка раунда,2026-09-08,https://mistral.ai/news/mistral-makes-sovereign-open-weight-ai-to-frontier/
+Nscale,облако,14.6,оценка раунда,2026-03-09,https://www.nscale.com/press-releases/nscale-series-c
+Poolside,лаборатория,13,оценка раунда,2026-08-20,https://www.newcomer.co/p/sources-poolside-strikes-6-billion
+SB Energy,облако,,,2026-08-17,https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/sbeoainvidia-portsrelease.htm
+Jane Street,инвестор,,,2026-04,https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm
+"Финансовые платформы Nvidia (Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs, KKR)",инвестор,,,2026-08-10,https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital
+AI-облака — партнёры Nvidia (не раскрыты),облако,,,2026-07-26,https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm
+Партнёры AMD по аренде ДЦ (не раскрыты),облако,,,2026-06-27,https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm
