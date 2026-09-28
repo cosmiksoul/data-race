@@ -1,0 +1,178 @@
+"""
+Проверка собранной страницы site/index.html (чек-лист из CLAUDE.md).
+
+Запуск из корня проекта:  python scripts/check_site.py [--quick]
+Зависимости: pip install playwright && python -m playwright install chromium
+
+Снимает кадры в screens/ (папка в .gitignore) на 1440×900 светлой и тёмной,
+1024×768 и 390×844: холодный старт, середина и финал перехода, блоки, графики,
+счёт. Проверяет: ошибки консоли, горизонтальную прокрутку, наезды подписей
+графиков друг на друга и на точки, что счёт помещается в экран, что ссылки
+на источники и подсказки не битые. Код выхода 1, если есть замечания.
+"""
+import asyncio, sys
+from pathlib import Path
+from playwright.async_api import async_playwright
+
+ROOT = Path(__file__).resolve().parents[1]
+PAGE = (ROOT / "site" / "index.html").as_uri()
+SHOTS = ROOT / "screens"
+QUICK = "--quick" in sys.argv
+
+VIEWS = [  # имя, размер, тема, reduced motion
+    ("1440-light", (1440, 900), "light", False),
+    ("1440-dark", (1440, 900), "dark", False),
+    ("1024", (1024, 768), "light", False),
+    ("390", (390, 844), "light", False),
+    ("1440-rm", (1440, 900), "light", True),
+]
+
+# наезды: пересечение прямоугольников подписей между собой и с точками данных
+OVERLAPS = r"""
+() => {
+  const out = [];
+  const R = e => e.getBoundingClientRect();
+  const hit = (a, b, pad = 0.5) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > pad && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > pad;
+  document.querySelectorAll('figure.card > svg').forEach(svg => {
+    const id = svg.closest('figure').id;
+    const texts = [...svg.querySelectorAll('text')].filter(t => t.textContent.trim()).map(t => ({ t: t.textContent.trim(), r: R(t) }));
+    const marks = [...svg.querySelectorAll('.mark > :not(.hit), :scope > g > circle')].map(m => ({ r: R(m), n: m.parentNode.getAttribute('aria-label') || 'точка' }));
+    for (let i = 0; i < texts.length; i++) {
+      for (let j = i + 1; j < texts.length; j++) if (hit(texts[i].r, texts[j].r)) out.push(`${id}: «${texts[i].t}» × «${texts[j].t}»`);
+      for (const m of marks) if (hit(texts[i].r, m.r, 1)) { out.push(`${id}: «${texts[i].t}» на точке ${m.n}`); break; }
+      if (texts[i].r.right > innerWidth || texts[i].r.left < 0) out.push(`${id}: «${texts[i].t}» за краем экрана`);
+    }
+  });
+  return out;
+}
+"""
+
+INTEGRITY = r"""
+() => {
+  const out = [];
+  document.querySelectorAll('a[href^="#"]').forEach(a => { const id = a.getAttribute('href').slice(1); if (id && !document.getElementById(id)) out.push('битая ссылка ' + a.getAttribute('href')); });
+  const g = JSON.parse(document.getElementById('d-page').textContent).gloss;
+  document.querySelectorAll('.term').forEach(t => { if (!g[t.dataset.term]) out.push('нет подсказки ' + t.dataset.term); });
+  document.querySelectorAll('figure[data-chart]').forEach(f => { const s = f.querySelector(':scope > svg'); if (!s || !s.childElementCount) out.push('пустой график ' + f.id); });
+  return out;
+}
+"""
+
+
+async def scroll_to(pg, js_y, wait=450):
+    await pg.evaluate(f"window.scrollTo(0, Math.max(0, {js_y}))")
+    await pg.wait_for_timeout(wait)
+
+
+async def check_view(b, name, size, scheme, rm, issues):
+    ctx = await b.new_context(viewport={"width": size[0], "height": size[1]}, color_scheme=scheme,
+                              reduced_motion="reduce" if rm else "no-preference",
+                              is_mobile=size[0] < 720, has_touch=size[0] < 720, device_scale_factor=1)
+    pg = await ctx.new_page()
+    pg.on("console", lambda m: issues.append(f"[{name}] консоль {m.type}: {m.text}") if m.type in ("error", "warning") else None)
+    pg.on("pageerror", lambda e: issues.append(f"[{name}] ошибка JS: {e}"))
+    shot = lambda lab: pg.screenshot(path=str(SHOTS / f"{name}_{lab}.png"))
+
+    async def hscroll(where):
+        if await pg.evaluate("document.documentElement.scrollWidth > innerWidth"):
+            issues.append(f"[{name}] горизонтальная прокрутка ({where})")
+
+    await pg.goto(PAGE)
+    await pg.wait_for_timeout(7200)  # автопроигрывание штаба 2021 → сегодня
+    await shot("00-cold"); await hscroll("холодный старт")
+    if rm and QUICK:
+        await ctx.close(); return
+    H = await pg.evaluate('document.getElementById("hq").offsetHeight - innerHeight')
+    for frac, lab in [(.2, "01-trans-a"), (.35, "02-trans-mid"), (.6, "03-trans-late"), (1.0, "04-trans-final")]:
+        await scroll_to(pg, int(H * frac), 600); await shot(lab)
+    await hscroll("финал перехода")
+    printed = await pg.evaluate("document.querySelectorAll('#billList li[data-no]').length")
+    if printed < 1:
+        issues.append(f"[{name}] строка 00 не напечаталась в финале перехода")
+    if rm:
+        await ctx.close(); return
+
+    # подсказка термина с клавиатуры
+    await scroll_to(pg, H + 10)
+    await pg.focus(".opening .term") if await pg.locator(".opening .term").count() else None
+    await pg.wait_for_timeout(200)
+    if not await pg.evaluate("document.getElementById('tip').classList.contains('on')"):
+        issues.append(f"[{name}] подсказка термина не открылась по фокусу")
+    await pg.evaluate("document.activeElement.blur()")
+
+    targets = [("05-howto", ".howto", 40), ("06-stubs", "#b02", 40), ("07-b06", "#b06", 40), ("08-fig1", "#fig1", 60),
+               ("09-fig1b", "#fig1b", 60), ("10-fig2", "#fig2", 80), ("11-b06-end", ".rowsum", 300),
+               ("12-world", "#b07", 40), ("13-glossary", "#glossary", 40), ("14-sources", "#sources", 40)]
+    for lab, sel, pad in targets:
+        await scroll_to(pg, f'document.querySelector("{sel}").getBoundingClientRect().top + scrollY - {pad}', 1400 if "fig" in lab else 500)
+        await shot(lab); await hscroll(lab)
+
+    # все якоря счёта: пройти по порядку, затем проверить, что счёт помещается в экран
+    for i in range(await pg.locator("[data-bill]").count()):
+        await scroll_to(pg, f'document.querySelectorAll("[data-bill]")[{i}].getBoundingClientRect().top + scrollY - innerHeight * .3', 250)
+    n = await pg.evaluate("document.querySelectorAll('#billList li[data-no]').length")
+    total = await pg.evaluate("Object.keys(JSON.parse(document.getElementById('d-page').textContent).bill).length")
+    if n != total:
+        issues.append(f"[{name}] напечатано строк счёта: {n} из {total}")
+    await scroll_to(pg, 'document.querySelector(".rowsum").getBoundingClientRect().top + scrollY - 200', 700)
+    if size[0] > 1180:
+        fit = await pg.evaluate("""(() => { const r = document.getElementById('receipt'), b = r.getBoundingClientRect();
+            return { bottom: b.bottom, over: r.scrollHeight - r.clientHeight }; })()""")
+        if fit["bottom"] > size[1] or fit["over"] > 1:
+            issues.append(f"[{name}] счёт не помещается в экран: {fit}")
+        await shot("15-receipt")
+        await pg.click("#billList li.compact")
+        await pg.wait_for_timeout(300); await shot("16-receipt-expanded")
+    else:
+        await pg.click("#receiptBarBtn"); await pg.wait_for_timeout(400)
+        fit = await pg.evaluate("(() => { const b = document.getElementById('receiptBar').getBoundingClientRect(); return { top: b.top, bottom: b.bottom }; })()")
+        if fit["top"] < 0 or fit["bottom"] > size[1] + 1:
+            issues.append(f"[{name}] плашка счёта не помещается в экран: {fit}")
+        await shot("15-receipt-bar")
+        await pg.click("#receiptBarBtn")
+
+    # подписи графиков и целостность ссылок — после финальной отрисовки
+    await scroll_to(pg, 'document.querySelector("#fig2").getBoundingClientRect().top + scrollY - 80', 1500)
+    for o in await pg.evaluate(OVERLAPS):
+        issues.append(f"[{name}] наезд подписей: {o}")
+    for o in await pg.evaluate(INTEGRITY):
+        issues.append(f"[{name}] {o}")
+
+    # подсказка точки графика с клавиатуры
+    await pg.focus("#fig1 .mark"); await pg.wait_for_timeout(150)
+    if not await pg.evaluate("document.getElementById('tip').classList.contains('on')"):
+        issues.append(f"[{name}] подсказка точки графика не открылась по фокусу")
+    await shot("17-fig1-focus")
+
+    # переключатель темы: авто → светлая → тёмная, выбор переживает перезагрузку
+    if name == "1440-light":
+        await pg.click("#themeBtn"); await pg.click("#themeBtn")
+        await pg.reload(); await pg.wait_for_timeout(500)
+        if await pg.evaluate("document.documentElement.dataset.theme") != "dark":
+            issues.append(f"[{name}] выбор темы не сохранился после перезагрузки")
+        await scroll_to(pg, 'document.querySelector("#fig1").getBoundingClientRect().top + scrollY - 60', 900)
+        await shot("18-theme-dark-toggle")
+        for o in await pg.evaluate(OVERLAPS):
+            issues.append(f"[{name}/тёмная кнопкой] наезд подписей: {o}")
+    await ctx.close()
+
+
+async def main():
+    SHOTS.mkdir(exist_ok=True)
+    for f in SHOTS.glob("*.png"):
+        f.unlink()
+    issues = []
+    async with async_playwright() as p:
+        b = await p.chromium.launch()
+        for v in VIEWS:
+            await check_view(b, *v, issues)
+            print(f"  {v[0]}: готово")
+        await b.close()
+    kb = (ROOT / "site" / "index.html").stat().st_size // 1024
+    print(f"Кадров: {len(list(SHOTS.glob('*.png')))} в {SHOTS.relative_to(ROOT)}/ · размер страницы {kb} КБ")
+    if issues:
+        print(f"Замечаний: {len(issues)}"); print("\n".join("  " + i for i in issues)); sys.exit(1)
+    print("Замечаний нет: консоль чистая, горизонтальной прокрутки нет, подписи не наезжают, счёт помещается в экран")
+
+
+asyncio.run(main())
