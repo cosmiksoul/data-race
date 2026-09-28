@@ -55,11 +55,13 @@ const billList = document.getElementById('billList'), billEmpty = document.getEl
 const barList = document.getElementById('barList'), bar = document.getElementById('receiptBar'), billCount = document.getElementById('billCount');
 const barBtn = document.getElementById('receiptBarBtn');
 const printed = new Set(), ORDER = Object.keys(BILL);
+// сторона строки: дебет — кто платит, кредит — что получаем, нейтральная — счёт в гонке, мир (тушью)
+const SIDES = { debit: ['−', 'дебет'], credit: ['+', 'кредит'], neutral: ['·', 'нейтральная строка'] };
 function billItem(b) {
-  const li = el('li', b.side);
-  const top = el('div'); top.append(el('span', 'sgn', b.side === 'debit' ? '−' : '+'), el('span', 'no', b.no + ' · '), el('span', 'ttl', b.ttl));
+  const li = el('li', b.side), [sg, sn] = SIDES[b.side] || SIDES.neutral;
+  const top = el('div'); top.append(el('span', 'sgn', sg), el('span', 'no', b.no + ' · '), el('span', 'ttl', b.ttl));
   li.append(top, el('div', '', b.val), el('span', 'who', b.who), el('span', 'tg', b.tg));
-  li.setAttribute('aria-label', `Строка ${b.no}, ${b.side === 'debit' ? 'дебет' : 'кредит'}: ${b.ttl} — ${b.val}; ${b.who}; ${b.tg}`);
+  li.setAttribute('aria-label', `Строка ${b.no}, ${sn}: ${b.ttl} — ${b.val}; ${b.who}; ${b.tg}`);
   return li;
 }
 const receiptBox = document.getElementById('receipt');

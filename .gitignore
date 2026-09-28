@@ -11,3 +11,6 @@ data/recalc/us/raw/CIK*.json
 s_*.png
 r_*.png
 screens/
+
+# рабочая папка Cowork (копии пакетов) — источник правды в content/
+Claude outputs/

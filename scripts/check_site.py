@@ -146,7 +146,7 @@ async def check_view(b, name, size, scheme, rm, issues):
 
     targets = [("05-howto", ".howto", 40), ("06-stubs", "#b01", 40), ("06b-b12", "#b12", 40), ("07-b06", "#b06", 40), ("08-fig1", "#fig1", 60),
                ("09-fig1b", "#fig1b", 60), ("10-fig2", "#fig2", 80), ("11-b06-end", ".rowsum", 300),
-               ("12-world", "#b07", 40), ("13-glossary", "#glossary", 40), ("14-sources", "#sources", 40)]
+               ("12-world", "#b07", 40), ("12b-fig07a", "#fig07a", 60), ("12c-fig07b", "#fig07b", 60), ("13-glossary", "#glossary", 40), ("14-sources", "#sources", 40)]
     for lab, sel, pad in targets:
         await scroll_to(pg, f'document.querySelector("{sel}").getBoundingClientRect().top + scrollY - {pad}', 1400 if "fig" in lab else 500)
         await shot(lab); await hscroll(lab)

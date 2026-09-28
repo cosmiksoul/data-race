@@ -237,7 +237,8 @@ class Page:
         block = str(p["block"])
         if kind == "bigfig":
             d = yaml.safe_load(raw)
-            return (f'<div class="bigfig {p.get("side", "")}"><div class="n">{html.escape(str(d["n"]))}'
+            lu = " lu" if len(str(d["unit"])) > 16 else ""  # длинная единица — под числом, иначе сжимает подпись
+            return (f'<div class="bigfig {p.get("side", "")}{lu}"><div class="n">{html.escape(str(d["n"]))}'
                     f'<small>{html.escape(d["unit"])}</small></div>'
                     f'<div class="c"{self.ed(block, d["caption"], f"блок {block} · вынос", key="caption")}>{self.inline(d["caption"], block)}</div></div>')
         if kind == "rowsum":
@@ -352,6 +353,14 @@ def build(edit=False):
     for k, v in pk.items():
         if k not in ready and not edit:
             print(f"  пропущен пакет {v['_file']}: статус «{v.get('status')}»")
+    # защита: пакет готов, а кода для его графиков ещё нет — блок остаётся заглушкой, пустых карточек нет
+    drawn = set(re.findall(r"^CHARTS\.(\w+)\s*=", "\n".join(rd(f) for f in (SRC / "charts").glob("*.js")), re.M))
+    for k in list(ready):
+        missing = [c for c in re.findall(r"^:::\s*chart\s+([\w-]+)", ready[k]["_body"], re.M) if c not in drawn]
+        if missing and k != "00":
+            del ready[k]
+            if not edit:
+                print(f"  пакет {pk[k]['_file']} готов, но графиков {', '.join(missing)} ещё нет в site/src/charts — блок пока заглушка")
 
     # 00 — штаб и подпись к сетке единиц
     p0 = ready.get("00")
@@ -446,6 +455,8 @@ def build(edit=False):
             rid = str(r["id"])
             if rid in bill:
                 fail(f"строка счёта {rid} повторяется")
+            if r["side"] not in ("debit", "credit", "neutral"):
+                fail(f"строка счёта {rid}: сторона «{r['side']}» — ждём debit, credit или neutral")
             bill[rid] = {"side": r["side"], "no": DISPLAY_NO[b], "ttl": r["title"], "val": r["value"], "who": r["who"], "tg": r["tags"]}
 
     total_f, total_h = sum(s["dt"] for s in sites["sites"]), sum(s["dp"] for s in sites["sites"])
