@@ -1,0 +1,100 @@
+parameter,value,unit,date,source,note
+valuation_anthropic_last_round,965,млрд $,2026-05-28,https://www.anthropic.com/news/series-h,"Series H, post-money; 12-51"
+valuation_anthropic_ipo_target,2000,млрд $,2026-09-04,https://finance.yahoo.com/markets/stocks/articles/anthropic-weighs-morgan-stanley-goldman-223747740.html,По данным FT; ПРОГНОЗ; 12-60
+valuation_openai_last_round,852,млрд $,2026-03-31,https://openai.com/index/accelerating-the-next-phase-ai/,"Post-money; подтверждена продажей акций сотрудников 10.08.2026; 12-68, 12-70"
+valuation_openai_talks,1200-1500,млрд $,2026-09-16,https://finance.yahoo.com/technology/ai/articles/openai-weighing-funding-round-over-223133303.html,"Ранние переговоры: инвесторы — $1,2 трлн, OpenAI — до $1,5 трлн; 12-71"
+valuation_openai_ipo_target,1000,млрд $,2026-06-26,https://www.business-standard.com/world-news/openai-may-delay-ipo-until-2027-targets-1-trillion-valuation-report-126062600115_1.html,IPO в 2027 году (NYT); 12-74
+marketcap_spacex_incl_xai,1959,млрд $,2026-09-25,https://companiesmarketcap.com/spacex/marketcap/,Отдельной оценки xAI после слияния нет; 12-91
+valuation_xai_at_merger,250,млрд $,2026-02-02,https://finance.yahoo.com/markets/stocks/articles/spacex-absorbed-xai-combined-1-080100015.html,"Доля xAI в сделке на $1,25 трлн; 12-89"
+valuation_mistral,24.4,млрд $,2026-09-08,https://mistral.ai/news/mistral-makes-sovereign-open-weight-ai-to-frontier/,>€21 млрд post-money; перевод в $ — TechCrunch; 12-94
+valuation_ssi,32,млрд $,2025-04,https://www.calcalistech.com/ctechnews/article/hjfywdtajl,Новее нет; вложение Nvidia 07.2026 без раскрытой оценки; 12-96
+anthropic_revenue_2024,0.381,млрд $,2024,https://epoch.ai/data/ai_companies_revenue_reports.csv,The Information (22.01.2026) через набор Epoch AI; вторичный
+anthropic_revenue_2025,4.5,млрд $,2025,https://epoch.ai/data/ai_companies_revenue_reports.csv,The Information (27.01.2026) через Epoch; вторичный; 12-63
+anthropic_revenue_q1_2026,4.73,млрд $,2026-Q1,https://fortune.com/2026/08/15/anthropic-revenue-q2-11-5-billion-ipo-investors/,"Bloomberg через Fortune; предварительно, без аудита"
+anthropic_revenue_q2_2026,11.5,млрд $,2026-Q2,https://fortune.com/2026/08/15/anthropic-revenue-q2-11-5-billion-ipo-investors/,"«Более $11,5 млрд»; 2К25 — $0,787 млрд; 12-61"
+anthropic_runrate_2026_05,47,млрд $ в год,2026-05,https://www.anthropic.com/news/series-h,Самоотчёт компании; 12-52
+anthropic_runrate_2026_07,65,млрд $ в год,2026-07,https://www.axios.com/2026/09/18/anthropic-100-billion-revenue,Bloomberg (17.08.2026); строка 05s-01
+anthropic_runrate_2026_09,100,млрд $ в год,2026-09-18,https://www.axios.com/2026/09/18/anthropic-100-billion-revenue,NYT через Axios; Bloomberg подаёт как прогноз «к концу 2026»; строка 05s-01
+anthropic_runrate_2026_12_investor_projection,100-120,млрд $ в год,2026-12,https://www.forbes.com/sites/jonmarkman/2026/08/17/anthropics-groundbreaking-second-quarter-delivers-115b-in-revenue/,"Прогноз инвесторов, не компании; 12-67"
+anthropic_forecast_revenue_2026_jan,18,млрд $,2026,https://www.investing.com/news/stock-market-news/anthropic-ups-2026-revenue-forecast-delays-cashpositive-target--the-information-4469111,"The Information, 27.01.2026; устарел: за 1П26 уже $16,2 млрд"
+anthropic_forecast_revenue_2027,55,млрд $,2027,https://www.investing.com/news/stock-market-news/anthropic-ups-2026-revenue-forecast-delays-cashpositive-target--the-information-4469111,"The Information, 27.01.2026; вероятно, тоже занижен"
+anthropic_forecast_revenue_2028,70,млрд $,2028,https://techcrunch.com/2025/11/04/anthropic-expects-b2b-demand-to-boost-revenue-to-70b-in-2028-report/,"The Information, 04.11.2025; «до $70 млрд»; устарел; 12-64"
+anthropic_forecast_revenue_2029_bull,148,млрд $,2029,https://finance.yahoo.com/news/anthropic-quietly-raises-ceiling-121501064.html,"Оптимистичный сценарий компании, январь 2026; 12-65"
+anthropic_forecast_cashflow_2028,17,млрд $,2028,https://techcrunch.com/2025/11/04/anthropic-expects-b2b-demand-to-boost-revenue-to-70b-in-2028-report/,При выручке $70 млрд — маржа денежного потока ~24%
+anthropic_cashflow_positive_year,2028,год,2026-01-27,https://www.investing.com/news/stock-market-news/anthropic-ups-2026-revenue-forecast-delays-cashpositive-target--the-information-4469111,Сдвинут с 2027; 12-66
+anthropic_adj_operating_profit_q2_2026,0.559,млрд $,2026-Q2,https://finance.yahoo.com/markets/stocks/articles/anthropic-track-first-profitable-quarter-124217577.html,"Прогноз FT (май 2026) при выручке $10,9 млрд; маржа ≈5,1%. Bloomberg: итог 2К26 — «положительная скорр. операционная прибыль», без суммы; 12-62"
+anthropic_gross_margin_2025,40,%,2025,https://www.investing.com/news/stock-market-news/anthropic-trims-profit-margin-outlook-as-ai-operating-costs-rise--the-information-4459316,"Прогноз на 2025 (The Information, 22.01.2026), было 50%; строка 06-42"
+anthropic_gross_margin_2028_target,77,%,2028,https://techcrunch.com/2025/11/04/anthropic-expects-b2b-demand-to-boost-revenue-to-70b-in-2028-report/,"The Information, 04.11.2025"
+openai_revenue_2024,3.7,млрд $,2024,https://fortune.com/2026/06/16/openai-financials-leaked-losses-revenue-profit/,Утечка отчётности с аудитом
+openai_revenue_2025,13.07,млрд $,2025,https://fortune.com/2026/06/16/openai-financials-leaked-losses-revenue-profit/,12-81
+openai_cost_of_revenue_2025,7.5,млрд $,2025,https://fortune.com/2026/06/16/openai-financials-leaked-losses-revenue-profit/,Валовая маржа по этим данным ≈43%; The Information — 33% (06-41): определения расходятся
+openai_operating_loss_2025,-20.92,млрд $,2025,https://fortune.com/2026/06/16/openai-financials-leaked-losses-revenue-profit/,"Операционная маржа ≈ −160%; 2024: −$8,78 млрд; 12-82"
+openai_net_loss_2025,-38.53,млрд $,2025,https://qz.com/openai-leaked-financials-losses-revenue-ipo-061626,В основном переоценка конвертируемых долей и варрантов; для модели не использовать
+openai_arr_2025_end,20,млрд $ в год,2025-12,https://openai.com/index/a-business-that-scales-with-the-value-of-intelligence/,"CFO: $2 млрд (2023), $6 млрд (2024), $20+ млрд (2025); 12-80"
+openai_runrate_2026_08,40,млрд $ в год,2026-08-13,https://www.pymnts.com/news/artificial-intelligence/2026/openais-revenue-run-rate-tops-40-billion-as-ipo-nears/,Bloomberg; строка 05s-02
+openai_forecast_revenue_2026,36,млрд $,2026,https://www.investing.com/news/economy-news/openai-expects-to-burn-through-almost-280-billion-by-2030-ft-reports-4907970,"FT, 18.09.2026; в феврале было $30 млрд (The Information)"
+openai_forecast_revenue_2027,62,млрд $,2027,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,"The Information, 21.02.2026; «около»"
+openai_forecast_revenue_2030,350,млрд $,2030,https://www.investing.com/news/economy-news/openai-expects-to-burn-through-almost-280-billion-by-2030-ft-reports-4907970,"FT, 18.09.2026; в феврале — около $280 млрд; 12-83"
+openai_forecast_revenue_cum_2026_2030,840,млрд $,2026-2030,https://www.investing.com/news/economy-news/openai-expects-to-burn-through-almost-280-billion-by-2030-ft-reports-4907970,"FT, 18.09.2026"
+openai_forecast_fcf_cum_2026_2030,-278,млрд $,2026-2030,https://www.investing.com/news/economy-news/openai-expects-to-burn-through-almost-280-billion-by-2030-ft-reports-4907970,"FT, 18.09.2026; в мае — −$305 млрд; 12-84"
+openai_forecast_fcf_2026,-25,млрд $,2026,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,"The Information, 02.2026 (до сентябрьского пересмотра)"
+openai_forecast_fcf_2027,-57,млрд $,2027,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,То же
+openai_forecast_fcf_2028,-85,млрд $,2028,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,То же
+openai_forecast_fcf_2029,-51,млрд $,2029,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,То же
+openai_forecast_fcf_2030,39,млрд $,2030,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,То же; первый положительный год; 12-85
+openai_forecast_compute_through_2030,856,млрд $,2026-2030,https://www.investing.com/news/economy-news/openai-expects-to-burn-through-almost-280-billion-by-2030-ft-reports-4907970,"FT, 18.09.2026; крупнейшая статья расходов"
+openai_cash_runway_end,2028,год,2026-09-18,https://www.investing.com/news/economy-news/openai-expects-to-burn-through-almost-280-billion-by-2030-ft-reports-4907970,Деньги раунда $122 млрд кончатся к 2028 году без новых привлечений
+openai_cashflow_positive_year,2030,год,2026-02-21,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,"Раньше — 2029 (Bloomberg, 03.2025, 12-86); WSJ (11.2025): прибыль в 2030 году, операционный убыток ~$74 млрд в 2028 (12-87)"
+openai_gross_margin_2025,33,%,2025,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,The Information; строка 06-41
+openai_gross_margin_2029_target,52-67,%,2029,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,"The Information, 02.2026; прежняя цель — 70%"
+spacex_ai_segment_revenue_2025,3.201,млрд $,2025,https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm,"Проспект 424B4; включает X (реклама, подписки)"
+spacex_ai_segment_operating_loss_2025,-6.355,млрд $,2025,https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm,Операционная маржа ≈ −199%; 12-92
+spacex_ai_segment_revenue_q2_2026,2.561,млрд $,2026-Q2,https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm,"10-Q; годовой темп ≈ $10,2 млрд"
+spacex_ai_segment_operating_loss_q2_2026,-1.257,млрд $,2026-Q2,https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm,"Маржа ≈ −49%; 1П26: −$3,726 млрд; 12-93"
+spacex_ai_segment_capex_q2_2026,15.828,млрд $,2026-Q2,https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm,В 6 раз больше выручки сегмента
+mistral_arr_2026_09,1,млрд $ в год,2026-09-08,https://epoch.ai/data/ai_companies_revenue_reports.csv,CFO в WSJ: «чуть больше $1 млрд»; 12-95
+ps_anthropic_965_on_runrate,9.7-20.5,раз,2026-09,https://www.anthropic.com/news/series-h,965 / (47…100); 12-115
+ps_anthropic_2000_on_runrate,20,раз,2026-09,,2000 / 100
+ps_openai_852_on_runrate,21.3-35.5,раз,2026-09,https://openai.com/index/accelerating-the-next-phase-ai/,852 / (24…40); 12-116
+ps_openai_1200_on_runrate,30,раз,2026-09,,1200 / 40
+ps_spacex_ttm,85,раз,2026-09-25,https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm,"1959 / 23,04 (выручка за 12 мес. по 30.06.2026)"
+ps_mistral_arr,24,раз,2026-09-08,,"24,4 / ~1,0"
+ps_microsoft_ttm,11.5,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"3832 / 331,84"
+ps_nvidia_ttm,17.9,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"5434 / 302,97"
+ps_alphabet_ttm,9.4,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"4171 / 445,87"
+ps_meta_ttm,8.4,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"1914 / 228,25"
+ps_software_industry_us,11.0,раз,2026-01-05,https://pages.stern.nyu.edu/~adamodar/pc/datasets/psdata.xls,"Дамодаран, Software (System & Application), 309 фирм; весь рынок — 3,07"
+pe_ttm_microsoft,28.7,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"Капитализация / чистая прибыль за 12 мес.; форвардный — 26,1 (stockanalysis, 28.09); 12-105"
+pe_ttm_alphabet,17.1,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"Занижен переоценкой долей (Anthropic, SpaceX); форвардный — 25,7; 12-106"
+pe_ttm_meta,28.1,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"Форвардный — 23,3; 12-107"
+pe_ttm_nvidia,28.2,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"Форвардный — 18,7; 12-108"
+pe_ttm_amazon,19.9,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"Занижен переоценкой доли в Anthropic; форвардный — 26,6"
+pe_ttm_oracle,21.9,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"Форвардный — 16,1"
+mcap_to_operating_income_microsoft,24.7,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"Наш расчёт: 3832 / 155,24; чище P/E для сравнения, не зависит от переоценок"
+mcap_to_operating_income_alphabet,28.3,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"4171 / 147,63"
+mcap_to_operating_income_meta,22.0,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"1914 / 86,93"
+mcap_to_operating_income_nvidia,27.5,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"5434 / 197,58"
+mcap_to_operating_income_amazon,28.7,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"2693 / 93,71"
+mcap_to_operating_income_oracle,18.0,раз,2026-09-25,https://data.sec.gov/api/xbrl/companyfacts/,"414,6 / 23,06"
+pe_forward_sp500,19.2,раз,2026-09-25,https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_092526.pdf,"FactSet; средняя за 5 лет — 19,8, за 10 лет — 19,0; 12-109"
+pe_trailing_sp500,25.8,раз,2026-09-25,https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_092526.pdf,FactSet
+pe_aggregate_software_industry_us,49.1,раз,2026-01-05,https://pages.stern.nyu.edu/~adamodar/pc/datasets/pedata.xls,"Дамодаран: совокупная капитализация / чистая прибыль, Software (System & Application); весь рынок — 34,2. Для «зрелого» сценария завышен: в выборке много растущих и убыточных"
+op_margin_ttm_microsoft,46.8,%,2026-06-30,https://data.sec.gov/api/xbrl/companyfacts/,Фин. 2026 год; 12-110
+op_margin_ttm_alphabet,33.1,%,2026-06-30,https://data.sec.gov/api/xbrl/companyfacts/,
+op_margin_ttm_meta,38.1,%,2026-06-30,https://data.sec.gov/api/xbrl/companyfacts/,
+op_margin_ttm_apple,33.2,%,2026-06-27,https://data.sec.gov/api/xbrl/companyfacts/,
+op_margin_ttm_oracle,32.1,%,2026-08-31,https://data.sec.gov/api/xbrl/companyfacts/,
+op_margin_ttm_amazon,12.1,%,2026-06-30,https://data.sec.gov/api/xbrl/companyfacts/,"Вся компания, включая розницу"
+op_margin_ttm_nvidia,65.2,%,2026-07-26,https://data.sec.gov/api/xbrl/companyfacts/,"Поставщик чипов — верхняя граница, не аналог лаборатории"
+op_margin_aws_q2_2026,39.3,%,2026-Q2,https://www.aboutamazon.com/news/company-news/amazon-earnings-q2-2026-report,"$16,6 / $42,2 млрд"
+op_margin_google_cloud_q2_2026,35.5,%,2026-Q2,https://s206.q4cdn.com/479360582/files/doc_financials/2026/q2/2026q2-alphabet-earnings-release.pdf,"$8,814 / $24,8 млрд; годом ранее — 20,7%"
+op_margin_software_industry_us,33.0,%,2026-01-05,https://pages.stern.nyu.edu/~adamodar/pc/datasets/margin.xls,"Дамодаран, Software (System & Application), до налогов; до вычета компенсаций акциями — 40,8%; 12-111"
+op_margin_semiconductor_industry_us,35.3,%,2026-01-05,https://pages.stern.nyu.edu/~adamodar/pc/datasets/margin.xls,"Дамодаран, Semiconductor"
+op_margin_total_market_us,12.8,%,2026-01-05,https://pages.stern.nyu.edu/~adamodar/pc/datasets/margin.xls,"Дамодаран, все компании США (5994)"
+operating_income_ttm_nvidia,197.6,млрд $,2026-07-26,https://data.sec.gov/api/xbrl/companyfacts/,"Масштаб «самой прибыльной» компании: Microsoft — 155,2; Apple — 154,9; Alphabet — 147,6; Amazon — 93,7; Meta — 86,9"
+riskfree_ust10,5.18,%,2026-09-24,https://fred.stlouisfed.org/series/DGS10,FRED DGS10; 12-112
+equity_risk_premium_implied_us,4.23,%,2026-01-01,https://pages.stern.nyu.edu/~adamodar/pc/datasets/histimpl.xls,"Дамодаран, FCFE-метод; 12-113"
+cost_of_capital_software_us,9.34,%,2026-01-05,https://pages.stern.nyu.edu/~adamodar/pc/datasets/wacc.xls,"Software (System & Application); интернет-софт — 10,66%; полупроводники — 10,55%; рынок — 6,96%. Считалось от безрисковой ставки 3,95%; сейчас ~5,2%"
+vc_target_return_bridge_ipo,20-35,%,2026,https://www.equidam.com/resources/equidam-vc-method-paper.pdf,"Барьерная ставка венчура на поздней стадии, с учётом риска провала; 12-114"
+tax_rate_us_federal,21,%,2026,https://www.law.cornell.edu/uscode/text/26/11,Допущение для перевода операционной прибыли в чистую (без налогов штатов и процентов)
+required_revenue_ai_buildout_2032,3725,млрд $ в год,2026-09-04,https://www.brookings.edu/wp-content/uploads/2026/09/4c_Van-Nieuwerburgh.pdf,"Van Nieuwerburgh; 6 000 при сроке службы IT 3 года; 05s-05, 05s-06"
