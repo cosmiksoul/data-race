@@ -115,13 +115,12 @@ async def check_view(b, name, size, scheme, rm, issues):
             issues.append(f"[{name}] горизонтальная прокрутка ({where})")
 
     await pg.goto(PAGE)
-    await pg.wait_for_timeout(2500)  # преамбула: автопроигрывание штаба ещё не должно начаться
+    await pg.wait_for_timeout(2500)  # середина автопроигрывания штаба
     await shot("00-cold"); await hscroll("холодный старт")
-    has_pre = await pg.evaluate("!!document.getElementById('preamble')")
-    if has_pre and not rm and await pg.evaluate("document.getElementById('hq').getBoundingClientRect().top > innerHeight * .3"):
-        clock = await pg.evaluate("document.getElementById('hqT').textContent")
-        if not clock.startswith("2021"):
-            issues.append(f"[{name}] автопроигрывание штаба началось под преамбулой: T {clock}")
+    over = await pg.evaluate("""(() => { const p = document.querySelector('.hq-pre'); if (!p) return null;
+        const a = p.getBoundingClientRect(), h = document.querySelector('.hq-hero').getBoundingClientRect(); return a.bottom > h.top - 4 ? 'счётчик' : null; })()""")
+    if over:
+        issues.append(f"[{name}] преамбула наезжает на {over}")
     base = await pg.evaluate('document.getElementById("hq").offsetTop')
     await scroll_to(pg, base, 7200)  # сцена на экране: автопроигрывание 2021 → сегодня
     await shot("00b-hq"); await hscroll("штаб")

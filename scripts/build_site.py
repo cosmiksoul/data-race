@@ -49,6 +49,7 @@ MANIFEST = [
 DISPLAY_NO = {"00": "00", **{it[1]: f"{n:02d}" for n, it in
                             enumerate((it for it in MANIFEST if it[0] == "block"), 1)}}
 SIDE = {"debit": "Дебет", "credit": "Кредит"}
+MONTHS = "январь февраль март апрель май июнь июль август сентябрь октябрь ноябрь декабрь".split()
 
 RANGES = {
     "cyrillic": "U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116",
@@ -303,6 +304,7 @@ def main():
     gloss = yaml.safe_load(rd(CONTENT / "glossary.yml"))
     page = Page(gloss, pk)
     page.charts = {}
+    sites = build_sites()
     ready = {k: v for k, v in pk.items() if v.get("status") == READY}
     for k, v in pk.items():
         if k not in ready:
@@ -315,18 +317,20 @@ def main():
     _, sp0 = page.body(p0)
     hq, gc = p0["hq"], yaml.safe_load(sp0["grid-caption"])
     legend = "".join(f'<span><i class="{c}"></i>{html.escape(t)}</span>' for c, t in zip(("f", "h"), gc["legend"]))
-    # преамбула над картой (план v1.3): короткий текст на тёмном поле штаба, под ним — сцена
-    pre = (f'<section id="preamble" aria-label="Вступление"><div class="pre-in">'
-           f'{page.paras(p0["preamble"], "00")}</div></section>\n') if p0.get("preamble") else ""
+    # преамбула (план v1.3) — в левой колонке сцены, карта справа
+    pre = f'<div class="hq-pre">{page.paras(p0["preamble"], "00")}</div>' if p0.get("preamble") else ""
+    # подзаголовок штаба: описание из пакета + месяц выгрузки данных (вместо «2021 → сегодня»)
+    y, mo = sites["today"].split("-")[:2]
+    hq_sub = f'{hq["sub"].split(" · ")[0]} · ' + f'данные за {MONTHS[int(mo) - 1]} {y}'.replace(" ", "\u00a0")
     hq_html = f"""<a class="skip" href="#paper">К тексту</a>
-{pre}<section id="hq" aria-label="{html.escape(hq['brand'].capitalize())}: вступление">
+<section id="hq" aria-label="{html.escape(hq['brand'].capitalize())}: вступление">
   <div class="stage" id="stage">
     <svg id="stageSvg" aria-hidden="true"></svg>
     <div class="hq-ui" id="hqUi">
       <div class="hq-top">
-        <div><div class="hq-brand">{html.escape(hq['brand'])}</div><div class="hq-sub">{html.escape(hq['sub'])}</div></div>
-        <div class="hq-clock" aria-hidden="true">T <b id="hqT"></b></div>
+        <div class="hq-sub">{html.escape(hq_sub)}</div>
       </div>
+      {pre}
       <div class="hq-hero"><div class="lbl">{html.escape(hq['counter_label'])}</div><div class="num" id="hqNum">0<small>ГВт</small></div></div>
       <a class="hq-link" href="{MAP_LINK}">{html.escape(hq['link'])}</a>
       <div class="hq-cta">{html.escape(hq['cta'])} <span aria-hidden="true">↓</span></div>
@@ -397,7 +401,6 @@ def main():
                 fail(f"строка счёта {rid} повторяется")
             bill[rid] = {"side": r["side"], "no": DISPLAY_NO[b], "ttl": r["title"], "val": r["value"], "who": r["who"], "tg": r["tags"]}
 
-    sites = build_sites()
     total_f, total_h = sum(s["dt"] for s in sites["sites"]), sum(s["dp"] for s in sites["sites"])
     m = re.search(r"(\d+) закрашенные \+ (\d+) полых", gc.get("grid", ""))
     if m and (int(m.group(1)), int(m.group(2))) != (total_f, total_h):

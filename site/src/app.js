@@ -93,7 +93,7 @@ function checkBills() { for (const n of anchors) if (!printed.has(n.dataset.bill
 /* ═══ ШТАБ И ПЕРЕХОД ═══ */
 const hq = document.getElementById('hq'), stage = document.getElementById('stage');
 const svg = d3.select('#stageSvg'), hqUi = document.getElementById('hqUi'), opening = document.getElementById('opening');
-const hqT = document.getElementById('hqT'), hqNum = document.getElementById('hqNum');
+const hqNum = document.getElementById('hqNum');
 const gMap = svg.append('g'), gGlow = svg.append('g'), gDots = svg.append('g');
 const defs = svg.append('defs');
 const grad = defs.append('radialGradient').attr('id', 'glow');
@@ -117,7 +117,12 @@ function layoutStage() {
   if (!laidOut) return; // сцены не видно — разложим точки, когда у окна появится размер
   svg.attr('viewBox', `0 0 ${W} ${H}`);
   const mob = W < 720;
-  proj = d3.geoAlbersUsa().fitExtent([[W * (mob ? .04 : .08), H * (mob ? .2 : .14)], [W * (mob ? .96 : .92), H * (mob ? .7 : .82)]], nation);
+  // карта — справа от преамбулы (на телефоне — между преамбулой и счётчиком): меряем, а не угадываем
+  const sr0 = stage.getBoundingClientRect(), pre = hqUi.querySelector('.hq-pre'), heroTop = hqUi.querySelector('.hq-hero').getBoundingClientRect().top - sr0.top;
+  const pr = pre ? pre.getBoundingClientRect() : null;
+  const box = mob ? [[W * .04, (pr ? pr.bottom - sr0.top : H * .2) + 14], [W * .96, Math.max((pr ? pr.bottom - sr0.top : H * .2) + 134, heroTop - 14)]]
+                  : [[Math.max(W * .3, pr ? pr.right - sr0.left + 40 : W * .08), H * .1], [W * .97, H * .86]];
+  proj = d3.geoAlbersUsa().fitExtent(box, nation);
   rScale.range([0, Math.max(9, Math.min(22, W / 60))]);
   const path = d3.geoPath(proj);
   gMap.selectAll('*').remove();
@@ -171,7 +176,6 @@ function render() {
   const mi = Math.round(lerp(0, months.length - 1, playT)); const ym = months[mi];
   const D = playT >= 1 ? TODAY : monthEnd(ym);
   const tot = renderGlow(D);
-  hqT.textContent = (playT >= 1 ? TODAY.slice(0, 7) : ym).replace('-', '·');
   hqNum.firstChild.nodeValue = nf1.format(tot / 1000);
   gGlow.attr('opacity', 1 - clamp(t / .14));
   hqUi.style.opacity = 1 - clamp(t / .15);
