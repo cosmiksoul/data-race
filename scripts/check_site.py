@@ -115,13 +115,21 @@ async def check_view(b, name, size, scheme, rm, issues):
             issues.append(f"[{name}] горизонтальная прокрутка ({where})")
 
     await pg.goto(PAGE)
-    await pg.wait_for_timeout(7200)  # автопроигрывание штаба 2021 → сегодня
+    await pg.wait_for_timeout(2500)  # преамбула: автопроигрывание штаба ещё не должно начаться
     await shot("00-cold"); await hscroll("холодный старт")
+    has_pre = await pg.evaluate("!!document.getElementById('preamble')")
+    if has_pre and not rm and await pg.evaluate("document.getElementById('hq').getBoundingClientRect().top > innerHeight * .3"):
+        clock = await pg.evaluate("document.getElementById('hqT').textContent")
+        if not clock.startswith("2021"):
+            issues.append(f"[{name}] автопроигрывание штаба началось под преамбулой: T {clock}")
+    base = await pg.evaluate('document.getElementById("hq").offsetTop')
+    await scroll_to(pg, base, 7200)  # сцена на экране: автопроигрывание 2021 → сегодня
+    await shot("00b-hq"); await hscroll("штаб")
     if rm and QUICK:
         await ctx.close(); return
     H = await pg.evaluate('document.getElementById("hq").offsetHeight - innerHeight')
     for frac, lab in [(.2, "01-trans-a"), (.35, "02-trans-mid"), (.6, "03-trans-late"), (1.0, "04-trans-final")]:
-        await scroll_to(pg, int(H * frac), 600); await shot(lab)
+        await scroll_to(pg, base + int(H * frac), 600); await shot(lab)
     await hscroll("финал перехода")
     printed = await pg.evaluate("document.querySelectorAll('#billList li[data-no]').length")
     if printed < 1:
@@ -130,14 +138,14 @@ async def check_view(b, name, size, scheme, rm, issues):
         await ctx.close(); return
 
     # подсказка термина с клавиатуры
-    await scroll_to(pg, H + 10)
+    await scroll_to(pg, base + H + 10)
     await pg.focus(".opening .term") if await pg.locator(".opening .term").count() else None
     await pg.wait_for_timeout(200)
     if not await pg.evaluate("document.getElementById('tip').classList.contains('on')"):
         issues.append(f"[{name}] подсказка термина не открылась по фокусу")
     await pg.evaluate("document.activeElement.blur()")
 
-    targets = [("05-howto", ".howto", 40), ("06-stubs", "#b02", 40), ("07-b06", "#b06", 40), ("08-fig1", "#fig1", 60),
+    targets = [("05-howto", ".howto", 40), ("06-stubs", "#b01", 40), ("06b-b12", "#b12", 40), ("07-b06", "#b06", 40), ("08-fig1", "#fig1", 60),
                ("09-fig1b", "#fig1b", 60), ("10-fig2", "#fig2", 80), ("11-b06-end", ".rowsum", 300),
                ("12-world", "#b07", 40), ("13-glossary", "#glossary", 40), ("14-sources", "#sources", 40)]
     for lab, sel, pad in targets:

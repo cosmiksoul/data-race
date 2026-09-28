@@ -49,6 +49,11 @@ button{font:inherit;color:inherit}
 .skip:focus{top:12px}
 
 /* ── штаб и переход ─────────────────────────────── */
+/* преамбула: тёмное поле штаба, текст внизу — под ним сразу начинается карта */
+#preamble{background:var(--hq-bg);color:var(--hq-ink);min-height:66vh;min-height:66svh;display:flex;align-items:flex-end;padding:14vh max(24px,6vw) 7vh}
+.pre-in{max-width:680px}
+#preamble p{font:400 clamp(21px,1.9vw,26px)/1.42 var(--serif);margin:0 0 .6em;text-wrap:pretty}
+#preamble p:last-child{margin-bottom:0}
 #hq{position:relative;height:360vh}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--hq-bg)}
 #stageSvg{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -217,6 +222,7 @@ footer.colophon{margin-top:48px;font:12.5px/1.55 var(--sans);color:var(--ink-4)}
   .paper{grid-template-columns:16px minmax(0,1fr) 16px;padding-top:48px}
   .paper > *,.paper > .wide,.paper > .block{grid-column:2}
   .paper > .block{display:block}
+  #preamble{padding:12vh 16px 6vh} #preamble p{font-size:20px}
   .opening .intro{left:16px;right:16px;width:auto;top:9vh}
   .opening .cap{left:16px;right:16px;width:auto;bottom:calc(2vh + 44px);font-size:13.5px}
   .opening h1{font-size:40px}

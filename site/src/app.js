@@ -198,12 +198,20 @@ function render() {
   });
 }
 
-// автопроигрывание 2021 → сегодня
+// автопроигрывание 2021 → сегодня; над картой стоит преамбула, поэтому ролик ждёт,
+// пока сцена не займёт почти весь экран, — иначе он отыграет, пока читают текст
 function autoplay() {
   if (RM) { playT = 1; render(); return; }
-  playT = 0; const t0 = performance.now(), dur = 6500;
-  const step = now => { if (progress() > .02) { playT = 1; lastP = -1; render(); return; } playT = clamp((now - t0) / dur); lastP = -1; render(); if (playT < 1) requestAnimationFrame(step); };
-  requestAnimationFrame(step);
+  playT = 0; lastP = -1; render();
+  const inView = () => innerHeight > 0 && hq.getBoundingClientRect().top <= innerHeight * .3;
+  const start = () => {
+    const t0 = performance.now(), dur = 6500;
+    const step = now => { if (progress() > .02) { playT = 1; lastP = -1; render(); return; } playT = clamp((now - t0) / dur); lastP = -1; render(); if (playT < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+  if (inView()) { start(); return; }
+  const wait = () => { if (inView()) { removeEventListener('scroll', wait); removeEventListener('resize', wait); start(); } };
+  addEventListener('scroll', wait, { passive: true }); addEventListener('resize', wait);
 }
 let ticking = false;
 addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; render(); checkBills(); }); } }, { passive: true });

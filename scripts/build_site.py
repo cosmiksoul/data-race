@@ -1,5 +1,5 @@
 """
-Сборка страницы «Счёт за интеллект»: content/*.md + site/src → site/index.html.
+Сборка страницы «Гонка за искусственным интеллектом»: content/*.md + site/src → site/index.html.
 
 Один самодостаточный файл: шрифты (woff2 в base64), D3, topojson, картооснова,
 данные площадок и графиков встраиваются внутрь, сеть в рантайме не нужна.
@@ -24,23 +24,30 @@ EDITION = "2026-09-28"   # дата выпуска: шапка счёта, «с�
 READY = "готов к вёрстке"
 MAP_LINK = "../index.html"  # экран-штаб целиком (макет v0.1 в корне репозитория)
 
-# Каркас страницы (docs/content-plan.md, раздел 3). Названия — для заглушек,
-# у готовых пакетов заголовок берётся из пакета.
+# Каркас страницы (docs/content-plan.md, раздел 3, план v1.3). Названия — для заглушек,
+# у готовых пакетов заголовок берётся из пакета. Номер блока — рабочий (пакеты, реестр,
+# якоря #bNN); на странице строки нумеруются по порядку манифеста (см. DISPLAY_NO).
 MANIFEST = [
     ("block", "01", None, "Вопрос и как читать", "вопрос страницы и как читать теги"),
+    ("block", "11", None, "Двигатель гонки", "частота релизов → спрос на обучение и на работу моделей"),
     ("divider", "Счёт · дебет", "debit", "кто платит"),
     ("block", "02", "debit", "Техника и малый бизнес", "память, SSD, GPU, консоли · VPS, облака, аренда GPU, SaaS"),
     ("block", "03", "debit", "Счёт за свет", "PJM, тарифы, кто платит за подключение"),
     ("block", "04", "debit", "Энергосистема и климат", "доля дата-центров в электричестве, газ, уголь, АЭС, выбросы, вода · врезка «Сосед за забором»"),
-    ("block", "05", "debit", "Деньги и рабочие места", "капзатраты, ВВП, долги, концентрация, вакансии · врезка «Если это пузырь — и что останется»"),
+    ("block", "05", "debit", "Деньги и рабочие места", "капзатраты, ВВП, долги, концентрация, вакансии · врезка «Что останется, если это пузырь»"),
+    ("block", "12", "debit", "Деньги по кругу", "сеть сделок вендоров и лабораторий · оценка против прибыли"),
     ("divider", "Счёт · кредит", "credit", "что получаем"),
     ("block", "06", "credit", "Почему интеллект дешевеет, а счёт — нет", "три цены · токены на задачу · эффект отдачи"),
-    ("divider", "Мир", None, "страны и сценарии"),
+    ("divider", "Мир и риски", None, "страны, риски и сценарии"),
     ("block", "07", None, "Гонка стран", "пять способов измерить страны, где данных мало"),
+    ("block", "13", None, "Инциденты и риски", "динамика инцидентов, типология, оценки вероятности катастрофы"),
     ("block", "08", None, "Туман", "веер сценариев до 2030 года, ограничители"),
     ("block", "09", None, "Сальдо", "итоговый счёт и индикаторы"),
     ("block", "10", None, "Методика", "как считали, какие допущения, где синтез"),
 ]
+# рабочий номер → номер строки на странице: 00 — вступление, дальше по порядку манифеста
+DISPLAY_NO = {"00": "00", **{it[1]: f"{n:02d}" for n, it in
+                            enumerate((it for it in MANIFEST if it[0] == "block"), 1)}}
 SIDE = {"debit": "Дебет", "credit": "Кредит"}
 
 RANGES = {
@@ -308,8 +315,11 @@ def main():
     _, sp0 = page.body(p0)
     hq, gc = p0["hq"], yaml.safe_load(sp0["grid-caption"])
     legend = "".join(f'<span><i class="{c}"></i>{html.escape(t)}</span>' for c, t in zip(("f", "h"), gc["legend"]))
-    hq_html = f"""<section id="hq" aria-label="{html.escape(hq['brand'].capitalize())}: вступление">
-  <a class="skip" href="#paper">К тексту</a>
+    # преамбула над картой (план v1.3): короткий текст на тёмном поле штаба, под ним — сцена
+    pre = (f'<section id="preamble" aria-label="Вступление"><div class="pre-in">'
+           f'{page.paras(p0["preamble"], "00")}</div></section>\n') if p0.get("preamble") else ""
+    hq_html = f"""<a class="skip" href="#paper">К тексту</a>
+{pre}<section id="hq" aria-label="{html.escape(hq['brand'].capitalize())}: вступление">
   <div class="stage" id="stage">
     <svg id="stageSvg" aria-hidden="true"></svg>
     <div class="hq-ui" id="hqUi">
@@ -349,10 +359,10 @@ def main():
         p = ready.get(no)
         if p:
             body, _ = page.body(p)
-            parts.append(f'<article class="block" id="b{no}">\n{rowline(p.get("side"), no, p.get("rowline", name))}\n'
+            parts.append(f'<article class="block" id="b{no}">\n{rowline(p.get("side"), DISPLAY_NO[no], p.get("rowline", name))}\n'
                          f'<h2>{html.escape(p["title"])}</h2>\n{body}\n</article>')
         else:
-            parts.append(f'<article class="block stub" id="b{no}">\n{rowline(side, no, name)}\n'
+            parts.append(f'<article class="block stub" id="b{no}">\n{rowline(side, DISPLAY_NO[no], name)}\n'
                          f'<h2>{html.escape(name)}</h2>\n'
                          f'<div class="pending"><b>Строка в работе.</b> {html.escape(topics)}.</div>\n</article>')
 
@@ -385,7 +395,7 @@ def main():
             rid = str(r["id"])
             if rid in bill:
                 fail(f"строка счёта {rid} повторяется")
-            bill[rid] = {"side": r["side"], "no": b, "ttl": r["title"], "val": r["value"], "who": r["who"], "tg": r["tags"]}
+            bill[rid] = {"side": r["side"], "no": DISPLAY_NO[b], "ttl": r["title"], "val": r["value"], "who": r["who"], "tg": r["tags"]}
 
     sites = build_sites()
     total_f, total_h = sum(s["dt"] for s in sites["sites"]), sum(s["dp"] for s in sites["sites"])
