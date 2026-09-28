@@ -1,5 +1,5 @@
 """
-Сборка страницы «Гонка за искусственным интеллектом»: content/*.md + site/src → site/index.html.
+Сборка страницы «Гонка за искусственным интеллектом»: content/*.md + site/src → index.html в корне (главная GitHub Pages).
 
 Один самодостаточный файл: шрифты (woff2 в base64), D3, topojson, картооснова,
 данные площадок и графиков встраиваются внутрь, сеть в рантайме не нужна.
@@ -18,11 +18,11 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT, LIB, FONTS = ROOT / "content", ROOT / "data" / "lib", ROOT / "prototype" / "fonts"
-SRC, OUT = ROOT / "site" / "src", ROOT / "site" / "index.html"
+SRC, OUT = ROOT / "site" / "src", ROOT / "index.html"
 
 EDITION = "2026-09-28"   # дата выпуска: шапка счёта, «сегодня» на графиках — обнови при пересборке
 READY = "готов к вёрстке"
-MAP_LINK = "../index.html"  # экран-штаб целиком (макет v0.1 в корне репозитория)
+MAP_LINK = "mockup/"  # экран-штаб целиком (макет v0.1, mockup/index.html)
 
 # Каркас страницы (docs/content-plan.md, раздел 3, план v1.3). Названия — для заглушек,
 # у готовых пакетов заголовок берётся из пакета. Номер блока — рабочий (пакеты, реестр,
