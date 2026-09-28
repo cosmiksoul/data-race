@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="ru" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Счёт за интеллект — прототип</title>
+<meta name="description" content="Кто платит за гонку дата-центров для ИИ и что мир получает взамен. Прототип: переход «штаб → бумага» и строка 06.">
+<style>
+/*__FONTS__*/
+:root{
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  /* штаб */
+  --hq-bg:#07090d; --hq-ink:#e8edf3; --hq-muted:#6b7684; --hq-glow:#8fe3ff; --hq-line:#1b2430;
+  /* бумага — светлая */
+  --paper:#F0EFEB; --ink:#1C1C1A; --ink-2:#4A4944; --ink-3:#5E5D57; --ink-4:#6A6963;
+  --faint:#C6C5BF; --grid:#DEDDD6; --wash:#E6E4DE;
+  --l1:#1C1C1A; --l2:#4A4944; --l3:#6A6963; --l4:#8F8E88; --l5:#B0AFA9;
+  --debit:#b8432f; --credit:#2e5c9e;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])){
+    --paper:#1C1C1A; --ink:#F0EFEB; --ink-2:#DCDAD2; --ink-3:#B3B0A4; --ink-4:#A3A198;
+    --faint:#55554F; --grid:#2E2D29; --wash:#252521;
+    --l1:#F0EFEB; --l2:#C9C7BD; --l3:#A3A198; --l4:#8F8E88; --l5:#6A6963;
+    --debit:#d9654f; --credit:#5c8bd6; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1C1C1A; --ink:#F0EFEB; --ink-2:#DCDAD2; --ink-3:#B3B0A4; --ink-4:#A3A198;
+  --faint:#55554F; --grid:#2E2D29; --wash:#252521;
+  --l1:#F0EFEB; --l2:#C9C7BD; --l3:#A3A198; --l4:#8F8E88; --l5:#6A6963;
+  --debit:#d9654f; --credit:#5c8bd6; color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:18px/1.62 var(--serif);-webkit-font-smoothing:antialiased;overflow-x:hidden;font-kerning:normal}
+a{color:inherit}
+button{font:inherit;color:inherit}
+
+/* ── штаб и переход ─────────────────────────────── */
+#hq{position:relative;height:360vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--hq-bg)}
+#stageSvg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hq-ui{position:absolute;inset:0;pointer-events:none;color:var(--hq-ink);font-family:var(--mono)}
+.hq-top{position:absolute;left:24px;top:22px;right:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hq-brand{font:600 15px/1.2 var(--mono);letter-spacing:.3em}
+.hq-sub{margin-top:6px;font:11px/1.4 var(--mono);letter-spacing:.14em;color:var(--hq-muted);text-transform:uppercase}
+.hq-clock{font:12px var(--mono);letter-spacing:.14em;color:#a3aebb;text-align:right}
+.hq-clock b{color:#5fd4ff;font-size:15px;font-weight:600}
+.hq-hero{position:absolute;left:24px;bottom:84px}
+.hq-hero .lbl{font:11px var(--mono);letter-spacing:.18em;color:var(--hq-muted);text-transform:uppercase}
+.hq-hero .num{font:600 64px/1 var(--sans);letter-spacing:-.02em;color:var(--hq-ink);font-variant-numeric:proportional-nums}
+.hq-hero .num small{font:500 22px var(--sans);color:#a3aebb;margin-left:8px}
+.hq-cta{position:absolute;left:0;right:0;bottom:26px;text-align:center;font:12px var(--mono);letter-spacing:.16em;color:#a3aebb;text-transform:uppercase}
+.hq-cta span{display:inline-block;animation:nudge 2.4s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.hq-link{position:absolute;right:24px;bottom:84px;pointer-events:auto;font:11px var(--mono);letter-spacing:.14em;color:#a3aebb;text-transform:uppercase;text-decoration:none;border-bottom:1px solid #2a3746}
+.hq-link:hover{color:#fff}
+
+.opening{position:absolute;inset:0;pointer-events:none;opacity:0;color:var(--ink)}
+.opening .intro{position:absolute;left:max(24px,6vw);top:14vh;width:min(420px,36vw)}
+.kicker{font:500 12px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.opening h1{font:600 clamp(40px,5.2vw,68px)/1.02 var(--serif);letter-spacing:-.015em;margin:14px 0 14px}
+.opening .dek{font:400 clamp(19px,1.7vw,23px)/1.35 var(--serif);color:var(--ink-2);margin:0}
+.opening .cap{position:absolute;left:max(24px,6vw);bottom:10vh;width:min(420px,36vw);font:15px/1.5 var(--sans);color:var(--ink-2)}
+.opening .cap .rl{font:500 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.opening .cap .key{display:flex;gap:16px;margin-top:10px;font:12.5px var(--sans);color:var(--ink-3)}
+.opening .cap .key i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.opening .cap .key .f{background:var(--ink)} .opening .cap .key .h{border:1.3px solid var(--ink)}
+.opening .cap .tags{margin-top:8px}
+.opening .src{margin-top:10px;font:500 10px/1.4 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4)}
+
+/* ── бумага ─────────────────────────────────────── */
+.paper{display:grid;grid-template-columns:minmax(16px,1fr) minmax(0,210px) minmax(0,680px) 44px minmax(0,250px) minmax(16px,1fr);column-gap:0;padding:72px 0 40px}
+.paper > *{grid-column:3}
+.paper > .wide{grid-column:2 / 4}
+.paper > .block{grid-column:2 / 4;display:grid;grid-template-columns:subgrid;align-content:start}
+.block > *{grid-column:2;min-width:0}
+.block > .wide-fig{grid-column:1 / 3}
+.receipt-col{grid-column:5;grid-row:1 / span 60}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:40px;font:12px var(--sans);color:var(--ink-3)}
+.themebtn{border:1px solid var(--faint);background:transparent;border-radius:999px;padding:4px 12px;font:12px var(--sans);color:var(--ink-3);cursor:pointer}
+.themebtn:hover{color:var(--ink);border-color:var(--ink-4)}
+.howto{font:16px/1.55 var(--sans);color:var(--ink-2);border-top:1px solid var(--grid);border-bottom:1px solid var(--grid);padding:18px 0;margin-bottom:56px}
+.howto p{margin:0 0 8px}
+.howto p:last-child{margin:0}
+.proto{font:14px/1.5 var(--sans);color:var(--ink-3);border:1px dashed var(--faint);border-radius:14px;padding:14px 18px;margin:0 0 64px}
+.proto b{color:var(--ink-2);font-weight:600}
+
+.rowline{font:500 11.5px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-top:2px solid var(--ink);padding-top:12px}
+.rowline .side{font-weight:600;color:var(--credit)}
+.rowline .side.debit{color:var(--debit)}
+.block h2{font:600 clamp(30px,3.4vw,42px)/1.1 var(--serif);letter-spacing:-.01em;margin:14px 0 22px}
+.block h3{font:600 23px/1.25 var(--serif);margin:48px 0 12px}
+.block p{margin:0 0 18px;hyphens:auto}
+.lead{font-size:21px;line-height:1.55;color:var(--ink)}
+.bigfig{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:end;margin:30px 0 34px}
+.bigfig .n{font:600 84px/0.9 var(--sans);letter-spacing:-.03em;color:var(--credit)}
+.bigfig .n small{font:500 22px var(--sans);letter-spacing:0;color:var(--ink-3);margin-left:6px}
+.bigfig .c{font:15px/1.45 var(--sans);color:var(--ink-2);padding-bottom:6px}
+.rowsum{font:16px/1.55 var(--sans);background:var(--wash);border-radius:14px;padding:16px 20px;margin:36px 0 0}
+.rowsum b{font-weight:600}
+
+.tag{display:inline-block;font:600 9.5px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:3px 6px 2px;border-radius:4px;border:1px solid var(--ink-4);color:var(--ink-3);vertical-align:2px;margin-left:4px;white-space:nowrap}
+.tag.est{border-style:dotted}
+.tag.proj{border-style:dashed}
+sup.ref{font:600 11px var(--sans);line-height:0;margin-left:1px}
+sup.ref a{text-decoration:none;color:var(--ink-3);padding:0 1px}
+sup.ref a:hover{color:var(--ink)}
+.term{text-decoration:underline dotted var(--ink-4);text-underline-offset:3px;cursor:help}
+blockquote{margin:0 0 18px;padding-left:18px;border-left:2px solid var(--faint);color:var(--ink-2);font-style:italic}
+
+/* ── карточка графика ───────────────────────────── */
+figure.card{margin:34px 0 40px;padding:0}
+@media (min-width:721px){.block > figure.card{margin-top:16px}.block > h3{margin-top:30px}.block > .bigfig{margin-top:12px}}
+figure.card .ct{font:600 19px/1.3 var(--sans);letter-spacing:-.01em;margin:0 0 4px;color:var(--ink)}
+figure.card .cs{font:12.5px/1.45 var(--sans);color:var(--ink-3);margin:0 0 14px}
+figure.card .cs i{display:inline-block;vertical-align:1px;margin-right:5px}
+figure.card .cs .lg{white-space:nowrap;margin-right:10px}
+figure.card .cs .lg.long{white-space:normal}
+figure.card .cs i.stepkey{width:16px;height:2px;background:var(--credit);vertical-align:3px}
+figure.card svg{display:block;width:100%;overflow:visible}
+figure.card .csrc{font:500 9.5px/1.4 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);margin-top:10px}
+.axis text,.lbl{font:600 10px var(--sans);fill:var(--ink-4);letter-spacing:.02em}
+.dlbl{font:500 11.5px var(--sans);fill:var(--ink-2)}
+.dlbl.b{font-weight:600;fill:var(--ink)}
+.ann{font:12px var(--sans);fill:var(--ink-2)}
+.ann.credit{fill:var(--credit);font-weight:600}
+.ledger{stroke:var(--grid);stroke-width:1}
+.hair{stroke:var(--faint);stroke-width:.7}
+
+/* ── счёт на поле ───────────────────────────────── */
+.receipt{position:sticky;top:28px;font:12px/1.45 var(--mono);color:var(--ink-2);background:var(--paper);border:1px solid var(--faint);border-radius:6px;padding:14px 14px 16px;max-height:calc(100vh - 56px);overflow:auto}
+.receipt .rh{text-align:center;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);padding-bottom:8px;border-bottom:1px dashed var(--faint)}
+.receipt .rh small{display:block;font-weight:400;letter-spacing:.06em;color:var(--ink-4);margin-top:3px;text-transform:none}
+.receipt ol{list-style:none;margin:0;padding:0}
+:is(.receipt,.receipt-bar) li{padding:9px 0;border-bottom:1px dashed var(--faint);animation:print .5s ease-out both}
+:is(.receipt,.receipt-bar) li .no{color:var(--ink-4)}
+:is(.receipt,.receipt-bar) li .ttl{color:var(--ink);font-weight:500}
+:is(.receipt,.receipt-bar) li .sgn{font-weight:600;margin-right:4px}
+:is(.receipt,.receipt-bar) li.debit .sgn{color:var(--debit)} :is(.receipt,.receipt-bar) li.credit .sgn{color:var(--credit)}
+:is(.receipt,.receipt-bar) li .who{display:block;color:var(--ink-3);margin-top:2px}
+:is(.receipt,.receipt-bar) li .tg{display:inline-block;margin-top:4px;font-size:10px;letter-spacing:.1em;border:1px solid var(--faint);border-radius:3px;padding:1px 4px;color:var(--ink-4)}
+.receipt .empty{color:var(--ink-4);padding:10px 0}
+.rt{display:flex;align-items:baseline;gap:8px;padding-top:12px;font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.rt i{flex:1;border-bottom:1px dotted var(--ink-4);transform:translateY(-3px)}
+.rf{text-align:right;color:var(--ink-4);padding-top:3px;font:11px var(--mono)}
+.receipt{scrollbar-width:thin;scrollbar-color:var(--faint) transparent}
+.receipt li.compact{padding:6px 0;cursor:pointer}
+.receipt li.compact > :not(:first-child){display:none}
+.receipt li.compact .ttl{text-decoration:underline dotted var(--faint);text-underline-offset:3px}
+.receipt li.compact:hover .ttl,.receipt li.compact:focus-visible .ttl{text-decoration-color:var(--ink-3)}
+.receipt li.compact{animation:none}
+@keyframes print{from{opacity:0;transform:translateY(-6px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(0 0 0 0)}}
+.receipt-bar{display:none}
+
+/* ── источники и подвал ─────────────────────────── */
+#sources{margin-top:80px;border-top:2px solid var(--ink);padding-top:12px;font:14.5px/1.5 var(--sans);color:var(--ink-2)}
+#sources h2{font:600 24px var(--serif);margin:10px 0 16px;color:var(--ink)}
+#sources ol{padding-left:26px;margin:0}
+#sources li{margin:0 0 10px}
+#sources li:target{background:var(--wash);border-radius:6px}
+#sources a{color:var(--ink);text-underline-offset:2px}
+footer.colophon{margin-top:48px;font:12.5px/1.55 var(--sans);color:var(--ink-4)}
+
+/* ── подсказка ──────────────────────────────────── */
+#tip{position:fixed;z-index:60;pointer-events:none;max-width:320px;background:var(--paper);color:var(--ink-2);border:1px solid var(--faint);border-radius:10px;padding:10px 12px;font:13px/1.45 var(--sans);box-shadow:0 10px 30px rgba(0,0,0,.12);opacity:0;transition:opacity .12s}
+#tip.on{opacity:1}
+#tip .t{font-weight:600;color:var(--ink);margin-bottom:3px}
+#tip .kv{display:grid;grid-template-columns:auto auto;gap:2px 14px;font-variant-numeric:tabular-nums}
+#tip .kv b{color:var(--ink);text-align:right;font-weight:600}
+#tip .note{margin-top:5px;font-size:12px;color:var(--ink-4)}
+
+@media (max-width:1180px){
+  .paper{grid-template-columns:minmax(16px,1fr) minmax(0,120px) minmax(0,680px) minmax(16px,1fr)}
+  .paper > *{grid-column:3}
+  .paper > .wide{grid-column:2 / 4}
+  .paper > .block{grid-column:2 / 4}
+  .receipt-col{display:none}
+  .receipt-bar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--paper);border-top:1px solid var(--faint);font:12px var(--mono);color:var(--ink-2);transform:translateY(100%);transition:transform .3s}
+  .receipt-bar.on{transform:none}
+  .receipt-bar button{width:100%;text-align:left;background:none;border:0;padding:10px 16px;cursor:pointer;display:flex;justify-content:space-between;font:12px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .receipt-bar .body{display:none;max-height:50vh;overflow:auto;padding:0 16px 12px}
+  .receipt-bar li{list-style:none}
+  .receipt-bar.open .body{display:block}
+}
+@media (max-width:720px){
+  body{font-size:17px}
+  .paper{grid-template-columns:16px minmax(0,1fr) 16px;padding-top:48px}
+  .paper > *,.paper > .wide,.paper > .block{grid-column:2}
+  .paper > .block{display:block}
+  .opening .intro{left:16px;right:16px;width:auto;top:9vh}
+  .opening .cap{left:16px;right:16px;width:auto;bottom:4vh;font-size:13.5px}
+  .opening h1{font-size:40px}
+  .hq-hero{bottom:96px;left:16px} .hq-hero .num{font-size:46px}
+  .hq-top{left:16px;right:16px} .hq-link{right:16px;bottom:64px}
+  .bigfig{grid-template-columns:1fr;gap:8px}
+  .bigfig .n{font-size:64px}
+  .lead{font-size:19px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<section id="hq" aria-label="Гонка за мощности: вступление">
+  <div class="stage" id="stage">
+    <svg id="stageSvg" aria-hidden="true"></svg>
+    <div class="hq-ui" id="hqUi">
+      <div class="hq-top">
+        <div><div class="hq-brand">ГОНКА ЗА МОЩНОСТИ</div><div class="hq-sub">Дата-центры для ИИ, которые видно со спутника · 2021 → сегодня</div></div>
+        <div class="hq-clock">T <b id="hqT">2021·01</b></div>
+      </div>
+      <div class="hq-hero"><div class="lbl">мощность работающих площадок</div><div class="num" id="hqNum">0<small>ГВт</small></div></div>
+      <a class="hq-link" href="../index.html">Открыть карту целиком →</a>
+      <div class="hq-cta">Всё это уже построено. Кто платит по счёту? <span>↓</span></div>
+    </div>
+    <div class="opening" id="opening">
+      <div class="intro">
+        <div class="kicker">Исследование · сентябрь 2026</div>
+        <h1>Счёт за&nbsp;интеллект</h1>
+        <p class="dek">Кто платит за гонку дата-центров для&nbsp;ИИ и&nbsp;что мир получает взамен</p>
+      </div>
+      <div class="cap">
+        <div class="rl">Строка 00 · что уже построено</div>
+        Каждая точка — 100&nbsp;<span class="term" data-term="mw">МВт</span>. Закрашенные — мощности, которые уже работают: 17,3&nbsp;ГВт на&nbsp;73&nbsp;площадках из&nbsp;93 в&nbsp;базе Epoch AI. Полые — то, что компании планируют запустить до&nbsp;конца 2028&nbsp;года: ещё около 31&nbsp;ГВт.<div class="tags"><span class="tag est">оценка</span><span class="tag proj">прогноз</span></div>
+        <div class="key"><span><i class="f"></i>работает</span><span><i class="h"></i>в&nbsp;планах до&nbsp;конца 2028</span></div>
+        <div class="src">Источник: Epoch AI, выгрузка 24.09.2026 · база покрывает около 44% мировых вычислений для&nbsp;ИИ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="paper" id="paper">
+  <div class="receipt-col" aria-label="Счёт">
+    <div class="receipt" id="receipt">
+      <div class="rh">Счёт № 1 · за интеллект<small>28.09.2026 · печатается по мере чтения</small></div>
+      <ol id="billList"><li class="empty" id="billEmpty">Строки появятся по мере чтения</li></ol>
+      <div class="rt" aria-label="Итого: суммы нет, у строк разные единицы"><span>Итого</span><i></i><span>—</span></div>
+      <div class="rf">у строк разные единицы</div>
+    </div>
+  </div>
+
+  <div class="topbar"><span>Прототип · этап 0</span><button class="themebtn" id="themeBtn" type="button" aria-label="Переключить тему">Тема: авто</button></div>
+
+  <div class="howto" data-bill="00">
+    <p><b>Как читать.</b> Ключевые утверждения помечены: <span class="tag">факт</span> — измерено или официально опубликовано; <span class="tag est">оценка</span> — расчёт на допущениях; <span class="tag proj">прогноз</span> — сценарий на будущее.</p>
+    <p>По ходу чтения на полях печатается счёт (на телефоне — внизу экрана): в каждой строке — кто платит и кто выигрывает.</p>
+  </div>
+
+  <div class="proto"><b>Здесь будут строки 01–05:</b> вопрос страницы, техника и малый бизнес, счёт за свет, энергосистема и климат, деньги и рабочие места.</div>
+
+  <article class="block" id="b06">
+    <div class="rowline"><span class="side">Кредит</span><span>строка 06</span><span>что получает пользователь</span></div>
+    <h2>Почему интеллект дешевеет, а&nbsp;счёт&nbsp;—&nbsp;нет</h2>
+    <p class="lead">Гонку мощностей обычно оправдывают так: чем больше вычислений, тем дешевле интеллект. По одной из мерок это правда. Но счёт обычного пользователя не падает. Дело в том, что цен у интеллекта три и ведут они себя по-разному.</p>
+
+    <div class="bigfig">
+      <div class="n">13<small>раз в год</small></div>
+      <div class="c">Во столько раз в среднем дешевеет ответ одного и того же качества. <span class="tag est">оценка</span> Epoch AI, сентябрь 2026<sup class="ref"><a href="#src-1">1</a></sup></div>
+    </div>
+
+    <h3>Три цены</h3>
+    <p data-bill="06a"><b>Цена неизменного качества</b> падает быстрее всего. <span class="term" data-term="epoch">Epoch AI</span> посчитала, сколько стоит ответ на вопрос теста при заданном качестве: в среднем эта стоимость снижается в 13&nbsp;раз в год (от 7 до 19&nbsp;раз в зависимости от теста).<sup class="ref"><a href="#src-1">1</a></sup> <span class="tag est">оценка</span> Пример: в марте 2023 года самой дешёвой моделью уровня GPT-4 на научных вопросах была сама GPT-4 — $37,5 за миллион <span class="term" data-term="token">токенов</span>. Через 21&nbsp;месяц такой же уровень давала модель за $0,12 — примерно в 300&nbsp;раз дешевле.<sup class="ref"><a href="#src-2">2</a></sup> <span class="tag">факт</span></p>
+    <p data-bill="06b"><b>Цена флагмана</b> ведёт себя иначе. Лучшие модели сначала дешевели: <span class="term" data-term="flagship">флагман</span> OpenAI GPT-4 весной 2023 года стоил $37,5 за миллион токенов (<span class="term" data-term="blended">смешанная цена</span>), GPT-5 в августе 2025-го — уже $3,4. Затем цена пошла вверх: GPT-5.5 в апреле 2026-го — $11,3, GPT-6 Astra в сентябре — $20.<sup class="ref"><a href="#src-3">3</a></sup> У Anthropic похожая картина: модели линейки Opus с конца 2025 года стоят $8–10, но выше в линейке появились Fable&nbsp;5 ($20) и Mythos Preview с закрытым доступом ($50).<sup class="ref"><a href="#src-4">4</a></sup> <span class="tag">факт</span></p>
+    <p data-bill="06c"><b>Цена подписки</b> не меняется вовсе. ChatGPT Plus стоит $20 в месяц с февраля 2023 года, Claude Pro — $20 с сентября того же года. Меняется другое: сколько за эти деньги можно сделать. Сверху добавились тарифы за $100 и $200, снизу — ChatGPT Go за $8 в США.<sup class="ref"><a href="#src-5">5</a></sup> <span class="tag">факт</span></p>
+
+    <figure class="card wide-fig" id="fig1">
+      <div class="ct">Уровень GPT-4 стал в 300 раз дешевле, а цены лучших моделей с 2025 года растут</div>
+      <div class="cs">Смешанная цена за 1&nbsp;млн токенов (3&nbsp;токена запроса на 1&nbsp;токен ответа). Шкала логарифмическая: каждая линия — в 10&nbsp;раз дороже предыдущей. <span class="lg"><i><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg></i>OpenAI</span> <span class="lg"><i><svg width="10" height="10"><rect x="1" y="1" width="8" height="8" fill="currentColor"/></svg></i>Anthropic</span> <span class="lg"><i><svg width="10" height="10"><path d="M5 0.5 9.5 5 5 9.5 0.5 5z" fill="currentColor"/></svg></i>Google</span> <span class="lg long"><i class="stepkey"></i>самая дешёвая модель уровня GPT-4 на&nbsp;научных вопросах</span></div>
+      <svg id="chart1" role="img" aria-label="График: цена флагманских моделей и модели уровня GPT-4, 2023–2026"></svg>
+      <div class="csrc">Источники: Epoch AI; прайс-листы OpenAI, Anthropic, Google · данные Epoch AI по уровню GPT-4 — до декабря 2024 года</div>
+    </figure>
+
+    <figure class="card" id="fig1b">
+      <div class="ct">Подписка стоит те же $20 с 2023 года, а сверху добавились дорогие тарифы</div>
+      <div class="cs">Долларов в месяц · точка — появление тарифа · <span class="lg"><i><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg></i>ChatGPT</span> <span class="lg"><i><svg width="10" height="10"><rect x="1" y="1" width="8" height="8" fill="currentColor"/></svg></i>Claude</span></div>
+      <svg id="chart1b" role="img" aria-label="График: тарифы подписок ChatGPT и Claude, 2023–2026"></svg>
+      <div class="csrc">Источники: OpenAI, Anthropic, TechCrunch, SiliconANGLE, справочный центр OpenAI</div>
+    </figure>
+
+    <h3>Почему пользователь не чувствует удешевления</h3>
+    <p><b>Покупают лучшее.</b> Дешевеет вчерашний уровень, а людям и компаниям нужен сегодняшний. Спрос на модели слабо зависит от цены: по данным <span class="term" data-term="openrouter">OpenRouter</span> и венчурного фонда a16z, модель, которая на 10% дешевле другой, получает лишь на 0,5–0,7% больше запросов.<sup class="ref"><a href="#src-6">6</a></sup> Это сравнение разных моделей между собой, а не реакция спроса на удешевление одной и той же модели. Но оно показывает: дешевизна сама по себе почти не привлекает пользователей. <span class="tag est">оценка</span></p>
+    <p data-bill="06d"><b>Токенов на задачу всё больше.</b> <span class="term" data-term="reasoning">Рассуждающие модели</span> сначала расписывают ход решения и только потом отвечают. По данным Epoch AI, они выдают в среднем в 8&nbsp;раз больше текста, чем обычные (на сложных научных вопросах — в 15&nbsp;раз, см. график), а длина их ответов растёт в 5&nbsp;раз в год.<sup class="ref"><a href="#src-7">7</a></sup> На OpenRouter средний запрос за 2024–2025 годы вырос с 1,5&nbsp;тыс. до 6&nbsp;тыс. токенов, средний ответ — примерно втрое.<sup class="ref"><a href="#src-6">6</a></sup> Поэтому цена решённой задачи падает медленнее цены токена. <span class="tag">факт</span></p>
+
+    <figure class="card" id="fig2">
+      <div class="ct">На один научный вопрос рассуждающая модель пишет в 15 раз больше текста, чем обычная</div>
+      <div class="cs">Вопросы <span class="term" data-term="gpqa">GPQA Diamond</span> · медиана по моделям · одна точка — 100 токенов, с округлением</div>
+      <svg id="chart2" role="img" aria-label="Единичная диаграмма: 5 точек у обычной модели и 77 точек у рассуждающей"></svg>
+      <div class="csrc">Источник: Epoch AI, данные до апреля 2025 года · расчёт медиан — наш</div>
+    </figure>
+
+    <p data-bill="06e"><b>Мощностей не хватает.</b> Лимиты подписок прямо зависят от того, сколько у компании вычислительных мощностей. 26 марта 2026 года Anthropic ужесточила в часы пик <span class="term" data-term="limit5">пятичасовые лимиты</span>. 6 мая компания объявила, что получает более 300&nbsp;МВт мощностей дата-центра Colossus&nbsp;1 компании SpaceX (свыше 220&nbsp;тыс. графических ускорителей Nvidia) и удваивает пятичасовые лимиты <span class="term" data-term="claudecode">Claude Code</span>.<sup class="ref"><a href="#src-8">8</a></sup> 10 сентября OpenAI перестала принимать новых подписчиков на тариф Pro за $200.<sup class="ref"><a href="#src-9">9</a></sup> <span class="tag">факт</span></p>
+
+    <h3>Та же цена, но считают иначе</h3>
+    <p>Бывает и незаметное подорожание: цена прежняя, но потребление считают по-новому. Редактор кода Cursor в июне 2025 года заменил в тарифе Pro «500 запросов» на «$20 использования» по ценам API. Для Claude Sonnet 4 это, по оценке самой компании, около 225 запросов средней длины вместо прежних 250, для более дешёвых моделей — больше; зато длинные задачи теперь расходуют лимит быстрее.<sup class="ref"><a href="#src-10">10</a></sup> <span class="tag">факт</span> Помощник программиста GitHub Copilot с 1 июня 2026 года считает не запросы, а токены — при прежних ценах тарифов. В GitHub объяснили переход так:</p>
+    <blockquote>«Сейчас короткий вопрос в чате и многочасовая сессия, в которой ИИ сам пишет код, могут стоить пользователю одинаково».<sup class="ref"><a href="#src-11">11</a></sup></blockquote>
+    <p>Похожий эффект у Claude Opus&nbsp;4.7: новый <span class="term" data-term="tokenizer">токенизатор</span> делит тот же текст на токены иначе, и их выходит до 1,35&nbsp;раза больше при прежней цене за токен.<sup class="ref"><a href="#src-12">12</a></sup> <span class="tag">факт</span></p>
+
+    <h3>Кто платит, а кто выигрывает</h3>
+    <p>Выигрывают те, кому хватает вчерашнего уровня: сервисы, которые используют дешёвые модели для простых массовых задач. Платят те, кому нужны передовые модели: их подписчики, программисты, работающие с <span class="term" data-term="agent">агентами</span>, и компании, встраивающие флагманы в свои продукты.</p>
+    <p>Разработчики моделей пока тоже не выходят на ту доходность, на которую рассчитывали. По данным издания The Information, которое ссылается на документы для инвесторов, <span class="term" data-term="margin">валовая маржа</span> OpenAI в 2025 году составила 33% при цели 46%, а Anthropic ожидала за 2025 год около 40% — на 10 процентных пунктов ниже прежнего прогноза.<sup class="ref"><a href="#src-13">13</a></sup> <span class="tag est">оценка</span></p>
+
+    <h3>Эффект отдачи</h3>
+    <p>Интеллект дешевеет, но потребляют его всё больше. По данным самой Google, в мае 2026 года она обрабатывала свыше 3,2&nbsp;квадриллиона токенов в месяц — в 7&nbsp;раз больше, чем годом раньше.<sup class="ref"><a href="#src-14">14</a></sup> <span class="tag">факт</span> В экономике энергетики такое явление называют <span class="term" data-term="rebound">эффектом отдачи</span>: когда ресурс дешевеет, его используют больше, и рост потребления съедает часть экономии, а иногда и всю. Поэтому дешевеющий интеллект не отменяет ни гигаватт из строки 00, ни счетов за электричество из строки 03.</p>
+
+    <div class="rowsum"><b>Итог строки 06.</b> Ответ одного и того же качества дешевеет примерно в 13 раз в год, но лучшие модели с 2025 года дорожают, а подписка стоит столько же при плавающих лимитах. Выигрывает тот, кому хватает вчерашнего уровня; платит тот, кому нужны передовые модели.</div>
+  </article>
+
+  <div class="proto" style="margin-top:64px"><b>Дальше — строки 07–10:</b> гонка стран, туман, сальдо, методика и глоссарий.</div>
+
+  <section id="sources">
+    <h2>Источники</h2>
+    <ol>
+      <li id="src-1">Epoch AI. <a href="https://epoch.ai/publications/the-plunging-price-of-thought" target="_blank" rel="noopener">The plunging price of thought</a>. 22.09.2026. Цена — за вопрос теста при заданном уровне качества.</li>
+      <li id="src-2">Epoch AI. <a href="https://epoch.ai/data/charts/llm-inference-price-trends/lowest_price_models_data.csv" target="_blank" rel="noopener">LLM inference price trends: самые дешёвые модели по уровням (CSV)</a>. 2025. Уровень GPT-4 на GPQA Diamond, смешанная цена 3:1.</li>
+      <li id="src-3">OpenAI: <a href="https://openai.com/index/gpt-4-research" target="_blank" rel="noopener">GPT-4</a> (14.03.2023); <a href="https://openai.com/index/introducing-gpt-5-for-developers/" target="_blank" rel="noopener">GPT-5 для разработчиков</a> (07.08.2025); <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener">GPT-5.5</a> (23.04.2026); <a href="https://openai.com/index/gpt-5-6/" target="_blank" rel="noopener">GPT-5.6</a> (09.07.2026); <a href="https://openai.com/index/gpt-6-astra/" target="_blank" rel="noopener">GPT-6 Astra</a> (03.09.2026).</li>
+      <li id="src-4">Anthropic: <a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener">цены API</a>; <a href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">Claude Fable 5</a> (09.06.2026); <a href="https://www.anthropic.com/glasswing" target="_blank" rel="noopener">Project Glasswing</a> (Mythos Preview, 07.04.2026); <a href="https://www.anthropic.com/claude-opus-5-5" target="_blank" rel="noopener">Claude Opus 5.5</a> (22.09.2026).</li>
+      <li id="src-5">OpenAI: <a href="https://openai.com/index/chatgpt-plus/" target="_blank" rel="noopener">ChatGPT Plus</a> (01.02.2023), <a href="https://openai.com/index/introducing-chatgpt-pro/" target="_blank" rel="noopener">ChatGPT Pro</a> (05.12.2024), <a href="https://openai.com/index/introducing-chatgpt-go/" target="_blank" rel="noopener">ChatGPT Go</a> (16.01.2026); TechCrunch: <a href="https://techcrunch.com/2026/04/09/chatgpt-pro-plan-100-month-codex/" target="_blank" rel="noopener">тариф Pro за $100</a> (09.04.2026), <a href="https://techcrunch.com/2025/04/09/anthropic-rolls-out-a-200-per-month-claude-subscription" target="_blank" rel="noopener">Claude Max</a> (09.04.2025); SiliconANGLE: <a href="https://siliconangle.com/2023/09/07/anthropic-announces-claude-pro-paid-subscription-generative-ai-chatbot/" target="_blank" rel="noopener">Claude Pro</a> (07.09.2023).</li>
+      <li id="src-6">OpenRouter, a16z. <a href="https://arxiv.org/abs/2601.10088" target="_blank" rel="noopener">Исследование использования моделей на OpenRouter</a>, arXiv:2601.10088. 15.01.2026.</li>
+      <li id="src-7">Epoch AI. <a href="https://epoch.ai/data-insights/output-length" target="_blank" rel="noopener">Output length</a>: статья и <a href="https://epoch.ai/data/charts/output-length/scatter_data.csv" target="_blank" rel="noopener">данные (CSV)</a>. 17.04.2025.</li>
+      <li id="src-8">Anthropic. <a href="https://www.anthropic.com/news/higher-limits-spacex" target="_blank" rel="noopener">Higher limits</a> (06.05.2026); The Register. <a href="https://www.theregister.com/2026/03/26/anthropic_tweaks_usage_limits/" target="_blank" rel="noopener">Anthropic tweaks usage limits</a> (26.03.2026).</li>
+      <li id="src-9">OpenAI Help Center. <a href="https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers" target="_blank" rel="noopener">About ChatGPT Pro tiers</a>. 10.09.2026.</li>
+      <li id="src-10">Cursor. <a href="https://cursor.com/blog/june-2025-pricing" target="_blank" rel="noopener">June 2025 pricing</a>. 16.06.2025, обновлено 04.07.2025.</li>
+      <li id="src-11">GitHub. <a href="https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/" target="_blank" rel="noopener">GitHub Copilot is moving to usage-based billing</a>. 27.04.2026. Перевод цитаты наш.</li>
+      <li id="src-12">Anthropic. <a href="https://www.anthropic.com/news/claude-opus-4-7" target="_blank" rel="noopener">Claude Opus 4.7</a>. 16.04.2026.</li>
+      <li id="src-13">The Decoder. <a href="https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/" target="_blank" rel="noopener">О данных The Information по OpenAI</a> (20.02.2026); Investing.com. <a href="https://www.investing.com/news/stock-market-news/anthropic-trims-profit-margin-outlook-as-ai-operating-costs-rise--the-information-4459316" target="_blank" rel="noopener">О данных The Information по Anthropic</a> (22.01.2026). Утечка, вторичный пересказ.</li>
+      <li id="src-14">Google. <a href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/" target="_blank" rel="noopener">Выступление Сундара Пичаи на I/O 2026</a>. 19.05.2026.</li>
+      <li id="src-15">Epoch AI. <a href="https://epoch.ai/data/ai-data-centers" target="_blank" rel="noopener">AI data centers</a>. Выгрузка 24.09.2026, CC BY 4.0. Координаты — из <a href="https://epoch.ai/data/data-centers/satellite-explorer" target="_blank" rel="noopener">Satellite Explorer</a>.</li>
+    </ol>
+  </section>
+
+  <footer class="colophon">
+    Прототип «Счёта за интеллект», этап 0 · 28.09.2026. Данные о площадках — Epoch AI (CC BY 4.0). Шрифты Source Serif 4 и IBM Plex (SIL Open Font License). Картографическая основа — us-atlas (US Census). Визуальный язык графиков — по образцу <a href="https://github.com/larashero3-dotcom/lieflat-charts" target="_blank" rel="noopener">Lieflat Charts</a>; код написан заново.
+  </footer>
+</main>
+
+<div class="receipt-bar" id="receiptBar"><button type="button" id="receiptBarBtn"><span>Счёт · <b id="billCount">0</b> <span id="billWord">строк</span></span><span>▲</span></button><div class="body" id="receiptBarBody"><div class="receipt-total" id="barTotal"><div class="rt"><span>Итого</span><i></i><span>—</span></div><div class="rf">у строк разные единицы</div></div></div></div>
+<div id="tip" role="tooltip"></div>
+
+<script>/*__D3__*/</script>
+<script>/*__TOPO__*/</script>
+<script type="application/json" id="d-sites">/*__SITES__*/</script>
+<script type="application/json" id="d-us">/*__US__*/</script>
+<script>
+(() => {
+'use strict';
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DATA = JSON.parse(document.getElementById('d-sites').textContent);
+const US = JSON.parse(document.getElementById('d-us').textContent);
+const css = () => getComputedStyle(document.documentElement);
+const nf1 = new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const nf0 = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 });
+const nf2 = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 });
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const lerp = (a, b, t) => a + (b - a) * t;
+const plural = (n, one, few, many) => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many; };
+
+/* ── тема ── */
+const root = document.documentElement, themeBtn = document.getElementById('themeBtn');
+const THEMES = ['auto', 'light', 'dark'], TL = { auto: 'авто', light: 'светлая', dark: 'тёмная' };
+function setTheme(t) { root.dataset.theme = t; themeBtn.textContent = 'Тема: ' + TL[t]; try { localStorage.setItem('sch-theme', t); } catch (e) {} redrawAll(); }
+try { const s = localStorage.getItem('sch-theme'); if (s && THEMES.includes(s)) { root.dataset.theme = s; themeBtn.textContent = 'Тема: ' + TL[s]; } } catch (e) {}
+themeBtn.addEventListener('click', () => setTheme(THEMES[(THEMES.indexOf(root.dataset.theme) + 1) % 3]));
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => redrawAll());
+
+/* ── подсказки ── */
+const tip = document.getElementById('tip');
+function showTip(node, x, y) { tip.replaceChildren(node); tip.classList.add('on'); placeTip(x, y); }
+function placeTip(x, y) { const r = tip.getBoundingClientRect(); let L = x + 14, T = y + 14; if (L + r.width > innerWidth - 8) L = x - r.width - 14; if (T + r.height > innerHeight - 8) T = y - r.height - 14; tip.style.left = Math.max(8, L) + 'px'; tip.style.top = Math.max(8, T) + 'px'; }
+function hideTip() { tip.classList.remove('on'); }
+const GLOSS = {
+  mw: ['МВт и ГВт', 'Мегаватт и гигаватт — единицы мощности. 1 ГВт = 1 000 МВт — примерно столько выдаёт крупный энергоблок АЭС.'],
+  epoch: ['Epoch AI', 'Независимая исследовательская организация, которая собирает данные о вычислениях, моделях и дата-центрах.'],
+  token: ['Токен', 'Единица, в которой модель читает и пишет текст: слово или его часть. Цены для разработчиков (API) указывают за миллион токенов.'],
+  flagship: ['Флагман', 'Самая сильная модель компании на момент выхода.'],
+  blended: ['Смешанная цена', 'Средняя цена миллиона токенов, если на каждые три токена запроса приходится один токен ответа. Так две цены — за запрос и за ответ — сводят в одну, чтобы модели можно было сравнивать.'],
+  openrouter: ['OpenRouter', 'Сервис-посредник, через который разработчики обращаются к моделям разных компаний. По его данным видно, какими моделями пользуются и как.'],
+  reasoning: ['Рассуждающие модели', 'Модели, которые перед ответом расписывают ход решения. Эти промежуточные шаги оплачиваются как токены ответа.'],
+  gpqa: ['GPQA Diamond', 'Тест из сложных вопросов по биологии, физике и химии уровня аспирантуры. По нему сравнивают модели.'],
+  limit5: ['Пятичасовой лимит', 'Сколько работы подписчик может сделать за пять часов. Когда лимит исчерпан, приходится ждать, пока он обновится.'],
+  agent: ['Агент', 'Модель, которая сама выполняет многошаговую задачу — например, пишет код, запускает его и исправляет ошибки — без участия человека на каждом шаге.'],
+  claudecode: ['Claude Code', 'Инструмент Anthropic, в котором модель Claude сама пишет и правит программный код.'],
+  tokenizer: ['Токенизатор', 'Часть модели, которая режет текст на токены. Другой токенизатор может разрезать тот же текст на большее число токенов — и счёт вырастет.'],
+  margin: ['Валовая маржа', 'Доля выручки, которая остаётся после прямых затрат на саму услугу — у разработчиков моделей это в основном вычисления.'],
+  rebound: ['Эффект отдачи', 'Удешевление или экономия ресурса может вести к росту его общего потребления. Классический пример — уголь и паровые машины в XIX веке (парадокс Джевонса).']
+};
+document.querySelectorAll('.term').forEach(t => {
+  const g = GLOSS[t.dataset.term]; if (!g) return; t.tabIndex = 0;
+  const build = () => { const f = document.createDocumentFragment(); f.append(el('div', 't', g[0]), el('div', '', g[1])); return f; };
+  t.addEventListener('pointerenter', e => showTip(build(), e.clientX, e.clientY));
+  t.addEventListener('pointermove', e => placeTip(e.clientX, e.clientY));
+  t.addEventListener('pointerleave', hideTip);
+  t.addEventListener('focus', () => { const r = t.getBoundingClientRect(); showTip(build(), r.left, r.bottom); });
+  t.addEventListener('blur', hideTip);
+});
+
+/* ── счёт ── */
+const BILL = {
+  '00': { side: 'debit', no: '00', ttl: 'Построено', val: '17,3 ГВт работает, ещё около 31 ГВт в планах до конца 2028 года (база Epoch AI)', who: 'платят владельцы площадок — и, как покажут следующие строки, не только они', tg: 'оценка · прогноз' },
+  '06a': { side: 'credit', no: '06', ttl: 'Уровень GPT-4', val: 'в 300 раз дешевле за 21 месяц', who: 'выигрывает тот, кому его хватает', tg: 'факт' },
+  '06b': { side: 'debit', no: '06', ttl: 'Флагман OpenAI', val: '$3,4 → $20 за 1 млн токенов с августа 2025', who: 'платит тот, кому нужны передовые модели', tg: 'факт' },
+  '06c': { side: 'debit', no: '06', ttl: 'Подписка', val: '$20 с 2023 года, сверху тарифы за $100 и $200', who: 'платит подписчик, лимиты зависят от мощностей', tg: 'факт' },
+  '06d': { side: 'debit', no: '06', ttl: 'Токены на задачу', val: 'в 8 раз больше у рассуждающих моделей', who: 'платит пользователь флагмана', tg: 'факт' },
+  '06e': { side: 'debit', no: '06', ttl: 'Нехватка мощностей', val: 'лимиты урезают и повышают вслед за мощностями', who: 'платит подписчик — ожиданием, когда лимит исчерпан', tg: 'факт' }
+};
+const billList = document.getElementById('billList'), billEmpty = document.getElementById('billEmpty');
+const barBody = document.getElementById('receiptBarBody'), bar = document.getElementById('receiptBar'), billCount = document.getElementById('billCount');
+const printed = new Set();
+function billItem(b) {
+  const li = el('li', b.side);
+  const top = el('div'); top.append(el('span', 'sgn', b.side === 'debit' ? '−' : '+'), el('span', 'no', b.no + ' · '), el('span', 'ttl', b.ttl));
+  li.append(top, el('div', '', b.val), el('span', 'who', b.who), el('span', 'tg', b.tg));
+  return li;
+}
+const receiptBox = document.getElementById('receipt'), barTotal = document.getElementById('barTotal');
+let pinned = null; // позиция, которую читатель развернул сам
+function setCompact(li, on) { li.classList.toggle('compact', on); li.setAttribute('aria-expanded', String(!on)); }
+function fitReceipt() {
+  const items = [...billList.querySelectorAll('li[data-no]')]; if (!items.length || !receiptBox.offsetParent) return;
+  const cur = items[items.length - 1].dataset.no;
+  items.forEach(li => setCompact(li, li !== pinned && li.dataset.no !== cur));
+  // если текущий блок не помещается, сворачиваем его старые позиции, последняя остаётся раскрытой
+  for (let i = 0; i < items.length - 1 && receiptBox.scrollHeight > receiptBox.clientHeight; i++) if (items[i] !== pinned) setCompact(items[i], true);
+}
+billList.addEventListener('click', e => { const li = e.target.closest('li[data-no]'); if (!li) return; pinned = li.classList.contains('compact') ? li : null; fitReceipt(); });
+billList.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('li[data-no]')) { e.preventDefault(); e.target.click(); } });
+addEventListener('resize', () => fitReceipt());
+function printBill(key) {
+  if (printed.has(key) || !BILL[key]) return; printed.add(key);
+  billEmpty && billEmpty.remove();
+  const li = billItem(BILL[key]); li.dataset.no = BILL[key].no; li.tabIndex = 0; li.setAttribute('role', 'button');
+  billList.append(li); barBody.insertBefore(billItem(BILL[key]), barTotal); fitReceipt();
+  billCount.textContent = printed.size; document.getElementById('billWord').textContent = plural(printed.size, 'строка', 'строки', 'строк'); bar.classList.add('on');
+}
+document.getElementById('receiptBarBtn').addEventListener('click', () => bar.classList.toggle('open'));
+const billObs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) printBill(e.target.dataset.bill); }), { rootMargin: '0px 0px -35% 0px' });
+document.querySelectorAll('[data-bill]').forEach(n => { if (n.dataset.bill !== '00') billObs.observe(n); });
+
+/* ═══ ШТАБ И ПЕРЕХОД ═══ */
+const hq = document.getElementById('hq'), stage = document.getElementById('stage');
+const svg = d3.select('#stageSvg'), hqUi = document.getElementById('hqUi'), opening = document.getElementById('opening');
+const gMap = svg.append('g'), gGlow = svg.append('g'), gDots = svg.append('g');
+const defs = svg.append('defs');
+const grad = defs.append('radialGradient').attr('id', 'glow');
+[['0%', '#ffffff', .95], ['22%', '#8fe3ff', .85], ['60%', '#8fe3ff', .18], ['100%', '#8fe3ff', 0]].forEach(([o, c, a]) => grad.append('stop').attr('offset', o).attr('stop-color', c).attr('stop-opacity', a));
+const states = topojson.feature(US, US.objects.states), nation = topojson.feature(US, US.objects.nation);
+const sites = DATA.sites;
+const TODAY = DATA.today;
+const months = d3.timeMonths(new Date(Date.UTC(2021, 0, 1)), new Date(Date.UTC(2026, 9, 1))).map(d => d.toISOString().slice(0, 7));
+const monthEnd = ym => { const [y, m] = ym.split('-').map(Number); return new Date(Date.UTC(y, m, 0)).toISOString().slice(0, 10); };
+const powAt = (s, D) => { let p = 0; for (const t of s.tl) { if (t[0] <= D) p = t[1]; else break; } return p; };
+let W = 0, H = 0, proj, rScale = d3.scaleSqrt().domain([0, 2500]).range([0, 20]);
+let dots = []; // {x0,y0,x1,y1,fill,site,delay}
+let playT = 1; // 0..1 автопроигрывание
+let lastP = -1;
+
+function layoutStage() {
+  W = stage.clientWidth; H = stage.clientHeight;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+  const mob = W < 720;
+  proj = d3.geoAlbersUsa().fitExtent([[W * (mob ? .04 : .08), H * (mob ? .2 : .14)], [W * (mob ? .96 : .92), H * (mob ? .7 : .82)]], nation);
+  rScale.range([0, Math.max(9, Math.min(22, W / 60))]);
+  const path = d3.geoPath(proj);
+  gMap.selectAll('*').remove();
+  gMap.append('g').selectAll('path').data(states.features).join('path').attr('d', path).attr('fill', '#0e141b').attr('stroke', '#1b2430').attr('stroke-width', .6);
+  gMap.append('path').datum(nation).attr('d', path).attr('fill', 'none').attr('stroke', '#2a3746');
+  // позиции площадок; площадки вне США прилетают справа
+  let off = 0; const offN = sites.filter(s => !proj(s.ll)).length;
+  sites.forEach(s => { const p = proj(s.ll); if (p) { s.xy = p; s.off = false; } else { s.xy = [W + 30, H * (.2 + .6 * (off++ / Math.max(1, offN - 1)))]; s.off = true; } });
+  // сетка единиц
+  const nF = sites.reduce((a, s) => a + s.dt, 0), nH = sites.reduce((a, s) => a + s.dp, 0), N = nF + nH;
+  let gx0, gy0, gw, gh, cols;
+  if (mob) { // сетка между заголовком и подписью: меряем их, а не угадываем
+    const sr = stage.getBoundingClientRect(), ib = opening.querySelector('.intro').getBoundingClientRect().bottom - sr.top, ct = opening.querySelector('.cap').getBoundingClientRect().top - sr.top;
+    cols = 22; gx0 = 16; gw = W - 32; gy0 = ib + 18; gh = Math.max(120, ct - 18 - gy0); }
+  else { cols = 22; gx0 = W * .47; gw = Math.min(W * .47, 640); gy0 = H * .14; gh = H * .74; }
+  const rows = Math.ceil(N / cols); const step = Math.min(gw / cols, gh / rows);
+  if (mob) gx0 = 16 + (gw - step * cols) / 2;
+  const r = step * .28;
+  const order = sites.slice().sort((a, b) => b.t - a.t);
+  dots = []; let k = 0;
+  const cell = i => [gx0 + (i % cols) * step + step / 2, gy0 + Math.floor(i / cols) * step + step / 2];
+  order.forEach(s => { for (let j = 0; j < s.dt; j++) { const [x1, y1] = cell(k); const a = (j * 2.39996) % (2 * Math.PI), rr = Math.sqrt(j) * 3; dots.push({ x0: s.xy[0] + Math.cos(a) * rr, y0: s.xy[1] + Math.sin(a) * rr, x1, y1, fill: true, s, i: k }); k++; } });
+  const orderP = sites.slice().sort((a, b) => b.dp - a.dp);
+  orderP.forEach(s => { for (let j = 0; j < s.dp; j++) { const [x1, y1] = cell(k); dots.push({ x0: x1, y0: y1, x1, y1, fill: false, s, i: k }); k++; } });
+  dots.forEach(d => { d.r = r; d.delay = d.fill ? (d.i / nF) * .28 : ((d.i - nF) / nH) * .2; });
+  gDots.selectAll('circle').data(dots).join('circle').attr('r', r);
+  gGlow.selectAll('g.site').data(sites.filter(s => !s.off)).join(enter => { const g = enter.append('g').attr('class', 'site'); g.append('circle').attr('class', 'halo').attr('fill', 'url(#glow)'); g.append('circle').attr('class', 'core').attr('fill', '#eefaff'); return g; }).attr('transform', s => `translate(${s.xy[0]},${s.xy[1]})`);
+  window.__grid = { gx0, gy0, step, cols, N };
+  lastP = -1; render();
+}
+
+function renderGlow(D) {
+  let total = 0;
+  gGlow.selectAll('g.site').each(function (s) { const p = powAt(s, D); total += 0; const R = rScale(p); d3.select(this).select('.halo').attr('r', p > 0 ? R * 2.3 : 0); d3.select(this).select('.core').attr('r', p > 0 ? Math.max(1.4, R * .28) : 0); });
+  sites.forEach(s => total += powAt(s, D));
+  return total;
+}
+
+function progress() { const r = hq.getBoundingClientRect(); const total = r.height - innerHeight; return clamp(-r.top / total); }
+
+function render() {
+  const P = progress();
+  if (P === lastP && playT >= 1) return; lastP = P;
+  const t = clamp((P - .12) / .74); // фаза перехода
+  const paper = css().getPropertyValue('--paper').trim(), ink = css().getPropertyValue('--ink').trim();
+  const bgT = ease(clamp(t / .35));
+  stage.style.background = d3.interpolateRgb('#07090d', paper)(bgT);
+  gMap.attr('opacity', 1 - clamp(t / .12));
+  // автопроигрывание и счётчик
+  const mi = Math.round(lerp(0, months.length - 1, playT)); const ym = months[mi];
+  const D = playT >= 1 ? TODAY : monthEnd(ym);
+  const tot = renderGlow(D);
+  document.getElementById('hqT').textContent = (playT >= 1 ? '2026-09' : ym).replace('-', '·');
+  document.getElementById('hqNum').firstChild.nodeValue = nf1.format(tot / 1000);
+  gGlow.attr('opacity', 1 - clamp(t / .14));
+  hqUi.style.opacity = 1 - clamp(t / .15);
+  opening.style.opacity = ease(clamp((t - .72) / .2));
+  opening.style.pointerEvents = t > .9 ? 'auto' : 'none';
+  if (t > .95) printBill('00');
+  // точки
+  const glowC = d3.color('#8fe3ff'), inkC = d3.color(ink);
+  gDots.selectAll('circle').each(function (d) {
+    const c = d3.select(this);
+    if (d.fill) {
+      const u = RM ? (t > .5 ? 1 : 0) : ease(clamp((t - .08 - d.delay) / .42));
+      const vis = t <= 0 ? 0 : clamp(t / .08);
+      const powered = powAt(d.s, D) > 0 || t > 0;
+      c.attr('cx', lerp(d.x0, d.x1, u)).attr('cy', lerp(d.y0, d.y1, u))
+       .attr('fill', d3.interpolateRgb(glowC, inkC)(Math.max(bgT, clamp(u * 1.4)))).attr('stroke', 'none')
+       .attr('opacity', powered ? vis : 0);
+    } else {
+      const u = RM ? (t > .6 ? 1 : 0) : ease(clamp((t - .62 - d.delay) / .16));
+      c.attr('cx', d.x1).attr('cy', d.y1).attr('fill', 'none').attr('stroke', ink).attr('stroke-width', 1).attr('opacity', u);
+    }
+  });
+}
+
+// автопроигрывание 2021 → сегодня
+function autoplay() {
+  if (RM) { playT = 1; render(); return; }
+  playT = 0; const t0 = performance.now(), dur = 6500;
+  const step = now => { if (progress() > .02) { playT = 1; lastP = -1; render(); return; } playT = clamp((now - t0) / dur); lastP = -1; render(); if (playT < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+let ticking = false;
+addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; render(); }); } }, { passive: true });
+
+// подсказка по точкам сетки в финальном кадре
+svg.on('pointermove', e => {
+  const t = clamp((progress() - .12) / .74); if (t < .95) { hideTip(); return; }
+  const g = window.__grid; const [x, y] = d3.pointer(e);
+  const c = Math.floor((x - g.gx0) / g.step), r = Math.floor((y - g.gy0) / g.step);
+  if (c < 0 || c >= g.cols || r < 0) { hideTip(); return; }
+  const d = dots[r * g.cols + c]; if (!d) { hideTip(); return; }
+  const f = document.createDocumentFragment(); f.append(el('div', 't', d.s.n));
+  const kv = el('div', 'kv'); kv.append(el('span', '', 'Работает сегодня'), el('b', '', nf0.format(d.s.t) + '\u00a0МВт'), el('span', '', 'В планах к концу 2028 года'), el('b', '', nf0.format(d.s.e) + '\u00a0МВт'));
+  f.append(kv, el('div', 'note', d.fill ? 'Закрашенная точка — 100 МВт, которые уже работают' : 'Полая точка — 100 МВт в планах'));
+  showTip(f, e.clientX, e.clientY);
+}).on('pointerleave', hideTip);
+
+/* ═══ ГРАФИКИ СТРОКИ 06 ═══ */
+const F = [ // флагманы при выходе: [лаборатория, модель, дата, вход, выход, пометка]
+  ['OpenAI', 'GPT-4', '2023-03-14', 30, 60, ''], ['OpenAI', 'GPT-4o', '2024-05-13', 5, 15, ''], ['OpenAI', 'o1', '2024-12-17', 15, 60, 'рассуждающая'],
+  ['OpenAI', 'GPT-4.5', '2025-02-27', 75, 150, 'исследовательская версия'], ['OpenAI', 'GPT-5', '2025-08-07', 1.25, 10, ''], ['OpenAI', 'GPT-5.2', '2025-12-11', 1.75, 14, ''],
+  ['OpenAI', 'GPT-5.4', '2026-03-05', 2.5, 15, ''], ['OpenAI', 'GPT-5.5', '2026-04-23', 5, 30, ''], ['OpenAI', 'GPT-5.6 Sol', '2026-07-09', 5, 30, 'с конца августа — акция $4/$20'],
+  ['OpenAI', 'GPT-6 Astra', '2026-09-03', 10, 50, 'сначала ограниченный доступ'],
+  ['Anthropic', 'Claude 3 Opus', '2024-03-04', 15, 75, ''], ['Anthropic', 'Claude Opus 4', '2025-05-22', 15, 75, ''], ['Anthropic', 'Claude Opus 4.5', '2025-11-24', 5, 25, ''],
+  ['Anthropic', 'Claude Mythos Preview', '2026-04-07', 25, 125, 'закрытый доступ'], ['Anthropic', 'Claude Fable 5', '2026-06-09', 10, 50, ''], ['Anthropic', 'Claude Opus 5.5', '2026-09-22', 4, 20, ''],
+  ['Google', 'Gemini 2.5 Pro', '2025-03-25', 1.25, 10, 'запросы до 200 тыс. токенов'], ['Google', 'Gemini 3 Pro', '2025-11-18', 2, 12, 'запросы до 200 тыс. токенов'], ['Google', 'Gemini 3.1 Pro', '2026-02-19', 2, 12, 'предварительная версия']
+].map(([lab, m, d, i, o, note]) => ({ lab, m, d: new Date(d), ds: d, i, o, b: (3 * i + o) / 4, note }));
+const MAINLINE = ['GPT-4', 'GPT-4o', 'GPT-5', 'GPT-5.5', 'GPT-6 Astra'];
+const LABEL = { 'GPT-4': 'b', 'GPT-4o': '', 'GPT-5': 'b', 'GPT-5.5': '', 'GPT-6 Astra': 'b', 'GPT-4.5': '', 'Claude Mythos Preview': '', 'Claude Fable 5': '', 'Claude 3 Opus': '', 'Claude Opus 4.5': '' };
+const FIX = [['GPT-4', '2023-03-14', 37.5], ['GPT-4 Turbo', '2023-11-06', 15], ['Mistral Large', '2024-02-26', 6], ['Claude 3 Haiku', '2024-03-04', .5], ['Gemini 1.5 Flash', '2024-05-10', .13], ['Phi 4', '2024-12-13', .1225]].map(([m, d, p]) => ({ m, d: new Date(d), ds: d, p }));
+const fmtD = d => d.toISOString().slice(0, 10).split('-').reverse().join('.');
+const money = v => '$' + (v >= 10 ? nf1.format(v).replace(',0', '') : nf2.format(v));
+
+function shape(sel, lab, r) {
+  if (lab === 'OpenAI') return sel.append('circle').attr('r', r);
+  if (lab === 'Anthropic') return sel.append('rect').attr('x', -r * .9).attr('y', -r * .9).attr('width', r * 1.8).attr('height', r * 1.8);
+  return sel.append('path').attr('d', `M0 ${-r * 1.2} L${r * 1.2} 0 L0 ${r * 1.2} L${-r * 1.2} 0Z`);
+}
+
+function chart1() {
+  const s = d3.select('#chart1'); s.selectAll('*').remove();
+  const w = s.node().clientWidth, mob = w < 560, h = mob ? 360 : 440;
+  const m = { l: 44, r: mob ? 12 : 120, t: 16, b: 30 };
+  s.attr('viewBox', `0 0 ${w} ${h}`).attr('height', h);
+  const C = css(); const col = n => C.getPropertyValue(n).trim();
+  const x = d3.scaleUtc().domain([new Date('2023-01-01'), new Date('2026-12-31')]).range([m.l, w - m.r]);
+  const y = d3.scaleLog().domain([0.08, 160]).range([h - m.b, m.t]);
+  // бумага: линии бухгалтерской книги
+  [0.1, 1, 10, 100].forEach(v => { s.append('line').attr('class', 'ledger').attr('x1', m.l).attr('x2', w - m.r).attr('y1', y(v)).attr('y2', y(v)); s.append('text').attr('class', 'lbl').attr('x', m.l - 8).attr('y', y(v) + 3.5).attr('text-anchor', 'end').text('$' + nf2.format(v)); });
+  d3.range(2023, 2027).forEach(yr => { const xx = x(new Date(yr + '-01-01')); s.append('line').attr('class', 'hair').attr('x1', xx).attr('x2', xx).attr('y1', m.t).attr('y2', h - m.b).attr('stroke-dasharray', '1 3'); s.append('text').attr('class', 'lbl').attr('x', xx + 3).attr('y', h - m.b + 16).text(yr); });
+  // линия уровня GPT-4 (кредит — синий акцент)
+  const line = d3.line().x(d => x(d.d)).y(d => y(d.p)).curve(d3.curveStepAfter);
+  const fx = FIX.concat([{ d: new Date('2024-12-31'), p: .1225 }]);
+  s.append('path').datum(fx).attr('d', line).attr('fill', 'none').attr('stroke', col('--credit')).attr('stroke-width', 2);
+  s.append('g').selectAll('circle').data(FIX).join('circle').attr('cx', d => x(d.d)).attr('cy', d => y(d.p)).attr('r', 3.2).attr('fill', col('--credit')).attr('stroke', col('--paper')).attr('stroke-width', 1.5);
+  s.append('text').attr('class', 'ann credit').attr('x', mob ? x(new Date('2024-05-10')) + 4 : x(new Date('2024-12-13')) + 8).attr('y', mob ? y(.13) - 8 : y(.1225) - 8).text('в 300 раз дешевле за 21 месяц');
+  // основная линейка GPT
+  const ml = F.filter(d => MAINLINE.includes(d.m)).sort((a, b) => a.d - b.d);
+  s.append('path').datum(ml).attr('d', d3.line().x(d => x(d.d)).y(d => y(d.b)).curve(d3.curveMonotoneX)).attr('fill', 'none').attr('stroke', col('--ink')).attr('stroke-width', 1.2);
+  // точки флагманов
+  const LC = { OpenAI: col('--l1'), Anthropic: col('--l3'), Google: col('--l4') };
+  const g = s.append('g');
+  F.forEach(d => { const gg = g.append('g').attr('transform', `translate(${x(d.d)},${y(d.b)})`).attr('tabindex', 0).attr('role', 'img').attr('aria-label', `${d.m}, ${fmtD(d.d)}: ${money(d.b)} за 1 млн токенов`);
+    shape(gg, d.lab, 4.6).attr('fill', LC[d.lab]).attr('stroke', col('--paper')).attr('stroke-width', 1.8);
+    gg.append('circle').attr('r', 13).attr('fill', 'transparent');
+    const on = e => { const f = document.createDocumentFragment(); f.append(el('div', 't', d.m)); const kv = el('div', 'kv'); kv.append(el('span', '', 'Выход'), el('b', '', fmtD(d.d)), el('span', '', 'Запрос / ответ'), el('b', '', `$${nf2.format(d.i)} / $${nf2.format(d.o)}`), el('span', '', 'Смешанная цена'), el('b', '', money(d.b))); f.append(kv); if (d.note) f.append(el('div', 'note', d.note)); const r = e.clientX != null ? [e.clientX, e.clientY] : [gg.node().getBoundingClientRect().right, gg.node().getBoundingClientRect().bottom]; showTip(f, r[0], r[1]); };
+    gg.on('pointerenter', on).on('pointermove', e => placeTip(e.clientX, e.clientY)).on('pointerleave', hideTip).on('focus', on).on('blur', hideTip);
+  });
+  // подписи — выборочно
+  const lab = (name, dx, dy, anchor) => { const d = F.find(f => f.m === name); if (!d) return; const xx = x(d.d) + dx, yy = y(d.b) + dy; s.append('text').attr('class', 'dlbl' + (LABEL[name] === 'b' ? ' b' : '')).attr('x', xx).attr('y', yy).attr('text-anchor', anchor || 'start').text(name.replace('Claude ', '') + ' · ' + money(d.b)); };
+  lab('GPT-4', 8, -8); if (!mob) lab('GPT-4o', 8, -8); lab('GPT-5', -8, 16, 'end');
+  if (!mob) { lab('GPT-4.5', 8, 4); lab('Claude Mythos Preview', -8, -8, 'end'); lab('Claude 3 Opus', 8, -8); lab('Claude Fable 5', -8, -8, 'end'); }
+  if (mob) { const ga0 = F.find(f => f.m === 'GPT-6 Astra'), yT = y(80); s.append('line').attr('x1', x(ga0.d)).attr('x2', x(ga0.d)).attr('y1', y(ga0.b) - 6).attr('y2', yT + 4).attr('stroke', col('--ink-4')).attr('stroke-width', .8); s.append('text').attr('class', 'dlbl b').attr('x', w - m.r).attr('y', yT).attr('text-anchor', 'end').text('GPT-6 Astra · ' + money(ga0.b)); }
+  else lab('GPT-6 Astra', 8, 4);
+  lab('GPT-5.5', -8, -8, 'end');
+  // аннотация подорожания
+  const g5 = F.find(f => f.m === 'GPT-5'), ga = F.find(f => f.m === 'GPT-6 Astra');
+  if (!mob) { const xx = x(ga.d) + 70, y1 = y(g5.b), y2 = y(ga.b); s.append('line').attr('x1', xx).attr('x2', xx).attr('y1', y1).attr('y2', y2).attr('stroke', col('--ink-3')).attr('stroke-width', .8); s.append('line').attr('x1', x(g5.d) + 6).attr('x2', xx).attr('y1', y1).attr('y2', y1).attr('stroke', col('--faint')).attr('stroke-dasharray', '2 3'); const t6 = s.append('text').attr('class', 'ann').attr('x', xx + 6).attr('y', (y1 + y2) / 2 - 4); t6.append('tspan').text('в 6 раз дороже'); t6.append('tspan').attr('x', xx + 6).attr('dy', 15).text('с августа 2025'); }
+  // на мобильном без аннотации: рост цен назван в заголовке, а места нет
+}
+
+function chart1b() {
+  const s = d3.select('#chart1b'); s.selectAll('*').remove();
+  const w = s.node().clientWidth, mob = w < 560, h = 210;
+  const m = { l: 44, r: mob ? 12 : 150, t: 12, b: 28 };
+  s.attr('viewBox', `0 0 ${w} ${h}`).attr('height', h);
+  const C = css(); const col = n => C.getPropertyValue(n).trim();
+  const x = d3.scaleUtc().domain([new Date('2023-01-01'), new Date('2026-12-31')]).range([m.l, w - m.r]);
+  const y = d3.scaleLinear().domain([0, 220]).range([h - m.b, m.t]);
+  [0, 100, 200].forEach(v => { s.append('line').attr('class', 'ledger').attr('x1', m.l).attr('x2', w - m.r).attr('y1', y(v)).attr('y2', y(v)); s.append('text').attr('class', 'lbl').attr('x', m.l - 8).attr('y', y(v) + 3.5).attr('text-anchor', 'end').text('$' + v); });
+  d3.range(2023, 2027).forEach(yr => { const xx = x(new Date(yr + '-01-01')); s.append('text').attr('class', 'lbl').attr('x', xx + 3).attr('y', h - m.b + 16).text(yr); });
+  const T = [
+    { n: 'ChatGPT Plus', p: 20, d: '2023-02-01', lab: 'OpenAI' }, { n: 'Claude Pro', p: 20, d: '2023-09-07', lab: 'Anthropic' },
+    { n: 'ChatGPT Pro', p: 200, d: '2024-12-05', lab: 'OpenAI', pause: '2026-09-10' }, { n: 'Claude Max', p: 100, d: '2025-04-09', lab: 'Anthropic' }, { n: 'Claude Max', p: 200, d: '2025-04-09', lab: 'Anthropic' },
+    { n: 'ChatGPT Go (США)', p: 8, d: '2026-01-16', lab: 'OpenAI' }, { n: 'ChatGPT Pro', p: 100, d: '2026-04-09', lab: 'OpenAI' }
+  ].map(t => ({ ...t, dd: new Date(t.d) }));
+  const LC = { OpenAI: col('--l1'), Anthropic: col('--l3') };
+  const end = new Date('2026-09-28');
+  T.forEach((t, k) => { const off = (t.lab === 'Anthropic' ? 3 : -3);
+    s.append('line').attr('x1', x(t.dd)).attr('x2', x(end)).attr('y1', y(t.p) + off).attr('y2', y(t.p) + off).attr('stroke', LC[t.lab]).attr('stroke-width', 1.6);
+    const gg = s.append('g').attr('transform', `translate(${x(t.dd)},${y(t.p) + off})`); shape(gg, t.lab, 3.8).attr('fill', LC[t.lab]).attr('stroke', col('--paper')).attr('stroke-width', 1.5);
+    gg.append('circle').attr('r', 12).attr('fill', 'transparent');
+    gg.on('pointerenter', e => { const f = document.createDocumentFragment(); f.append(el('div', 't', `${t.n} · $${t.p} в месяц`), el('div', '', 'Появился ' + fmtD(t.dd))); if (t.pause) f.append(el('div', 'note', 'С 10.09.2026 новых подписчиков на тариф за $200 не принимают')); showTip(f, e.clientX, e.clientY); }).on('pointerleave', hideTip);
+  });
+  if (!mob) {
+    const lbl = (txt, v, dy) => s.append('text').attr('class', 'dlbl').attr('x', x(end) + 8).attr('y', y(v) + (dy || 4)).text(txt);
+    lbl('$200 · ChatGPT Pro, Claude Max', 200); lbl('$100 · ChatGPT Pro, Claude Max', 100); lbl('$20 · ChatGPT Plus, Claude Pro', 20, -2); lbl('$8 · ChatGPT Go', 8, 12);
+  }
+  const px = x(new Date('2026-09-10')); s.append('line').attr('x1', px).attr('x2', px).attr('y1', y(200) - 12).attr('y2', y(200) + 8).attr('stroke', col('--debit')).attr('stroke-width', 1.4);
+  s.append('text').attr('class', 'ann').attr('x', px - 6).attr('y', y(200) - 16).attr('text-anchor', 'end').text('новых подписчиков не принимают');
+}
+
+let chart2Shown = false;
+function chart2(animate) {
+  const s = d3.select('#chart2'); s.selectAll('*').remove();
+  const w = s.node().clientWidth, mob = w < 560;
+  const cols = mob ? 15 : 30, step = Math.min(18, w / cols), r = step * .32;
+  const rows = [{ lab: 'Обычная модель', v: 505 }, { lab: 'Рассуждающая модель', v: 7662 }];
+  const lx = 0; let yy = 20; const C = css(); const ink = C.getPropertyValue('--ink').trim();
+  const total = [];
+  rows.forEach((row, k) => {
+    const n = Math.round(row.v / 100), nr = Math.ceil(n / cols);
+    const tx = s.append('text').attr('class', 'dlbl b').attr('x', 0).attr('y', yy - 6);
+    tx.text(row.lab + ' · ' + nf0.format(row.v) + '\u00a0' + (row.v % 10 === 2 || row.v % 10 === 3 || row.v % 10 === 4 ? 'токена' : 'токенов'));
+    for (let i = 0; i < n; i++) total.push({ x: lx + (i % cols) * step + step / 2, y: yy + Math.floor(i / cols) * step + step / 2, k });
+    yy += nr * step + 34;
+  });
+  const h = yy - 20; s.attr('viewBox', `0 0 ${w} ${h}`).attr('height', h);
+  const c = s.append('g').selectAll('circle').data(total).join('circle').attr('cx', d => d.x).attr('cy', d => d.y).attr('r', r).attr('fill', ink);
+  if (animate && !RM) c.attr('opacity', 0).transition().delay((d, i) => i * 12).duration(180).attr('opacity', 1);
+}
+const c2obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !chart2Shown) { chart2Shown = true; chart2(true); } }), { threshold: .4 });
+c2obs.observe(document.getElementById('fig2'));
+
+function redrawAll() { lastP = -1; render(); chart1(); chart1b(); chart2(false); }
+let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { layoutStage(); chart1(); chart1b(); chart2(false); }, 150); });
+layoutStage(); chart1(); chart1b(); chart2(false); autoplay();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { layoutStage(); chart1(); chart1b(); chart2(false); });
+})();
+</script>
+</body>
+</html>

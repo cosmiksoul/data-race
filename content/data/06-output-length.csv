@@ -1,0 +1,3 @@
+model_type,median_output_tokens,models_in_sample,benchmark,source
+обычная,505,78,GPQA Diamond,"Epoch AI, output length scatter data; медиана — наш расчёт"
+рассуждающая,7662,12,GPQA Diamond,"Epoch AI, output length scatter data; медиана — наш расчёт"

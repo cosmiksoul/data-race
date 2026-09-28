@@ -1,0 +1,7 @@
+model,date,blended_usd_per_mtok,note
+GPT-4,2023-03-14,37.5,самая дешёвая модель уровня GPT-4 на GPQA Diamond (Epoch AI)
+GPT-4 Turbo,2023-11-06,15,самая дешёвая модель уровня GPT-4 на GPQA Diamond (Epoch AI)
+Mistral Large,2024-02-26,6,самая дешёвая модель уровня GPT-4 на GPQA Diamond (Epoch AI)
+Claude 3 Haiku,2024-03-04,.5,самая дешёвая модель уровня GPT-4 на GPQA Diamond (Epoch AI)
+Gemini 1.5 Flash,2024-05-10,.13,самая дешёвая модель уровня GPT-4 на GPQA Diamond (Epoch AI)
+Phi 4,2024-12-13,.1225,самая дешёвая модель уровня GPT-4 на GPQA Diamond (Epoch AI)

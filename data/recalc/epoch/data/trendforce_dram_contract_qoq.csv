@@ -1,0 +1,12 @@
+quarter,category,low_pct,high_pct,status,release_date,source,quote
+3Q25,conventional,10,15,прогноз (итог не опубликован в пресс-релизах),2025-07-07,https://www.trendforce.com/presscenter/news/20250707-12633.html,"average contract prices for conventional DRAM are projected to rise by 10% to 15% in 3Q25"
+3Q25,PC,8,13,прогноз,2025-07-07,https://www.trendforce.com/presscenter/news/20250707-12633.html,"PC DRAM ... expected to rise by 8% to 13% in the third quarter"
+3Q25,server,3,8,прогноз,2025-07-07,https://www.trendforce.com/presscenter/news/20250707-12633.html,"server DRAM ... prices expected to rise by 3% to 8%"
+4Q25,conventional,45,50,итог (оценка TrendForce),2026-02-26,https://www.trendforce.com/presscenter/news/20260226-12937.html,"Conventional DRAM contract prices rose 45–50% QoQ"
+1Q26,conventional,93,98,итог (оценка TrendForce),2026-06-01,https://www.trendforce.com/presscenter/news/20260601-13070.html,"increased by approximately 93% to 98% QoQ"
+1Q26,PC,100,,прогноз (>100%),2026-02-02,https://www.trendforce.com/presscenter/news/20260202-12911.html,"PC DRAM ... over 100%"
+1Q26,server,90,90,прогноз (~90%),2026-02-02,https://www.trendforce.com/presscenter/news/20260202-12911.html,"server DRAM ... around 90%"
+2Q26,conventional,58,63,прогноз (подтверждён 01.06.2026; итог не опубликован),2026-06-01,https://www.trendforce.com/presscenter/news/20260601-13070.html,"expected ... to rise another 58–63% QoQ in 2Q26"
+3Q26,conventional,13,18,прогноз (подтверждён 07.09.2026),2026-09-07,https://www.trendforce.com/presscenter/news/20260907-13219.html,"Conventional DRAM contract price growth ... is projected to moderate to 13–18% QoQ"
+3Q26,server,13,18,прогноз,2026-07-09,https://www.trendforce.com/presscenter/news/20260709-13140.html,"server DRAM contract prices will rise by 13–18% quarter-over-quarter in 3Q26"
+4Q26,conventional,,,прогноз за пейволом (отчёт 24.09.2026),2026-09-24,https://www.trendforce.com/research/download/RP260924PL,"AI Server Demand Continues to Support 4Q26 DRAM Price Hikes"

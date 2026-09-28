@@ -1,0 +1,13 @@
+_to_delete/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+node_modules/
+.venv/
+# сырые отчёты SEC (3–5 МБ каждый) скачиваются заново: data/recalc/us/fetch.sh
+data/recalc/us/raw/CIK*.json
+# скриншоты проверок
+s_*.png
+r_*.png
+screens/

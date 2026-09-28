@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Гонка за мощности</title>
+<meta name="description" content="Макет: гонка AI-датацентров 2019–2030 на открытых данных Epoch AI">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#07090d; --panel:#0b0f15; --panel-2:#0e131a;
+  --line:rgba(255,255,255,.07); --line-2:rgba(255,255,255,.12);
+  --ink:#e8edf3; --ink-2:#a3aebb; --muted:#6b7684; --faint:#3a4452;
+  --accent:#5fd4ff; --accent-dim:rgba(95,212,255,.14);
+  --land:#0e141b; --border:#1b2430; --nation:#2a3746;
+  --glow:#8fe3ff;
+  /* categorical, dark steps — validated vs #0f141b (all checks pass) */
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767; --s-other:#5b6572;
+  --mono: ui-monospace,"Cascadia Mono","SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --sans: system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;opacity:.35;mask-image:radial-gradient(ellipse at 50% 40%,#000 30%,transparent 85%)}
+button{font:inherit;color:inherit}
+.app{position:relative;z-index:1;display:grid;grid-template-rows:auto 1fr auto;min-height:100vh;padding:14px 16px 12px;gap:12px}
+
+/* ── header ─────────────────────────── */
+header{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand svg{flex:none}
+.brand h1{margin:0;font:600 17px/1.1 var(--mono);letter-spacing:.32em;color:var(--ink)}
+.brand p{margin:3px 0 0;font:11px/1.3 var(--mono);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.clock{display:flex;align-items:center;gap:10px;margin-left:auto;font:12px var(--mono);letter-spacing:.12em;color:var(--ink-2);flex-wrap:wrap}
+.clock b{color:var(--accent);font-weight:600;font-size:15px;letter-spacing:.08em}
+.chip{border:1px solid var(--line-2);padding:3px 8px;border-radius:3px;font:11px var(--mono);letter-spacing:.16em;color:var(--ink-2);white-space:nowrap}
+.chip.mode{color:var(--bg);background:var(--accent);border-color:var(--accent);font-weight:700}
+.chip.mode[data-mode="plan"]{background:transparent;color:var(--accent);border-style:dashed}
+.chip.mode[data-mode="fog"]{background:transparent;color:var(--ink-2);border-color:var(--faint)}
+.tools{display:flex;gap:6px;flex-wrap:wrap}
+.btn{background:transparent;border:1px solid var(--line-2);border-radius:3px;padding:5px 10px;font:11px var(--mono);letter-spacing:.14em;color:var(--ink-2);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--accent-dim);border-color:var(--accent);color:var(--ink)}
+.btn:focus-visible,.term:focus-visible,.row:focus-visible,.tick-item:focus-visible,#scrub:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:3px;overflow:hidden}
+.seg .btn{border:0;border-radius:0}
+.seg .btn+.btn{border-left:1px solid var(--line-2)}
+
+/* ── main grid ──────────────────────── */
+main{display:grid;grid-template-columns:300px minmax(0,1fr) 320px;gap:12px;min-height:0}
+.panel{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:4px;position:relative;min-width:0}
+.panel>h2{margin:0;padding:10px 12px 8px;font:600 11px var(--mono);letter-spacing:.22em;color:var(--muted);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.panel>h2 span{color:var(--faint);font-weight:400;letter-spacing:.1em}
+.corner{position:absolute;width:8px;height:8px;border-color:var(--accent);opacity:.6}
+.corner.tl{top:-1px;left:-1px;border-top:1px solid;border-left:1px solid}
+.corner.br{bottom:-1px;right:-1px;border-bottom:1px solid;border-right:1px solid}
+
+/* left column */
+.left{display:flex;flex-direction:column;gap:12px;min-height:0}
+.hero{padding:14px 14px 12px}
+.hero .lbl{font:11px var(--mono);letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+.hero .val{display:flex;align-items:baseline;gap:8px;margin-top:4px}
+.hero .num{font:600 56px/1 var(--sans);letter-spacing:-.02em;color:var(--ink)}
+.hero .unit{font:500 18px var(--sans);color:var(--ink-2)}
+.hero .cmp{margin-top:6px;font-size:13px;color:var(--ink-2)}
+.hero-panel.foggy .hero,.hero-panel.foggy .tiles{opacity:.45;transition:opacity .6s}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.tile{background:var(--panel-2);padding:9px 12px 10px}
+.tile.wide{grid-column:1/-1}
+.tile .lbl{font:10.5px var(--mono);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.tile .v{font:600 19px/1.2 var(--sans);margin-top:3px}
+.tile .v small{font-weight:500;font-size:12px;color:var(--ink-2);margin-left:3px}
+
+.race{flex:1;min-height:320px;display:flex;flex-direction:column}
+.race-body{position:relative;flex:1;margin:8px 12px 10px;min-height:280px}
+.row{position:absolute;left:0;right:0;height:30px;display:grid;grid-template-columns:118px 1fr;align-items:center;gap:8px;cursor:pointer;transition:transform .45s cubic-bezier(.3,.7,.2,1),opacity .3s;border-radius:3px;padding:0 4px}
+.row:hover{background:rgba(255,255,255,.03)}
+.row .nm{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.row .track{position:relative;height:14px}
+.row .bar{position:absolute;left:0;top:1px;height:12px;border-radius:0 4px 4px 0;transition:width .45s cubic-bezier(.3,.7,.2,1)}
+.row .v{position:absolute;top:-1px;font:12px var(--sans);font-variant-numeric:tabular-nums;color:var(--ink-2);white-space:nowrap;transition:left .45s cubic-bezier(.3,.7,.2,1)}
+.row.dim{opacity:.32}
+.row.sel .nm{font-weight:600}
+.race-note{margin:0 12px 10px;font:11px/1.4 var(--sans);color:var(--muted)}
+
+/* map */
+.mapwrap{display:flex;flex-direction:column;min-height:520px;overflow:hidden}
+#map{flex:1;width:100%;display:block;min-height:420px}
+.map-hud{position:absolute;left:12px;bottom:10px;font:11px var(--mono);letter-spacing:.1em;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;pointer-events:none}
+.map-hud i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.map-hud .op{background:radial-gradient(circle,#fff 0 25%,var(--glow) 45%,transparent 72%)}
+.map-hud .cs{border:1px dashed var(--glow)}
+.offframe{position:absolute;right:12px;bottom:10px;font:11px var(--mono);letter-spacing:.08em;color:var(--ink-2);background:rgba(7,9,13,.7);padding:4px 8px;border:1px solid var(--line-2);border-radius:3px}
+.fog{position:absolute;inset:36px 0 0 0;pointer-events:none;opacity:0;transition:opacity .6s;
+  background:radial-gradient(ellipse at 50% 55%,rgba(150,165,185,.10),rgba(7,9,13,.72) 75%);display:flex;align-items:center;justify-content:center}
+.fog.on{opacity:1}
+.fog .card{max-width:420px;margin:16px;padding:14px 16px;border:1px solid var(--line-2);background:rgba(7,9,13,.82);border-radius:4px;font-size:13px;color:var(--ink-2);pointer-events:auto}
+.fog .card b{display:block;font:600 11px var(--mono);letter-spacing:.22em;color:var(--ink);margin-bottom:6px}
+.scan{position:absolute;left:0;right:0;top:36px;height:120px;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(95,212,255,.05),transparent);animation:scan 9s linear infinite}
+@keyframes scan{from{transform:translateY(-120px)}to{transform:translateY(calc(100vh))}}
+.site-core{fill:#eefaff}
+.site-ring{fill:none;stroke:var(--glow);stroke-width:1;stroke-dasharray:2 2}
+.ping{fill:none;stroke:var(--accent);stroke-width:1.2}
+.hl-ring{fill:none;stroke:#fff;stroke-width:1.5}
+
+/* ticker */
+.ticker{display:flex;flex-direction:column;min-height:0}
+.tick-list{list-style:none;margin:0;padding:4px 0;overflow:auto;flex:1;max-height:calc(100vh - 250px)}
+.tick-item{padding:9px 12px 10px;border-bottom:1px solid var(--line);border-left:2px solid transparent;cursor:default}
+.tick-item:hover{background:rgba(255,255,255,.025)}
+.tick-item .hd{display:flex;align-items:center;gap:7px;font:11px var(--mono);letter-spacing:.06em;color:var(--muted)}
+.tick-item .hd .site{color:var(--ink);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tick-item .hd .dot{width:7px;height:7px;border-radius:50%;flex:none}
+.tick-item .hd .plan{margin-left:auto;border:1px dashed var(--faint);padding:0 5px;border-radius:2px;color:var(--ink-2);flex:none}
+.tick-item p{margin:5px 0 0;font-size:12.5px;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tick-item .src{margin-top:4px;font:10.5px var(--mono);color:var(--faint);letter-spacing:.08em}
+.tick-item.fresh{border-left-color:var(--accent);animation:fresh 1.6s ease-out}
+@keyframes fresh{from{background:rgba(95,212,255,.10)}to{background:transparent}}
+.tick-empty{padding:16px 12px;color:var(--muted);font-size:12.5px}
+
+/* scrubber */
+footer.timeline{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:stretch}
+.play{width:46px;border:1px solid var(--line-2);background:var(--panel);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.play:hover{border-color:var(--accent)}
+.play svg{fill:var(--accent)}
+.scrub-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;position:relative;padding:0 8px}
+#scrub{display:block;width:100%;height:104px;cursor:ew-resize;touch-action:none}
+.zone-lbl{font:10.5px var(--mono);letter-spacing:.2em;fill:var(--muted)}
+.yr{font:10.5px var(--mono);fill:var(--muted)}
+.foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:10.5px var(--mono);letter-spacing:.08em;color:var(--faint)}
+.foot a{color:var(--muted)}
+
+/* terms & tooltip */
+.term{border-bottom:1px dotted var(--muted);cursor:help}
+#tip{position:fixed;z-index:50;pointer-events:none;max-width:300px;background:#0d1219;border:1px solid var(--line-2);border-radius:4px;padding:9px 11px;font-size:12.5px;color:var(--ink-2);box-shadow:0 8px 30px rgba(0,0,0,.5);opacity:0;transition:opacity .12s}
+#tip.on{opacity:1}
+#tip .t{font:600 11px var(--mono);letter-spacing:.14em;color:var(--ink);text-transform:uppercase;margin-bottom:5px}
+#tip .kv{display:grid;grid-template-columns:auto auto;gap:2px 12px;font-variant-numeric:tabular-nums}
+#tip .kv b{color:var(--ink);font-weight:600;text-align:right}
+#tip .note{margin-top:6px;font-size:11.5px;color:var(--muted)}
+#tip .key{display:inline-block;width:10px;height:2px;vertical-align:3px;margin-right:6px}
+sup a{color:var(--accent);text-decoration:none;font:10px var(--mono)}
+
+/* modals */
+dialog{background:#0b0f15;color:var(--ink);border:1px solid var(--line-2);border-radius:6px;padding:0;max-width:min(980px,calc(100vw - 32px));width:100%;max-height:calc(100vh - 48px)}
+dialog::backdrop{background:rgba(3,5,8,.72)}
+dialog .dh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font:600 12px var(--mono);letter-spacing:.2em}
+dialog .db{padding:12px 16px 16px;overflow:auto;max-height:calc(100vh - 120px)}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font:600 10.5px var(--mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase;position:sticky;top:0;background:#0b0f15}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.src-list{margin:0;padding-left:22px;color:var(--ink-2);font-size:13px}
+.src-list li{margin:0 0 10px}
+.src-list a{color:var(--accent)}
+
+@media (max-width:1180px){
+  main{grid-template-columns:280px minmax(0,1fr)}
+  .ticker{grid-column:1/-1}
+  .tick-list{max-height:360px}
+}
+@media (max-width:760px){
+  .app{padding:12px 16px}
+  .tl-wrap{position:sticky;bottom:0;z-index:5;background:var(--bg);padding:8px 0 6px;margin:0 -16px;padding-left:16px;padding-right:16px;border-top:1px solid var(--line)}
+  .tl-wrap .foot{display:none}
+  .offframe{bottom:auto;top:44px}
+  .map-hud{display:none}
+  .mapwrap{min-height:300px}
+  #map{min-height:250px!important}
+  main{grid-template-columns:1fr}
+  .mapwrap{min-height:380px;order:-1}
+  #map{min-height:330px}
+  .hero .num{font-size:46px}
+  .clock{margin-left:0}
+  .brand h1{letter-spacing:.2em}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .scan{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="1.5" y="1.5" width="31" height="31" rx="3" fill="none" stroke="#5fd4ff" stroke-opacity=".5"/><rect x="8" y="8" width="18" height="18" rx="2" fill="none" stroke="#5fd4ff" stroke-opacity=".8"/><path d="M18.5 10.5 13 18h4l-1.5 5.5L21 16h-4z" fill="#5fd4ff"/></svg>
+      <div>
+        <h1>ГОНКА ЗА МОЩНОСТИ</h1>
+        <p>AI compute race · 93 площадки · <span class="term" tabindex="0" data-term="coverage">покрытие ≈44%</span><sup><a href="#" data-src="2">2</a></sup></p>
+      </div>
+    </div>
+    <div class="clock">
+      <span>T</span><b id="tRead">2026·09</b><span id="tRel" class="chip">СЕГОДНЯ</span><span id="modeChip" class="chip mode" data-mode="fact">ФАКТ</span>
+      <span class="chip">ДАННЫЕ 24.09.2026</span>
+    </div>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Вид карты">
+        <button class="btn" id="vUS" aria-pressed="true">США</button>
+        <button class="btn" id="vWorld" aria-pressed="false">МИР</button>
+      </div>
+      <button class="btn" id="bTable">ТАБЛИЦА</button>
+      <button class="btn" id="bSrc">ИСТОЧНИКИ</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="left">
+      <section class="panel hero-panel"><i class="corner tl"></i><i class="corner br"></i>
+        <div class="hero">
+          <div class="lbl"><span class="term" tabindex="0" data-term="facility">Мощность площадок</span></div>
+          <div class="val"><span class="num" id="heroNum">17,3</span><span class="unit">ГВт</span></div>
+          <div class="cmp" id="heroCmp">≈ 17 <span class="term" tabindex="0" data-term="reactor">энергоблоков АЭС</span></div>
+        </div>
+        <div class="tiles">
+          <div class="tile"><div class="lbl"><span class="term" tabindex="0" data-term="h100e">H100e</span></div><div class="v" id="tH">14,0<small>млн</small></div></div>
+          <div class="tile"><div class="lbl"><span class="term" tabindex="0" data-term="capex">Капвложения</span></div><div class="v" id="tC">$512<small>млрд</small></div></div>
+          <div class="tile wide"><div class="lbl">Площадки</div><div class="v" id="tS">70<small>в работе</small> · 12<small>в стройке</small></div></div>
+        </div>
+      </section>
+      <section class="panel race"><i class="corner tl"></i><i class="corner br"></i>
+        <h2>Гонка владельцев <span>ГВт</span></h2>
+        <div class="race-body" id="race"></div>
+        <p class="race-note">Клик по строке подсвечивает площадки на карте. * <span class="term" tabindex="0" data-term="colo">Колокейшн</span> — арендатор не раскрыт.</p>
+      </section>
+    </div>
+
+    <section class="panel mapwrap"><i class="corner tl"></i><i class="corner br"></i>
+      <h2 id="mapTitle">Карта площадок · США <span id="mapSub">размер — мощность площадки</span></h2>
+      <div class="scan" aria-hidden="true"></div>
+      <svg id="map" role="img" aria-label="Карта AI-датацентров"></svg>
+      <div class="map-hud"><span><i class="op"></i>работает</span><span><i class="cs"></i>в стройке / план</span></div>
+      <div class="offframe" id="offframe" hidden></div>
+      <div class="fog" id="fog"><div class="card"><b>ТУМАН · 2029–2030</b>
+        После 2028 года у Epoch почти нет наблюдений по отдельным площадкам. Дальше — только агрегаты по всем датацентрам мира: <span class="term" tabindex="0" data-term="iea">IEA</span> оценивает потребление в 485 ТВт·ч в 2025 году и около 950 ТВт·ч к 2030-му; AI-ориентированные датацентры — втрое.<sup><a href="#" data-src="3">3</a></sup></div></div>
+    </section>
+
+    <section class="panel ticker"><i class="corner tl"></i><i class="corner br"></i>
+      <h2><span style="color:var(--muted)"><span class="term" tabindex="0" data-term="intercept" style="letter-spacing:.22em">Перехваты</span></span> <span id="tickCount">стройка · спутник · отчёты</span></h2>
+      <ul class="tick-list" id="ticks"></ul>
+    </section>
+  </main>
+
+  <div class="tl-wrap">
+    <footer class="timeline">
+      <button class="play" id="play" aria-label="Проиграть"><svg width="16" height="16" viewBox="0 0 16 16" id="playIco"><path d="M3 1.5v13l11-6.5z"/></svg></button>
+      <div class="scrub-wrap"><svg id="scrub" tabindex="0" role="slider" aria-label="Дата" aria-valuemin="0" aria-valuemax="143"></svg></div>
+    </footer>
+    <div class="foot" style="margin-top:8px">
+      <span>МАКЕТ v0.1 · ДАННЫЕ: EPOCH AI (CC BY 4.0), IEA · ← → МЕСЯЦ · ПРОБЕЛ — ПУСК</span>
+      <span>Мощность в «ПЛАНЕ» — по разрешениям и заявлениям компаний, не факт</span>
+    </div>
+  </div>
+</div>
+
+<div id="tip" role="tooltip"></div>
+
+<dialog id="dTable"><div class="dh"><span id="tblTitle">ТАБЛИЦА</span><button class="btn" data-close>ЗАКРЫТЬ</button></div><div class="db"><table id="tbl"></table></div></dialog>
+<dialog id="dSrc"><div class="dh"><span>ИСТОЧНИКИ</span><button class="btn" data-close>ЗАКРЫТЬ</button></div><div class="db">
+<ol class="src-list">
+  <li id="src1">Epoch AI. <a href="https://epoch.ai/data/ai-data-centers" target="_blank" rel="noopener">AI data centers</a> — площадки, таймлайны, заметки о стройке, координаты из <a href="https://epoch.ai/data/data-centers/satellite-explorer" target="_blank" rel="noopener">Satellite Explorer</a>. Выгрузка от 24.09.2026. Лицензия CC BY 4.0.</li>
+  <li id="src2">Epoch AI. <a href="https://epoch.ai/data/data-centers-documentation/methodology" target="_blank" rel="noopener">Методология</a>: оценка мощности по охлаждению на спутниковых снимках, сверка с документами; покрытие ≈44% мировых AI-вычислений (90% ДИ 23–81%) на 26.09.2026.</li>
+  <li id="src3">IEA. <a href="https://www.iea.org/reports/key-questions-on-energy-and-ai/executive-summary" target="_blank" rel="noopener">Key Questions on Energy and AI</a> (2026): 485 ТВт·ч в 2025 → ~950 ТВт·ч в 2030. Лицензия CC BY 4.0.</li>
+  <li id="src4">Картоснова: <a href="https://github.com/topojson/world-atlas" target="_blank" rel="noopener">world-atlas</a> (Natural Earth, public domain), <a href="https://github.com/topojson/us-atlas" target="_blank" rel="noopener">us-atlas</a> (US Census). Отрисовка — <a href="https://d3js.org" target="_blank" rel="noopener">D3</a>.</li>
+</ol></div></dialog>
+
+<script>/*__D3__*/</script>
+<script>/*__TOPO__*/</script>
+<script type="application/json" id="d-data">/*__DATA__*/</script>
+<script type="application/json" id="d-us">/*__US__*/</script>
+<script type="application/json" id="d-world">/*__WORLD__*/</script>
+<script>
+(() => {
+'use strict';
+const DATA = JSON.parse(document.getElementById('d-data').textContent);
+const US = JSON.parse(document.getElementById('d-us').textContent);
+const WORLD = JSON.parse(document.getElementById('d-world').textContent);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const TODAY = DATA.meta.today, PLAN_END = DATA.meta.planEnd;
+const months = DATA.agg.map(a => a[0]);
+const monthEnd = ym => { const [y, m] = ym.split('-').map(Number); return new Date(Date.UTC(y, m, 0)).toISOString().slice(0, 10); };
+const ends = months.map(monthEnd);
+const todayIdx = months.indexOf(TODAY.slice(0, 7));
+ends[todayIdx] = TODAY;
+let ti = todayIdx, prevTi = ti, view = 'us', selOwner = null, playing = null;
+
+/* ── owners & colors (fixed by entity, never by rank) ── */
+const NAMED = DATA.meta.owners; // Oracle, Google, Meta, Microsoft, Amazon, SpaceXAI, CoreWeave, COLO
+const css = getComputedStyle(document.documentElement);
+const COLORS = {}; NAMED.forEach((o, i) => COLORS[o] = css.getPropertyValue('--s' + (i + 1)).trim());
+COLORS.OTHER = css.getPropertyValue('--s-other').trim();
+const GROUP = o => NAMED.includes(o) ? o : 'OTHER';
+const LABEL = g => g === 'COLO' ? 'Колокейшн*' : g === 'OTHER' ? 'Другие' : g;
+const GROUPS = [...NAMED, 'OTHER'];
+const sites = DATA.sites.map((s, i) => ({ ...s, i, g: GROUP(s.o) }));
+
+/* ── formatting ── */
+const nf1 = new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const nf0 = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 });
+const plural = (n, a, b, c) => { n = Math.abs(n) % 100; const n1 = n % 10; if (n > 10 && n < 20) return c; if (n1 > 1 && n1 < 5) return b; if (n1 === 1) return a; return c; };
+const fmtDate = d => d.split('-').reverse().join('.');
+
+/* ── state of a site at date D ── */
+function stateAt(s, D) {
+  let pt = null;
+  for (const p of s.p) { if (p[0] <= D) pt = p; else break; }
+  if (!pt) return null;
+  return { d: pt[0], P: pt[1], IT: pt[2], H: pt[3], C: pt[4], B: pt[5], planned: pt[0] > TODAY, live: pt[1] > 0 };
+}
+const groupMax = (() => { let m = 0; ends.forEach(D => { const acc = {}; sites.forEach(s => { const st = stateAt(s, D); if (st) acc[s.g] = (acc[s.g] || 0) + st.P; }); Object.values(acc).forEach(v => m = Math.max(m, v)); }); return m / 1000; })();
+
+/* ── tooltip ── */
+const tip = document.getElementById('tip');
+function showTip(node, x, y) { tip.replaceChildren(node); tip.classList.add('on'); placeTip(x, y); }
+function placeTip(x, y) { const r = tip.getBoundingClientRect(); let L = x + 14, T = y + 14; if (L + r.width > innerWidth - 8) L = x - r.width - 14; if (T + r.height > innerHeight - 8) T = y - r.height - 14; tip.style.left = Math.max(8, L) + 'px'; tip.style.top = Math.max(8, T) + 'px'; }
+function hideTip() { tip.classList.remove('on'); }
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+/* ── glossary ── */
+const TERMS = {
+  facility: ['Мощность площадки', 'Сколько площадка берёт из сети целиком: серверы плюс охлаждение и потери. IT-мощность (только серверы) в этих данных в среднем примерно на пятую часть меньше. Их отношение называется PUE — 1,2 считается хорошим показателем.'],
+  reactor: ['Энергоблок АЭС', 'Условная мера масштаба: крупный энергоблок даёт порядка 1 ГВт (реальные — примерно от 0,9 до 1,6 ГВт). Счёт — по мощности площадок, а не по фактическому потреблению.'],
+  h100e: ['H100e', 'H100-эквиваленты: вычислительная мощь всех чипов площадки, пересчитанная в число ускорителей NVIDIA H100 по пиковой 8-битной производительности.'],
+  capex: ['Капвложения', 'Полная стоимость площадок — стройка плюс вычислительное оборудование — в долларах 2025 года. Оценка Epoch.'],
+  colo: ['Колокейшн', 'Площадки операторов, сдающих мощности в аренду (QTS, DayOne, STACK и др.). Конечный арендатор Epoch не указан.'],
+  coverage: ['Покрытие', 'Epoch оценивает, что база охватывает около 44% мировых AI-вычислений (90% доверительный интервал 23–81%). 77 из 93 площадок — в США, Китай почти не виден. Это гонка компаний, а не стран.'],
+  intercept: ['Перехват', 'Запись Epoch о состоянии стройки: что видно на спутниковом снимке, что сказано в разрешениях и отчётах компаний. Записи с датой позже сегодняшней — планы.'],
+  iea: ['IEA', 'Международное энергетическое агентство. Его прогноз — по всем датацентрам мира, а не только по AI-площадкам из базы Epoch, поэтому напрямую с ГВт на экране не складывается.']
+};
+document.querySelectorAll('.term').forEach(t => {
+  const def = TERMS[t.dataset.term]; if (!def) return;
+  const build = () => { const f = document.createDocumentFragment(); f.append(el('div', 't', def[0]), el('div', '', def[1])); return f; };
+  t.addEventListener('pointerenter', e => showTip(build(), e.clientX, e.clientY));
+  t.addEventListener('pointermove', e => placeTip(e.clientX, e.clientY));
+  t.addEventListener('pointerleave', hideTip);
+  t.addEventListener('focus', () => { const r = t.getBoundingClientRect(); showTip(build(), r.left, r.bottom); });
+  t.addEventListener('blur', hideTip);
+});
+
+/* ── map ── */
+const svg = d3.select('#map');
+const gBase = svg.append('g'), gSites = svg.append('g').style('mix-blend-mode', 'screen'), gFx = svg.append('g');
+const defs = svg.append('defs');
+function glow(id, c) {
+  const g = defs.append('radialGradient').attr('id', id);
+  g.append('stop').attr('offset', '0%').attr('stop-color', '#ffffff').attr('stop-opacity', .95);
+  g.append('stop').attr('offset', '22%').attr('stop-color', c).attr('stop-opacity', .85);
+  g.append('stop').attr('offset', '60%').attr('stop-color', c).attr('stop-opacity', .18);
+  g.append('stop').attr('offset', '100%').attr('stop-color', c).attr('stop-opacity', 0);
+}
+glow('gl-base', css.getPropertyValue('--glow').trim());
+GROUPS.forEach(g => glow('gl-' + g, COLORS[g]));
+const usStates = topojson.feature(US, US.objects.states);
+const usNation = topojson.feature(US, US.objects.nation);
+const world = topojson.feature(WORLD, WORLD.objects.countries);
+world.features = world.features.filter(f => f.id !== '010');
+let proj, W = 0, H = 0;
+const rScale = d3.scaleSqrt().domain([0, 2500]);
+
+function layoutMap() {
+  const box = svg.node().getBoundingClientRect(); W = box.width; H = box.height;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+  gBase.selectAll('*').remove();
+  const pad = 18;
+  if (view === 'us') {
+    proj = d3.geoAlbersUsa().fitExtent([[pad, pad + 8], [W - pad, H - pad - 26]], usNation);
+    rScale.range([0, Math.max(10, Math.min(22, W / 55))]);
+  } else {
+    proj = d3.geoNaturalEarth1().fitExtent([[pad, pad], [W - pad, H - pad - 22]], world);
+    rScale.range([0, Math.max(6, Math.min(14, W / 90))]);
+  }
+  const path = d3.geoPath(proj);
+  if (view === 'world') gBase.append('path').datum(d3.geoGraticule10()).attr('d', path).attr('fill', 'none').attr('stroke', 'rgba(255,255,255,.035)');
+  const feats = view === 'us' ? usStates.features : world.features;
+  gBase.append('g').selectAll('path').data(feats).join('path').attr('d', path).attr('fill', view === 'us' ? 'var(--land)' : '#101923').attr('stroke', view === 'us' ? 'var(--border)' : '#223041').attr('stroke-width', .6);
+  if (view === 'us') gBase.append('path').datum(usNation).attr('d', path).attr('fill', 'none').attr('stroke', 'var(--nation)').attr('stroke-width', 1);
+  sites.forEach(s => { const p = proj(s.ll); s.xy = p || null; });
+  document.getElementById('mapTitle').firstChild.nodeValue = 'Карта площадок · ' + (view === 'us' ? 'США ' : 'Мир ');
+  renderSites(true);
+}
+
+function renderSites(instant) {
+  const D = ends[ti];
+  const vis = [];
+  let offN = 0, offP = 0;
+  sites.forEach(s => {
+    const st = stateAt(s, D); s.st = st;
+    if (!st) return;
+    if (!s.xy) { offN++; offP += st.P; return; }
+    vis.push(s);
+  });
+  vis.sort((a, b) => a.st.P - b.st.P);
+  const off = document.getElementById('offframe');
+  if (view === 'us' && offN) { off.hidden = false; off.textContent = `ВНЕ КАДРА: ${offN} ${plural(offN, 'площадка', 'площадки', 'площадок')} · ${nf1.format(offP / 1000)} ГВт → МИР`; } else off.hidden = true;
+
+  const sel = gSites.selectAll('g.site').data(vis, d => d.i);
+  const enter = sel.enter().append('g').attr('class', 'site').attr('tabindex', 0)
+    .on('pointerenter', (e, d) => siteTip(e, d)).on('pointermove', e => placeTip(e.clientX, e.clientY)).on('pointerleave', hideTip)
+    .on('focus', (e, d) => { const r = e.currentTarget.getBoundingClientRect(); siteTip({ clientX: r.right, clientY: r.bottom }, d); }).on('blur', hideTip);
+  enter.append('circle').attr('class', 'halo');
+  enter.append('circle').attr('class', 'site-ring');
+  enter.append('circle').attr('class', 'site-core');
+  enter.append('circle').attr('class', 'hit').attr('fill', 'transparent');
+  sel.exit().remove();
+  const all = enter.merge(sel).attr('transform', d => `translate(${d.xy[0]},${d.xy[1]})`);
+  const t = (instant || RM) ? 0 : 380;
+  all.each(function (d) {
+    const g = d3.select(this), st = d.st, R = rScale(st.P);
+    const dim = selOwner && d.g !== selOwner;
+    const fill = selOwner && d.g === selOwner ? `url(#gl-${d.g})` : 'url(#gl-base)';
+    g.style('opacity', dim ? .14 : 1);
+    g.select('.halo').attr('fill', fill).transition().duration(t).attr('r', st.live ? R * 2.4 : 0).attr('opacity', st.planned ? .45 : .9);
+    g.select('.site-core').transition().duration(t).attr('r', st.live ? Math.max(1.4, R * .28) : 0).attr('opacity', st.planned ? .6 : 1);
+    g.select('.site-ring').attr('r', st.live ? Math.max(4, R * 1.05) : 4.5).attr('opacity', (!st.live || st.planned) ? .85 : 0);
+    g.select('.hit').attr('r', Math.max(12, R * 1.2));
+  });
+}
+
+function siteTip(e, d) {
+  const st = d.st; if (!st) return;
+  const f = document.createDocumentFragment();
+  f.append(el('div', 't', d.n));
+  const kv = el('div', 'kv');
+  const add = (k, v) => { kv.append(el('span', '', k), el('b', '', v)); };
+  add('Владелец', d.o === 'COLO' ? 'колокейшн, не раскрыт' : d.o + (d.oc && d.oc !== 'confident' ? ` (${d.oc})` : ''));
+  if (d.u.length) add('Пользователи', d.u.map(u => u[0] + (u[1] && u[1] !== 'confident' ? '?' : '')).join(', '));
+  add('Страна', d.c);
+  add('Мощность площадки', st.P ? nf0.format(st.P) + ' МВт' : '—');
+  add('IT-мощность', st.IT ? nf0.format(st.IT) + ' МВт' : '—');
+  add('H100e', st.H ? nf1.format(st.H / 1e6) + ' млн' : '—');
+  add('Капвложения', st.C ? '$' + nf1.format(st.C) + ' млрд' : '—');
+  f.append(kv);
+  f.append(el('div', 'note', (st.planned ? 'ПЛАН на ' : 'Наблюдение от ') + fmtDate(st.d) + (st.live ? '' : ' · стройка')));
+  showTip(f, e.clientX, e.clientY);
+}
+
+function ping(s) {
+  if (RM || !s.xy) return;
+  gFx.append('circle').attr('class', 'ping').attr('cx', s.xy[0]).attr('cy', s.xy[1]).attr('r', 3).attr('opacity', .9)
+    .transition().duration(1300).ease(d3.easeCubicOut).attr('r', 30).attr('opacity', 0).remove();
+}
+function highlight(s, on) {
+  gFx.selectAll('.hl-ring').remove();
+  if (on && s.xy && s.st) gFx.append('circle').attr('class', 'hl-ring').attr('cx', s.xy[0]).attr('cy', s.xy[1]).attr('r', Math.max(9, rScale(s.st.P) * 1.3));
+}
+
+/* ── race ── */
+const raceBox = document.getElementById('race');
+const rows = {};
+GROUPS.forEach(g => {
+  const r = el('div', 'row'); r.tabIndex = 0; r.setAttribute('role', 'button');
+  const nm = el('div', 'nm'); const dot = el('span', 'dot'); dot.style.background = COLORS[g]; nm.append(dot, el('span', '', LABEL(g)));
+  const tr = el('div', 'track'); const bar = el('div', 'bar'); bar.style.background = COLORS[g]; const v = el('div', 'v');
+  tr.append(bar, v); r.append(nm, tr); raceBox.append(r);
+  const toggle = () => { selOwner = selOwner === g ? null : g; update(false); };
+  r.addEventListener('click', toggle);
+  r.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+  r.addEventListener('pointerenter', e => { const f = document.createDocumentFragment(); f.append(el('div', 't', LABEL(g))); const kv = el('div', 'kv'); const val = rows[g].val; kv.append(el('span', '', 'Мощность площадок'), el('b', '', nf1.format(val) + ' ГВт'), el('span', '', 'Площадок'), el('b', '', String(rows[g].n))); f.append(kv); if (g === 'OTHER') f.append(el('div', 'note', 'Softbank, G42, Huawei, VNET, Nscale, Nebius, Alibaba, Mistral AI и др.')); showTip(f, e.clientX, e.clientY); });
+  r.addEventListener('pointermove', e => placeTip(e.clientX, e.clientY));
+  r.addEventListener('pointerleave', hideTip);
+  rows[g] = { r, bar, v, val: 0, n: 0 };
+});
+function renderRace() {
+  const D = ends[ti]; const acc = {}, cnt = {};
+  GROUPS.forEach(g => { acc[g] = 0; cnt[g] = 0; });
+  sites.forEach(s => { const st = stateAt(s, D); if (st) { acc[s.g] += st.P / 1000; if (st.P > 0) cnt[s.g]++; } });
+  const order = GROUPS.slice().sort((a, b) => (a === 'OTHER') - (b === 'OTHER') || acc[b] - acc[a]);
+  const bw = raceBox.clientWidth - 118 - 8 - 8 - 58;
+  const rowH = Math.max(28, Math.min(34, raceBox.clientHeight / GROUPS.length));
+  order.forEach((g, k) => {
+    const o = rows[g]; o.val = acc[g]; o.n = cnt[g];
+    o.r.style.transform = `translateY(${k * rowH}px)`;
+    const w = Math.max(0, bw * acc[g] / groupMax);
+    o.bar.style.width = (acc[g] > 0 ? Math.max(2, w) : 0) + 'px';
+    o.v.style.left = (w + 6) + 'px';
+    o.v.textContent = acc[g] > 0 ? nf1.format(acc[g]) : '—';
+    o.r.classList.toggle('dim', !!selOwner && selOwner !== g);
+    o.r.classList.toggle('sel', selOwner === g);
+    o.r.setAttribute('aria-pressed', selOwner === g);
+    o.r.setAttribute('aria-label', `${LABEL(g)}: ${nf1.format(acc[g])} ГВт`);
+  });
+}
+
+/* ── hero & tiles ── */
+let heroVal = null;
+function renderHero() {
+  const a = DATA.agg[ti]; const D = ends[ti];
+  let live = 0, cons = 0; sites.forEach(s => { const st = stateAt(s, D); if (st) st.live ? live++ : cons++; });
+  const target = a[1];
+  const numEl = document.getElementById('heroNum');
+  if (heroVal == null || RM) { numEl.textContent = nf1.format(target); heroVal = target; }
+  else { const i = d3.interpolateNumber(heroVal, target); d3.select(numEl).transition().duration(320).tween('t', () => t => { numEl.textContent = nf1.format(i(t)); }); heroVal = target; }
+  const n = Math.round(target);
+  const cmp = document.getElementById('heroCmp');
+  cmp.firstChild.nodeValue = '≈ ' + nf0.format(n) + ' ';
+  cmp.querySelector('.term').textContent = plural(n, 'энергоблок АЭС', 'энергоблока АЭС', 'энергоблоков АЭС');
+  document.getElementById('tH').firstChild.nodeValue = nf1.format(a[2]);
+  document.getElementById('tC').firstChild.nodeValue = '$' + nf0.format(a[3]);
+  const tS = document.getElementById('tS'); tS.replaceChildren(document.createTextNode(String(live)), el('small', '', 'в работе'), document.createTextNode(' · ' + cons), el('small', '', 'в стройке'));
+}
+
+/* ── ticker ── */
+const tickUl = document.getElementById('ticks');
+let shown = new Set();
+function renderTicker() {
+  const D = ends[ti];
+  const list = []; for (let k = DATA.events.length - 1; k >= 0 && list.length < 14; k--) { if (DATA.events[k][0] <= D) list.push(k); }
+  tickUl.replaceChildren();
+  if (!list.length) { tickUl.append(el('li', 'tick-empty', 'Пока тихо: первые площадки появятся в данных ближе к 2021 году.')); return; }
+  const next = new Set();
+  list.forEach(k => {
+    const [d, si, txt, nsrc] = DATA.events[k]; const s = sites[si]; next.add(k);
+    const li = el('li', 'tick-item' + (shown.size && !shown.has(k) ? ' fresh' : '')); li.tabIndex = 0;
+    const hd = el('div', 'hd'); const dot = el('span', 'dot'); dot.style.background = COLORS[s.g];
+    hd.append(el('span', '', fmtDate(d)), dot, el('span', 'site', s.n));
+    if (d > TODAY) hd.append(el('span', 'plan', 'ПЛАН'));
+    li.append(hd, el('p', '', txt), el('div', 'src', nsrc ? `ИСТОЧНИКОВ В ЗАПИСИ: ${nsrc}` : 'СПУТНИКОВОЕ НАБЛЮДЕНИЕ'));
+    const on = () => { s.st = stateAt(s, D); highlight(s, true); }; const off = () => highlight(s, false);
+    li.addEventListener('pointerenter', on); li.addEventListener('pointerleave', off); li.addEventListener('focus', on); li.addEventListener('blur', off);
+    tickUl.append(li);
+  });
+  shown = next;
+  document.getElementById('tickCount').textContent = `${DATA.events.filter(e => e[0] <= D).length} записей · EN`;
+}
+
+/* ── header clock & mode ── */
+function renderClock() {
+  const ym = months[ti]; document.getElementById('tRead').textContent = ym.replace('-', '·');
+  const rel = ti - todayIdx; const relEl = document.getElementById('tRel');
+  relEl.textContent = rel === 0 ? 'СЕГОДНЯ' : (rel > 0 ? '+' : '−') + Math.abs(rel) + ' МЕС';
+  const mode = ti <= todayIdx ? 'fact' : (ends[ti] <= PLAN_END ? 'plan' : 'fog');
+  document.querySelector('.hero-panel').classList.toggle('foggy', mode === 'fog');
+  const mc = document.getElementById('modeChip'); mc.dataset.mode = mode; mc.textContent = { fact: 'ФАКТ', plan: 'ПЛАН', fog: 'ТУМАН' }[mode];
+  document.getElementById('fog').classList.toggle('on', mode === 'fog');
+}
+
+/* ── scrubber ── */
+const sc = d3.select('#scrub');
+const x = d3.scaleUtc(), y = d3.scaleLinear();
+const tDate = s => new Date(s + 'T00:00:00Z');
+const aggPts = DATA.agg.map((a, k) => ({ d: tDate(ends[k]), v: a[1], h: a[2], k }));
+let SW = 0, SH = 104;
+const M = { l: 8, r: 46, t: 20, b: 20 };
+function layoutScrub() {
+  SW = sc.node().getBoundingClientRect().width; sc.attr('viewBox', `0 0 ${SW} ${SH}`); sc.selectAll('*').remove();
+  x.domain([tDate('2019-01-01'), tDate('2030-12-31')]).range([M.l, SW - M.r]);
+  y.domain([0, 50]).range([SH - M.b, M.t]);
+  const xT = x(tDate(TODAY)), xP = x(tDate(PLAN_END)), x0 = x.range()[0], x1 = x.range()[1];
+  const d = sc.append('defs');
+  const fg = d.append('linearGradient').attr('id', 'fogg').attr('x1', 0).attr('x2', 1);
+  fg.append('stop').attr('offset', 0).attr('stop-color', '#8a97a8').attr('stop-opacity', .04);
+  fg.append('stop').attr('offset', 1).attr('stop-color', '#8a97a8').attr('stop-opacity', .16);
+  [['cf', x0, xT], ['cp', xT, xP]].forEach(([id, a, b]) => d.append('clipPath').attr('id', id).append('rect').attr('x', a).attr('y', 0).attr('width', Math.max(0, b - a)).attr('height', SH));
+  // grid (solid hairlines)
+  [0, 25, 50].forEach(v => { sc.append('line').attr('x1', x0).attr('x2', x1).attr('y1', y(v)).attr('y2', y(v)).attr('stroke', v ? 'rgba(255,255,255,.05)' : 'rgba(255,255,255,.14)'); if (v) sc.append('text').attr('class', 'yr').attr('x', x1 + 6).attr('y', y(v) + 3.5).text(v + ' ГВт'); });
+  // fog zone
+  sc.append('rect').attr('x', xP).attr('y', M.t - 6).attr('width', x1 - xP).attr('height', SH - M.b - M.t + 6).attr('fill', 'url(#fogg)');
+  // zone labels
+  [['ФАКТ', x0 + 4], ['ПЛАН', xT + 6], [SW > 560 ? 'ТУМАН · IEA' : 'ТУМАН', xP + 6]].forEach(([t, xx]) => sc.append('text').attr('class', 'zone-lbl').attr('x', xx).attr('y', 12).text(t));
+  sc.append('line').attr('x1', xP).attr('x2', xP).attr('y1', M.t - 6).attr('y2', SH - M.b).attr('stroke', 'rgba(255,255,255,.10)');
+  // today marker
+  sc.append('line').attr('x1', xT).attr('x2', xT).attr('y1', 4).attr('y2', SH - M.b).attr('stroke', 'rgba(255,255,255,.35)');
+  // area + line
+  const area = d3.area().x(p => x(p.d)).y0(y(0)).y1(p => y(p.v)).curve(d3.curveStepAfter);
+  const line = d3.line().x(p => x(p.d)).y(p => y(p.v)).curve(d3.curveStepAfter);
+  const acc = css.getPropertyValue('--accent').trim();
+  const fact = aggPts;
+  sc.append('path').datum(fact).attr('d', area).attr('fill', acc).attr('fill-opacity', .16).attr('clip-path', 'url(#cf)');
+  sc.append('path').datum(fact).attr('d', line).attr('fill', 'none').attr('stroke', acc).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('clip-path', 'url(#cf)');
+  sc.append('path').datum(fact).attr('d', area).attr('fill', acc).attr('fill-opacity', .07).attr('clip-path', 'url(#cp)');
+  sc.append('path').datum(fact).attr('d', line).attr('fill', 'none').attr('stroke', acc).attr('stroke-opacity', .75).attr('stroke-width', 2).attr('stroke-dasharray', '4 3').attr('clip-path', 'url(#cp)');
+  // year ticks
+  d3.range(2019, 2031).forEach(yr => { const xx = x(tDate(yr + '-01-01')); sc.append('line').attr('x1', xx).attr('x2', xx).attr('y1', SH - M.b).attr('y2', SH - M.b + 4).attr('stroke', 'rgba(255,255,255,.2)'); if (SW > 560 || yr % 2 === 0) sc.append('text').attr('class', 'yr').attr('x', xx + 3).attr('y', SH - 5).text(yr); });
+  // hover crosshair & handle
+  sc.append('line').attr('class', 'xh').attr('y1', M.t - 6).attr('y2', SH - M.b).attr('stroke', 'rgba(255,255,255,.25)').attr('opacity', 0);
+  const h = sc.append('g').attr('class', 'handle');
+  h.append('line').attr('y1', M.t - 8).attr('y2', SH - M.b).attr('stroke', acc).attr('stroke-width', 2);
+  h.append('circle').attr('r', 5).attr('fill', acc).attr('stroke', '#07090d').attr('stroke-width', 2);
+  h.append('rect').attr('class', 'hb').attr('height', 16).attr('rx', 2).attr('fill', acc);
+  h.append('text').attr('class', 'ht').attr('y', M.t - 12).attr('fill', '#07090d').style('font', '600 10.5px var(--mono)');
+  renderHandle();
+}
+function renderHandle() {
+  const p = aggPts[ti]; const xx = x(p.d);
+  const h = sc.select('.handle'); h.attr('transform', `translate(${xx},0)`);
+  h.select('circle').attr('cy', y(p.v));
+  const label = nf1.format(p.v) + ' ГВт';
+  const t = h.select('.ht').text(label); const tw = t.node().getComputedTextLength() + 10;
+  let off = -tw - 9; if (xx + off < M.l) off = 9;
+  const by = Math.max(2, Math.min(y(p.v) - 22, SH - M.b - 20));
+  t.attr('x', off + 5).attr('y', by + 12); h.select('.hb').attr('x', off).attr('y', by).attr('width', tw);
+  sc.attr('aria-valuenow', ti).attr('aria-valuetext', months[ti] + ', ' + label);
+}
+const idxAt = px => { const d = x.invert(px); let best = 0, bd = Infinity; aggPts.forEach((p, k) => { const dd = Math.abs(p.d - d); if (dd < bd) { bd = dd; best = k; } }); return best; };
+let dragging = false;
+sc.on('pointerdown', e => { dragging = true; sc.node().setPointerCapture(e.pointerId); stop(); setT(idxAt(d3.pointer(e)[0])); })
+  .on('pointermove', e => {
+    const [px] = d3.pointer(e); const k = idxAt(px);
+    if (dragging) { setT(k); return; }
+    const p = aggPts[k]; sc.select('.xh').attr('x1', x(p.d)).attr('x2', x(p.d)).attr('opacity', 1);
+    const f = document.createDocumentFragment(); f.append(el('div', 't', months[k].replace('-', '·') + (ends[k] > TODAY ? (ends[k] > PLAN_END ? ' · туман' : ' · план') : '')));
+    const kv = el('div', 'kv'); const key = el('span'); const sw = el('i', 'key'); sw.style.background = css.getPropertyValue('--accent'); key.append(sw, document.createTextNode('Мощность площадок'));
+    kv.append(key, el('b', '', nf1.format(p.v) + ' ГВт'), el('span', '', 'H100e'), el('b', '', nf1.format(p.h) + ' млн')); f.append(kv); showTip(f, e.clientX, e.clientY);
+  })
+  .on('pointerup pointercancel', () => { dragging = false; })
+  .on('pointerleave', () => { sc.select('.xh').attr('opacity', 0); hideTip(); })
+  .on('keydown', e => {
+    const k = { ArrowRight: 1, ArrowLeft: -1, ArrowUp: 12, ArrowDown: -12 }[e.key];
+    if (k) { e.preventDefault(); stop(); setT(Math.max(0, Math.min(months.length - 1, ti + k))); }
+    if (e.key === 'Home') { e.preventDefault(); setT(0); } if (e.key === 'End') { e.preventDefault(); setT(months.length - 1); }
+  });
+
+/* ── play ── */
+const playBtn = document.getElementById('play'), playIco = document.getElementById('playIco');
+let played = false;
+function stop() { if (playing) { clearInterval(playing); playing = null; playIco.innerHTML = '<path d="M3 1.5v13l11-6.5z"/>'; playBtn.setAttribute('aria-label', 'Проиграть'); } }
+function play() {
+  if (playing) return stop();
+  if (ti >= months.length - 1 || !played) { played = true; setT(months.indexOf('2021-01')); }
+  playIco.innerHTML = '<path d="M3 2h3.5v12H3zM9.5 2H13v12H9.5z"/>'; playBtn.setAttribute('aria-label', 'Пауза');
+  playing = setInterval(() => { if (ti >= months.length - 1) return stop(); setT(ti + 1); }, 140);
+}
+playBtn.addEventListener('click', play);
+document.addEventListener('keydown', e => { if (e.code === 'Space' && !['BUTTON', 'INPUT'].includes(document.activeElement.tagName) && !document.querySelector('dialog[open]')) { e.preventDefault(); play(); } });
+
+/* ── update loop ── */
+function setT(k) { if (k === ti) return; prevTi = ti; ti = k; update(true); }
+function update(fromTime) {
+  const D = ends[ti];
+  renderClock(); renderHero(); renderRace(); renderSites(false); renderTicker(); renderHandle();
+  if (fromTime && ti > prevTi) {
+    const lo = ends[prevTi]; let c = 0;
+    DATA.events.forEach(ev => { if (ev[0] > lo && ev[0] <= D && c < 12) { ping(sites[ev[1]]); c++; } });
+  }
+  if (document.getElementById('dTable').open) renderTable();
+}
+
+/* ── view toggle ── */
+const vUS = document.getElementById('vUS'), vW = document.getElementById('vWorld');
+function setView(v) { view = v; vUS.setAttribute('aria-pressed', v === 'us'); vW.setAttribute('aria-pressed', v === 'world'); layoutMap(); }
+vUS.addEventListener('click', () => setView('us')); vW.addEventListener('click', () => setView('world'));
+document.getElementById('offframe').style.pointerEvents = 'auto';
+document.getElementById('offframe').addEventListener('click', () => setView('world'));
+
+/* ── table view ── */
+function renderTable() {
+  const D = ends[ti]; document.getElementById('tblTitle').textContent = 'ТАБЛИЦА · ' + months[ti].replace('-', '·');
+  const tb = document.getElementById('tbl'); tb.replaceChildren();
+  const hr = el('tr'); ['Площадка', 'Владелец', 'Страна', 'Статус', 'Площадка, МВт', 'IT, МВт', 'H100e, тыс.', 'Капвл., $ млрд', 'Наблюдение'].forEach((h, k) => { const th = el('th', '', h); if (k >= 4 && k <= 7) th.style.textAlign = 'right'; hr.append(th); });
+  const th = el('thead'); th.append(hr); tb.append(th);
+  const body = el('tbody');
+  sites.map(s => ({ s, st: stateAt(s, D) })).filter(r => r.st).sort((a, b) => b.st.P - a.st.P).forEach(({ s, st }) => {
+    const tr = el('tr');
+    const c = [s.n, s.o === 'COLO' ? 'колокейшн' : s.o, s.c, (st.live ? 'работает' : 'стройка') + (st.planned ? ' (план)' : ''), nf0.format(st.P), nf0.format(st.IT), nf0.format(st.H / 1000), nf1.format(st.C), fmtDate(st.d)];
+    c.forEach((v, k) => tr.append(el('td', k >= 4 && k <= 7 ? 'n' : '', v))); body.append(tr);
+  });
+  tb.append(body);
+}
+const dT = document.getElementById('dTable'), dS = document.getElementById('dSrc');
+document.getElementById('bTable').addEventListener('click', () => { renderTable(); dT.showModal(); });
+document.getElementById('bSrc').addEventListener('click', () => dS.showModal());
+document.querySelectorAll('[data-src]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); dS.showModal(); const li = document.getElementById('src' + a.dataset.src); li && li.scrollIntoView({ block: 'center' }); }));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
+[dT, dS].forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
+
+/* ── boot ── */
+let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { layoutMap(); layoutScrub(); renderRace(); }, 120); });
+layoutMap(); layoutScrub(); update(false);
+})();
+</script>
+</body>
+</html>

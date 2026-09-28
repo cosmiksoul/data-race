@@ -1,0 +1,43 @@
+id,block,claim,value,unit,date,tag,status,source,note
+06-01,06,Стоимость решения задачи фиксированного уровня качества падает в среднем,13,раз в год,2026-09-22,ОЦЕНКА,проверено,https://epoch.ai/publications/the-plunging-price-of-thought,"Единица — $ за вопрос теста, не за токен; диапазон 7–19 по тестам; 75×/год сразу после появления уровня, 4,7×/год через два года"
+06-02,06,Самая дешёвая модель уровня GPT-4 на GPQA Diamond: GPT-4 (14.03.2023),37.5,$ за 1 млн токенов (смешанная 3:1),2023-03-14,ФАКТ,проверено,https://epoch.ai/data/charts/llm-inference-price-trends/lowest_price_models_data.csv,
+06-03,06,Самая дешёвая модель уровня GPT-4 на GPQA Diamond: Phi 4 (13.12.2024),0.1225,$ за 1 млн токенов (смешанная 3:1),2024-12-13,ФАКТ,проверено,https://epoch.ai/data/charts/llm-inference-price-trends/lowest_price_models_data.csv,Падение ~×300 за 21 месяц; данные Epoch до конца 2024
+06-04,06,GPT-4 при выходе,30/60,$ за 1 млн токенов вход/выход,2023-03-14,ФАКТ,проверено,https://openai.com/index/gpt-4-research,Контекст 8K
+06-05,06,GPT-4o при выходе,5/15,$ за 1 млн токенов вход/выход,2024-05-13,ФАКТ,проверено,https://openai.com/index/hello-gpt-4o/,
+06-06,06,o1 при выходе,15/60,$ за 1 млн токенов вход/выход,2024-12-17,ФАКТ,проверено,https://developers.openai.com/api/docs/models/o1,
+06-07,06,GPT-4.5 при выходе,75/150,$ за 1 млн токенов вход/выход,2025-02-27,ФАКТ,проверено,https://developers.openai.com/api/docs/models/gpt-4.5-preview,Исследовательская версия
+06-08,06,GPT-5 при выходе,1.25/10,$ за 1 млн токенов вход/выход,2025-08-07,ФАКТ,проверено,https://openai.com/index/introducing-gpt-5-for-developers/,
+06-09,06,GPT-5.2 при выходе,1.75/14,$ за 1 млн токенов вход/выход,2025-12-11,ФАКТ,проверено,https://openai.com/index/introducing-gpt-5-2/,
+06-10,06,GPT-5.4 при выходе,2.5/15,$ за 1 млн токенов вход/выход,2026-03-05,ФАКТ,проверено,https://openai.com/index/introducing-gpt-5-4/,
+06-11,06,GPT-5.5 при выходе,5/30,$ за 1 млн токенов вход/выход,2026-04-23,ФАКТ,проверено,https://openai.com/index/introducing-gpt-5-5/,
+06-12,06,GPT-5.6 Sol при выходе,5/30,$ за 1 млн токенов вход/выход,2026-07-09,ФАКТ,проверено,https://openai.com/index/gpt-5-6/,С конца августа 2026 — акционная цена $4/$20 минимум до 21.11.2026
+06-13,06,GPT-6 Astra при выходе,10/50,$ за 1 млн токенов вход/выход,2026-09-03,ФАКТ,проверено,https://openai.com/index/gpt-6-astra/,Сначала ограниченный доступ
+06-14,06,GPT-6 Sol при выходе,2/10,$ за 1 млн токенов вход/выход,2026-09-22,ФАКТ,проверено,https://openai.com/index/introducing-gpt-6-sol-and-luna/,
+06-15,06,Claude 3 Opus при выходе,15/75,$ за 1 млн токенов вход/выход,2024-03-04,ФАКТ,проверено,https://platform.claude.com/docs/en/about-claude/pricing,
+06-16,06,Claude Opus 4 при выходе,15/75,$ за 1 млн токенов вход/выход,2025-05-22,ФАКТ,проверено,https://platform.claude.com/docs/en/about-claude/pricing,
+06-17,06,Claude Opus 4.5 при выходе,5/25,$ за 1 млн токенов вход/выход,2025-11-24,ФАКТ,проверено,https://platform.claude.com/docs/en/about-claude/pricing,
+06-18,06,Claude Mythos Preview,25/125,$ за 1 млн токенов вход/выход,2026-04-07,ФАКТ,проверено,https://www.anthropic.com/glasswing,Только участники Project Glasswing
+06-19,06,Claude Fable 5 при выходе,10/50,$ за 1 млн токенов вход/выход,2026-06-09,ФАКТ,проверено,https://www.anthropic.com/news/claude-fable-5-mythos-5,
+06-20,06,Claude Opus 5.5 при выходе,4/20,$ за 1 млн токенов вход/выход,2026-09-22,ФАКТ,проверено,https://www.anthropic.com/claude-opus-5-5,
+06-21,06,Gemini 2.5 Pro,1.25/10,$ за 1 млн токенов вход/выход,2025-03-25,ФАКТ,проверено,https://ai.google.dev/gemini-api/docs/pricing,Для запросов до 200K токенов
+06-22,06,Gemini 3 Pro при выходе,2/12,$ за 1 млн токенов вход/выход,2025-11-18,ФАКТ,проверено,https://blog.google/technology/developers/gemini-3-developers/,Для запросов до 200K токенов; Gemini 3.1 Pro (19.02.2026) — та же цена
+06-23,06,ChatGPT Plus,20,$ в месяц,2023-02-01,ФАКТ,проверено,https://openai.com/index/chatgpt-plus/,Цена не менялась на 28.09.2026
+06-24,06,ChatGPT Pro,200,$ в месяц,2024-12-05,ФАКТ,проверено,https://openai.com/index/introducing-chatgpt-pro/,
+06-25,06,ChatGPT Pro (новый тариф),100,$ в месяц,2026-04-09,ФАКТ,проверено,https://techcrunch.com/2026/04/09/chatgpt-pro-plan-100-month-codex/,
+06-26,06,ChatGPT Go,8,$ в месяц (США),2026-01-16,ФАКТ,проверено,https://openai.com/index/introducing-chatgpt-go/,В других странах — местные цены
+06-27,06,Пауза новых подписок на ChatGPT Pro $200,,,2026-09-10,ФАКТ,проверено,https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers,Тариф $100 открыт
+06-28,06,Claude Pro,20,$ в месяц,2023-09-07,ФАКТ,проверено,https://siliconangle.com/2023/09/07/anthropic-announces-claude-pro-paid-subscription-generative-ai-chatbot/,
+06-29,06,Claude Max,100 и 200,$ в месяц,2025-04-09,ФАКТ,проверено,https://techcrunch.com/2025/04/09/anthropic-rolls-out-a-200-per-month-claude-subscription,
+06-30,06,Google AI Ultra: верхний тариф $250 → $200 и новый тариф $100,200 и 100,$ в месяц,2026-05-19,ФАКТ,проверено,https://blog.google/products-and-platforms/products/google-one/google-ai-subscriptions/,
+06-31,06,Anthropic ужесточила пятичасовые лимиты в часы пик,,,2026-03-26,ФАКТ,проверено,https://www.theregister.com/2026/03/26/anthropic_tweaks_usage_limits/,05:00–11:00 PT; ~7% пользователей
+06-32,06,Anthropic удвоила пятичасовые лимиты Claude Code после сделки на мощности Colossus 1,>300 МВт; >220 тыс. GPU,,2026-05-06,ФАКТ,проверено,https://www.anthropic.com/news/higher-limits-spacex,"Colossus 1 — SpaceX; удвоены пятичасовые лимиты Claude Code для Pro, Max, Team и Enterprise"
+06-33,06,Рассуждающие модели пишут больше текста,8,раз в среднем,2025-04-17,ФАКТ,проверено,https://epoch.ai/data-insights/output-length,"Рост длины ответов: 5×/год у рассуждающих, 2,2×/год у остальных"
+06-34,06,Медиана длины ответа на вопрос GPQA Diamond: обычные / рассуждающие модели,505 / 7662,токенов,2025-04-17,ОЦЕНКА,проверено,https://epoch.ai/data/charts/output-length/scatter_data.csv,Наш расчёт медиан по данным Epoch: 78 и 12 моделей
+06-35,06,"OpenRouter: средний запрос 1,5 тыс. → 6 тыс. токенов; ответ ~150 → 400",4 и 3,раз,2025-12,ФАКТ,проверено,https://arxiv.org/abs/2601.10088,Начало 2024 → конец 2025
+06-36,06,Разница в цене между моделями 10% соответствует разнице в использовании,0.5–0.7,%,2025-12,ОЦЕНКА,проверено,https://arxiv.org/abs/2601.10088,"Сравнение между моделями, не реакция на снижение цен"
+06-37,06,Claude Opus 4.7: новый токенизатор даёт больше токенов на тот же текст,1.0–1.35,раза,2026-04-16,ФАКТ,проверено,https://www.anthropic.com/news/claude-opus-4-7,Цена $5/$25 без изменений
+06-38,06,GitHub Copilot перешёл на токенные кредиты при прежних ценах тарифов,,,2026-06-01,ФАКТ,проверено,https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/,
+06-39,06,Cursor Pro: 500 запросов → $20 использования по ценам API,225 вместо 250,запросов средней длины к Claude Sonnet 4,2025-06-16,ФАКТ,проверено,https://cursor.com/blog/june-2025-pricing,"Раньше запрос к Sonnet списывал 2 из 500; для более дешёвых моделей запросов теперь больше (550 Gemini, 650 GPT-4.1); пост 16.06.2025, обновлён 04.07.2025"
+06-40,06,Google обрабатывает токенов в месяц,3.2,квадриллиона,2026-05-19,ФАКТ,проверено,https://blog.google/innovation-and-ai/sundar-pichai-io-2026/,Самоотчёт; ×7 за год; «по всем нашим продуктам»
+06-41,06,Валовая маржа OpenAI в 2025 году,33,%,2026-02-20,ОЦЕНКА,утечка,https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/,"The Information, документы для инвесторов; цель 46%"
+06-42,06,Валовая маржа Anthropic в 2025 году (прогноз),40,%,2026-01-22,ОЦЕНКА,утечка,https://www.investing.com/news/stock-market-news/anthropic-trims-profit-margin-outlook-as-ai-operating-costs-rise--the-information-4459316,The Information; на 10 п.п. ниже прежнего прогноза
