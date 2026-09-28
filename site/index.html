@@ -544,12 +544,14 @@ const monthEnd = ym => { const [y, m] = ym.split('-').map(Number); return new Da
 const powAt = (s, D) => { let p = 0; for (const t of s.tl) { if (t[0] <= D) p = t[1]; else break; } return p; };
 let W = 0, H = 0, proj;
 const rScale = d3.scaleSqrt().domain([0, 2500]).range([0, 20]);
-let dots = [], grid = null;
+let dots = [], grid = null, laidOut = false;
 let playT = 1; // 0..1 автопроигрывание
 let lastP = -1;
 
 function layoutStage() {
   W = stage.clientWidth; H = stage.clientHeight;
+  laidOut = W > 0 && H > 0;
+  if (!laidOut) return; // сцены не видно — разложим точки, когда у окна появится размер
   svg.attr('viewBox', `0 0 ${W} ${H}`);
   const mob = W < 720;
   proj = d3.geoAlbersUsa().fitExtent([[W * (mob ? .04 : .08), H * (mob ? .2 : .14)], [W * (mob ? .96 : .92), H * (mob ? .7 : .82)]], nation);
@@ -590,7 +592,8 @@ function renderGlow(D) {
   return sites.reduce((a, s) => a + powAt(s, D), 0);
 }
 
-function progress() { const r = hq.getBoundingClientRect(); const total = r.height - innerHeight; return clamp(-r.top / total); }
+// окно нулевой высоты (фоновая вкладка, превью, скрытый фрейм) даёт 0 / 0 — считаем, что переход не начат
+function progress() { const r = hq.getBoundingClientRect(); const total = r.height - innerHeight; return total > 0 ? clamp(-r.top / total) : 0; }
 const phase = () => clamp((progress() - .12) / .74);
 
 function render() {
@@ -824,7 +827,7 @@ function redrawAll() { lastP = -1; render(); drawCharts(); }
 let rT, lastW = innerWidth;
 addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => {
   // на телефоне адресная строка меняет высоту окна при прокрутке — сетку перестраиваем только при смене ширины
-  if (innerWidth !== lastW || innerWidth >= 720) { lastW = innerWidth; layoutStage(); drawCharts(); }
+  if (!laidOut || innerWidth !== lastW || innerWidth >= 720) { lastW = innerWidth; layoutStage(); drawCharts(); }
   fitReceipt();
 }, 150); });
 layoutStage(); drawCharts(); autoplay(); checkBills();
