@@ -1,0 +1,12 @@
+verification,autonomous,ai-led,collaborative,ai-assisted,search-scaffold,retrieval,total
+formal,5,13,7,5,1,0,31
+independent,0,5,0,1,7,0,13
+peer-reviewed,0,8,1,5,13,0,27
+author-verified,0,18,7,15,2,0,42
+claimed,0,12,5,5,0,0,22
+disputed,0,1,0,1,2,0,4
+known,0,0,0,1,0,1,2
+refuted,0,0,0,0,0,0,0
+total,5,57,20,33,25,1,141
+
+source,https://whataifound.org/data/entries.json,snapshot,2026-09-29,entries,141,latest_entry_date,2026-09-26

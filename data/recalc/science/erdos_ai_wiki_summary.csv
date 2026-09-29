@@ -1,0 +1,9 @@
+section,label_ru,entries,unique_problems,full,partial,incorrect,unverified,similar_yes,source,as_of
+1(a) AI standalone,"ИИ самостоятельно, аналогов в литературе не найдено",61,57,19,23,10,9,,https://github.com/teorth/erdosproblems/wiki/AI-contributions-to-Erd%C5%91s-problems,2026-06-30
+1(b) AI alongside literature,"ИИ самостоятельно, но аналог в литературе нашёлся после",25,24,15,10,0,0,20,https://github.com/teorth/erdosproblems/wiki/AI-contributions-to-Erd%C5%91s-problems,2026-06-30
+1(c) AI building on literature,"ИИ самостоятельно, опираясь на известную литературу",38,37,19,19,0,0,,https://github.com/teorth/erdosproblems/wiki/AI-contributions-to-Erd%C5%91s-problems,2026-06-30
+1(d) AI collaborating with humans,ИИ в соавторстве с людьми,132,116,37,54,7,34,,https://github.com/teorth/erdosproblems/wiki/AI-contributions-to-Erd%C5%91s-problems,2026-06-30
+2(a) Literature search,ИИ нашёл готовое решение в литературе,84,77,40,41,3,0,,https://github.com/teorth/erdosproblems/wiki/AI-contributions-to-Erd%C5%91s-problems,2026-06-30
+2(b) Formalization,ИИ формализовал доказательство (Lean),185,184,0,0,0,0,,https://github.com/teorth/erdosproblems/wiki/AI-contributions-to-Erd%C5%91s-problems,2026-06-30
+2(c) Rewriting,ИИ переписал доказательство,10,9,0,0,0,0,,https://github.com/teorth/erdosproblems/wiki/AI-contributions-to-Erd%C5%91s-problems,2026-06-30
+2(d) Computation,ИИ провёл вычисления,3,3,0,0,0,0,,https://github.com/teorth/erdosproblems/wiki/AI-contributions-to-Erd%C5%91s-problems,2026-06-30

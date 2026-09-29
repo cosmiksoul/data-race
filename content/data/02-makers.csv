@@ -1,0 +1,22 @@
+company,period,metric,value,unit,yoy,source,claim_id
+SK hynix,2Q26,выручка,79.3187,трлн вон,+257%,https://news.skhynix.com/en/q2-2026-business-results/,02-61;02-36
+SK hynix,2Q26,операционная прибыль,60.5426,трлн вон,+557%,https://news.skhynix.com/en/q2-2026-business-results/,02-61;02-36
+SK hynix,2Q26,операционная маржа,76,%,"2Q25: 41,4% (расчёт)",https://news.skhynix.com/en/q2-2026-business-results/,02-61;02-36
+SK hynix,2Q26,чистая прибыль,93.9226,трлн вон,,"https://news.skhynix.com/en/q2-2026-business-results/ (чистая маржа 118% — выше операционной, по данным компании)",02-61;02-36
+SK hynix,1Q26,операционная маржа,71.5,%,,https://news.skhynix.com/en/q2-2026-business-results/ (расчёт: 37.6103/52.5763),02-61;02-36
+Samsung Electronics,2Q26,выручка (консолидированная),171.5,трлн вон,"+129,9% (расчёт к 74,6)",https://news.samsung.com/global/samsung-electronics-announces-second-quarter-2026-results; https://news.samsung.com/global/samsung-electronics-announces-second-quarter-2025-results,02-62
+Samsung Electronics,2Q26,операционная прибыль (консолидированная),89.5,трлн вон,"×19 (расчёт к 4,7)",https://news.samsung.com/global/samsung-electronics-announces-second-quarter-2026-results; https://news.samsung.com/global/samsung-electronics-announces-second-quarter-2025-results,02-62
+Samsung Electronics — DS (полупроводники),2Q26,выручка,127.5,трлн вон,"+357% (расчёт к 27,9)",https://news.samsung.com/global/samsung-electronics-announces-second-quarter-2026-results; https://news.samsung.com/global/samsung-electronics-announces-second-quarter-2025-results,02-62
+Samsung Electronics — DS (полупроводники),2Q26,операционная прибыль,89.2,трлн вон,"×223 (расчёт к 0,4)",https://news.samsung.com/global/samsung-electronics-announces-second-quarter-2026-results; https://news.samsung.com/global/samsung-electronics-announces-second-quarter-2025-results,02-62
+Samsung Electronics — DS (полупроводники),2Q26,операционная маржа,70.0,%,"2Q25: 1,4% (расчёт)",https://news.samsung.com/global/samsung-electronics-announces-second-quarter-2026-results,02-62
+Micron,FQ3 2026 (до 28.05.2026),выручка,41.456,млрд $,+346%,https://www.sec.gov/Archives/edgar/data/723125/000072312526000013/a2026q3ex991-pressrelease.htm,02-63;02-37
+Micron,FQ3 2026 (до 28.05.2026),валовая маржа GAAP,84.6,%,"+46,9 п.п. (FQ3 2025: 37,7%)",https://www.sec.gov/Archives/edgar/data/723125/000072312526000013/a2026q3ex991-pressrelease.htm,02-63;02-37
+Micron,FQ3 2026 (до 28.05.2026),валовая маржа non-GAAP,84.9,%,"+45,9 п.п. (FQ3 2025: 39,0%)",https://www.sec.gov/Archives/edgar/data/723125/000072312526000013/a2026q3ex991-pressrelease.htm,02-63;02-37
+Micron,FQ3 2026 (до 28.05.2026),операционная маржа GAAP,80.4,%,"FQ3 2025: 23,3% (расчёт)",https://www.sec.gov/Archives/edgar/data/723125/000072312526000013/a2026q3ex991-pressrelease.htm,02-63;02-37
+Micron,FQ3 2026 (до 28.05.2026),рост цен DRAM кв/кв (нижняя граница «low-60s»),60,%,,https://investors.micron.com/static-files/631b1a32-5537-46ae-8f40-82e42fc79dfe,02-63
+Micron,FQ4 2026 (прогноз компании),выручка,50.0,млрд $,"±1,0; отчёт выйдет 30.09.2026",https://www.sec.gov/Archives/edgar/data/723125/000072312526000013/a2026q3ex991-pressrelease.htm,02-64
+Micron,FQ4 2026 (прогноз компании),валовая маржа,86,%,approximately; отчёт выйдет 30.09.2026,https://www.sec.gov/Archives/edgar/data/723125/000072312526000013/a2026q3ex991-pressrelease.htm,02-64
+Рынок DRAM (TrendForce),2Q26,выручка отрасли,154.73,млрд $,"+389% (расчёт к 31,63 во 2Q25); +59,5% кв/кв",https://www.trendforce.com/presscenter/news/20260907-13219.html; https://www.trendforce.com/presscenter/news/20250902-12694.html,02-07
+"Samsung (TrendForce, DRAM)",2Q26,выручка DRAM,60.98,млрд $,"+63,4% кв/кв; доля 39,4%",https://www.trendforce.com/presscenter/news/20260907-13219.html,02-07
+"SK hynix (TrendForce, DRAM)",2Q26,выручка DRAM,38.59,млрд $,"+37,9% кв/кв; доля 24,9%",https://www.trendforce.com/presscenter/news/20260907-13219.html,02-07
+"Micron (TrendForce, DRAM)",2Q26,выручка DRAM,36.0,млрд $,"+65,5% кв/кв; доля 23,3%",https://www.trendforce.com/presscenter/news/20260907-13219.html,02-07

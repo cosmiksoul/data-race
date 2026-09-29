@@ -1,0 +1,7 @@
+quarter,status,q,year,qoq_low_pct,qoq_high_pct,idx_low,idx_mid,idx_high,note,source,claim_id
+3Q25,база,3,2025,,,1.0,1.0,1.0,итог TrendForce не опубликован; прогноз был +10–15%,https://www.trendforce.com/presscenter/news/20250707-12633.html,RE-31
+4Q25,итог,4,2025,45,50,1.45,1.475,1.5,"итог (оценка TrendForce по опросу рынка), 26.02.2026; с HBM +50–55%",https://www.trendforce.com/presscenter/news/20260226-12937.html,02-40
+1Q26,итог,1,2026,93,98,2.799,2.884,2.97,"итог, 01.06.2026",https://www.trendforce.com/presscenter/news/20260601-13070.html,02-43
+2Q26,прогноз,2,2026,58,63,4.422,4.628,4.841,"прогноз 31.03.2026, подтверждён 01.06.2026; итог в открытых релизах не опубликован. Micron: её цены DRAM в квартале до 28.05.2026 выросли «чуть больше чем на 60%»",https://www.trendforce.com/presscenter/news/20260331-12995.html,02-45
+3Q26,прогноз,3,2026,13,18,4.996,5.346,5.712,"прогноз 03.07.2026, повторён 07.09.2026; итог ожидается в конце ноября",https://www.trendforce.com/presscenter/news/20260703-13134.html,02-46
+4Q26,прогноз,4,2026,,,,,,TrendForce (24.09.2026): спрос на ИИ-серверы продолжит поддерживать рост цен DRAM; цифры — в платном отчёте,https://www.trendforce.com/research/download/RP260924PL,02-48

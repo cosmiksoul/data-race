@@ -1,0 +1,6 @@
+period,date,wafer_share_pct,bit_share_pct,status,who,source,claim_id
+конец 2025,2025-12-31,18,8,оценка,"TrendForce, топ-3 производителя",https://www.trendforce.com/presscenter/news/20260602-13074.html,02-01;02-04
+сентябрь 2026,2026-09-29,20,,оценка,"Samsung (Reuters): «около 20% сейчас», вся отрасль",https://www.brecorder.com/news/40441772/samsung-electronics-says-hbm-to-account-for-nearly-30-of-industry-dram-capacity-next-year,02-55
+конец 2026,2026-12-31,22,9,прогноз,"TrendForce, топ-3 производителя",https://www.trendforce.com/presscenter/news/20260602-13074.html,02-02;02-04
+2027,2027-06-30,30,,прогноз,Samsung (Reuters): «почти 30%»,https://www.brecorder.com/news/40441772/samsung-electronics-says-hbm-to-account-for-nearly-30-of-industry-dram-capacity-next-year,02-55
+конец 2027,2027-12-31,30,13,прогноз,"TrendForce, топ-3 производителя",https://www.trendforce.com/presscenter/news/20260602-13074.html,02-03;02-54

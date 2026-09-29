@@ -1,0 +1,539 @@
+section,problem,ai_systems,date,outcome,outcome_color,literature,similar,humans
+1(a) AI standalone,11,"Aristotle, GPT","24 Jan, 2026",🔴 Incorrect claim made,incorrect,,,
+1(a) AI standalone,36,GPT-5.5 Pro,"29 Jun, 2026",⚪ Candidate partial result,unverified,,,
+1(a) AI standalone,38,GPT-5.5 Pro,"25 Apr, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,42,"Codex, GPT-5.2, GPT-5.2 Pro","19 Jan, 2026",🟡 Partial result (Lean),partial,,,
+1(a) AI standalone,51,ChatGPT free version,"11 Jan, 2026",🔴 Incorrect proof found,incorrect,,,
+1(a) AI standalone,52,Claude Mythos,"3 Jun, 2026",🟡 Solution to variant problem,partial,,,
+1(a) AI standalone,75,Aletheia,"1 Feb, 2026",🟡 Solution to variant problem (implicit in literature),partial,,,
+1(a) AI standalone,90,OpenAI internal model,"20 May, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,90,Claude Mythos,"26 May, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,124,Aristotle,"29 Nov, 2025",🟡 Partial result (Lean),partial,,,
+1(a) AI standalone,125,DeepMind prover agent,"21 Feb, 2026",🟡 Solution to variant problem (Lean),partial,,,
+1(a) AI standalone,125,DeepMind prover agent,"30 Mar, 2026",🟢 Full solution (Lean),full,,,
+1(a) AI standalone,138,DeepMind prover agent,"10 Apr, 2026",🟡 Partial result (Lean),partial,,,
+1(a) AI standalone,176,"Codex, GPT-5.5 Pro","23 Jun, 2026",⚪ Candidate partial result (Lean),unverified,,,
+1(a) AI standalone,205,"Aristotle, GPT-5.2 Thinking","10 Jan, 2026",🟢 Full solution (Lean),full,,,
+1(a) AI standalone,233,GPT-5.2 Pro,"18 Jan, 2026",🔴 Incorrect (conditional) proof found,incorrect,,,
+1(a) AI standalone,251,GPT-5.4 Pro,"15 Apr, 2026",🟡 Solution to variant problem,partial,,,
+1(a) AI standalone,263,"Aristotle, Claude Opus 4.7, GPT-5.5 Pro","9 May, 2026",🟡 Partial result (Lean) (solution to second part),partial,,,
+1(a) AI standalone,358,GPT-5.2 Pro,"11 Feb, 2026",🔴 Argument with major gaps made,incorrect,,,
+1(a) AI standalone,457,"Aristotle, GPT-5.2 Pro","2 Mar, 2026",🟢 Full solution (Lean),full,,,
+1(a) AI standalone,477,AlphaProof,"7 Jan, 2026",🟡 Solution to variant problem (Lean),partial,,,
+1(a) AI standalone,536,"Codex, GPT-5.5 Pro","22 Jun, 2026",🟡 Partial result (Lean),partial,,,
+1(a) AI standalone,539,"Codex, GPT-5.5, ProofCouncil","10 Jun, 2026",🟡 Partial result (Lean),partial,,,
+1(a) AI standalone,550,GPT,"22 Jun, 2026",⚪ Candidate full solution,unverified,,,
+1(a) AI standalone,616,"Claude Sonnet 4.5, Gemini 3 Pro, GPT-5.2 Pro","18 Jan, 2026",🔴 Incorrect proof found,incorrect,,,
+1(a) AI standalone,619,"Claude Fable 5, Codex, GPT-5.5","9 Jun, 2026",🟢 Full solution (Lean),full,,,
+1(a) AI standalone,647,"ChatGPT Deep research, DeepSeek DeepThink, Gemini","28 Jan, 2026",🔴 Incorrect proof found,incorrect,,,
+1(a) AI standalone,654,Aletheia,"1 Feb, 2026",🟡 Partial result,partial,,,
+1(a) AI standalone,671,"Codex, GPT-5.5 Pro","22 Jun, 2026",⚪ Candidate full solution (Lean),unverified,,,
+1(a) AI standalone,684,OpenAI internal model,"31 Mar, 2026",🟡 Partial result,partial,,,
+1(a) AI standalone,694,GPT-5.5 Pro,"1 May, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,730,GPT-5.5 Pro,"24 Jun, 2026",⚪ Candidate full solution,unverified,,,
+1(a) AI standalone,741,DeepMind prover agent,"31 Mar, 2026",🟡 Partial result (Lean) (solution to variant of first part; solution to second part),partial,,,
+1(a) AI standalone,741,OpenAI internal model,"31 Mar, 2026",🟡 Partial result (solution to second part),partial,,,
+1(a) AI standalone,741,DeepMind prover agent,"16 Apr, 2026",🟢 Full solution (Lean),full,,,
+1(a) AI standalone,783,GPT-5.2,"23 Jan, 2026",🟡 Partial result,partial,,,
+1(a) AI standalone,836,GPT-5.5 Pro,"27 Apr, 2026",⚪ Candidate partial result (solution to second part),unverified,,,
+1(a) AI standalone,872,GPT-5.2 Pro,"16 Feb, 2026",🟡 Partial result,partial,,,
+1(a) AI standalone,888,"Claude Opus 4.5, Gemini 3 Pro, GPT-5.2 Thinking","18 Jan, 2026",🔴 Incorrect proof found,incorrect,,,
+1(a) AI standalone,949,AlphaProof,"7 Jan, 2026",🟡 Solution to variant problem (Lean),partial,,,
+1(a) AI standalone,951,GPT-5.2 Pro,"27 Jan, 2026",🟡 Solution to variant problem,partial,,,
+1(a) AI standalone,960,OpenAI internal model,"9 Apr, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,963,Gemini 3 Pro,"22 Jan, 2026",🔴 Argument with major gaps made,incorrect,,,
+1(a) AI standalone,987,OpenAI internal model,"9 Apr, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,990,OpenAI internal model,"9 Apr, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,1014,OpenAI internal model,"23 Apr, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,1033,GPT-5.5 Pro,"27 Jun, 2026",⚪ Candidate partial result,unverified,,,
+1(a) AI standalone,1039,GPT-5.5 Pro,"7 May, 2026",🟡 Partial result,partial,,,
+1(a) AI standalone,1040,Aletheia,"1 Feb, 2026",🟡 Solution to one part of problem; 🔴 incorrect solution to other part,partial,,,
+1(a) AI standalone,1041,GPT-5.4 Thinking,"22 Apr, 2026",🔴 Argument with major gaps made,incorrect,,,
+1(a) AI standalone,1044,GPT-5.2 Pro,"5 Jan, 2026",🔴 Incorrect claim made,incorrect,,,
+1(a) AI standalone,1051,Aletheia,"29 Jan, 2026",🟢 Full solution (Lean),full,,,
+1(a) AI standalone,1054,"Claude Opus 4.8, GPT-5.5 Pro, Principia Math","22-23 Jun, 2026",🟡 Partial result (Lean),partial,,,
+1(a) AI standalone,1091,OpenAI internal model,"9 Apr, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,1101,GPT-5.5 Pro,"27 Apr, 2026",⚪ Candidate partial result (solution to second part),unverified,,,
+1(a) AI standalone,1131,GPT-5.5 Pro,"26 Apr, 2026",⚪ Candidate partial result,unverified,,,
+1(a) AI standalone,1141,OpenAI internal model,"9 Apr, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,1194,GPT-5.4 Pro,"23 Apr, 2026",🟡 Partial result,partial,,,
+1(a) AI standalone,1196,GPT-5.4 Pro,"13 Apr, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,1202,GPT-5.4 Pro,"1 Apr, 2026",🟢 Full solution,full,,,
+1(a) AI standalone,1217,GPT-5.4 Pro,"16 Apr, 2026",🟢 Full solution,full,,,
+1(b) AI alongside literature,120,DeepMind prover agent,"14 Mar, 2026",🟡 Solution to variant problem (Lean),partial,🟡 de Reyna (1983),No,
+1(b) AI alongside literature,152,DeepMind prover agent,"3 Apr, 2026",🟢 Full solution (Lean),full,"🟡 Erdős, Sárközy, and Sós (1994)",Yes,
+1(b) AI alongside literature,176,"Codex, GPT-5.5 Pro","21 Jun, 2026",🟡 Partial result (Lean),partial,🟡 Hunter (2026),Yes,
+1(b) AI alongside literature,218,GPT,"28 Jan, 2026",🟡 Conditional solution,partial,🟡 Banks (2023),Yes,
+1(b) AI alongside literature,281,GPT-5.2 Pro,"17 Jan, 2026",🟢 Full solution,full,🟢 Davenport and Erdős (1936) + Rogers (in Halberstam-Roth (1966)),No,
+1(b) AI alongside literature,333,"Claude Opus 4.5, GPT-5.2 Pro","25 Dec, 2025",🟢 Full solution (Lean),full,🟢 Erdős and Newman (1977),Yes,
+1(b) AI alongside literature,346,"Codex, GPT-5.5 Pro","19 Jun, 2026",🟡 Solution to variant problem (Lean),partial,🟡 Burr and Erdős (1981),Yes,
+1(b) AI alongside literature,366,Automated research pipeline,"14 Apr, 2026",🟡 Conditional partial result,partial,🟡 Aktaş and Murty (2017),Yes,
+1(b) AI alongside literature,397,"Aristotle, GPT-5.2 Pro","10 Jan, 2026",🟢 Full solution (Lean),full,🟢 China TST competition (2012),Yes,
+1(b) AI alongside literature,397,Aletheia,"2 Feb, 2026",🟢 Full solution,full,🟢 China TST competition (2012),Yes,
+1(b) AI alongside literature,543,GPT-5.2 Pro,"21 Jan, 2026",🟢 Full solution,full,🟡 Erdős and Hall (1977),Yes,
+1(b) AI alongside literature,629,"Gemini 3.1 Pro, GPT-5.4 Thinking","4 Apr, 2026",🟡 Partial result,partial,"🟡 Erdős (1964) + Erdős, Rubin, and Taylor (1980)",Yes,
+1(b) AI alongside literature,635,"Aristotle, GPT-5.2 Pro","30 Jan, 2026",🟡 Solution to one part of problem (Lean),partial,🟡 Elliott (1979) (reduces one part of problem to a much simpler one),Yes (for a large portion of the proof),
+1(b) AI alongside literature,650,GPT-5.4 Pro,"6-7 Mar, 2026",🟢 Full solution (stronger than literature),full,🟢 Erdős and Selfridge (1978),No,
+1(b) AI alongside literature,659,Aletheia,"2 Feb, 2026",🟢 Full solution,full,🟡 Sheffer and Lund (2014); 🟢 Grayzel (2026),Yes,
+1(b) AI alongside literature,728,"Aristotle, GPT-5.2 Pro","6 Jan, 2026",🟢 Full solution (Lean),full,🟡 Pomerance (2014),Yes,
+1(b) AI alongside literature,846,DeepMind prover agent; OpenAI internal model (independently),"21-25 Feb, 2026",🟢 Full solution (Lean); 🟢 Full solution,full,"🟡 Reiher, Rödl, and Sales (2024)",No,
+1(b) AI alongside literature,851,GPT-5.2 Pro,"Feb 5, 2026",🟢 Full solution (building upon 🟡 Romanoff (1934)),full,Matthews (1982); 🟢 Green and Sawhney (unpublished),Yes,
+1(b) AI alongside literature,897,"Archivara, Aristotle","26 Dec, 2025",🟢 Full solution (Lean),full,🟢 Wirsing (1981),Yes,
+1(b) AI alongside literature,935,Aletheia,"1 Feb, 2026",🟡 Solution to one part of problem,partial,🟡 van Doorn (2025) (solution to one part of [367]),Yes,
+1(b) AI alongside literature,983,GPT-5.5 Pro,"30 Apr, 2026",🟡 Partial result (solution to first part),partial,🟡 Erdős (1970),Yes,
+1(b) AI alongside literature,997,OpenAI internal model,"31 Mar, 2026",🟢 Full solution,full,🟡 Benatar (2014),Yes,
+1(b) AI alongside literature,1026,Aristotle,"7 Dec, 2025",🟢 Full solution (Lean),full,"🟢 Tidor, Wang, and Yang (2016)",Only after applying an argument from Seidenberg (1959),
+1(b) AI alongside literature,1082,DeepMind prover agent,"14 Feb, 2026",🟡 Counterexample to one part (Lean),partial,🟡 Fishburn (2002),Yes,
+1(b) AI alongside literature,1089,Aletheia,"1 Feb, 2026",🟢 Full solution found,full,🟢 Bannai and Bannai (1981),Yes,
+1(c) AI building on literature,12,DeepMind prover agent,"7 Apr, 2026",🟡 Partial result (Lean) (solutions to first part and second part),partial,🟡 Erdős and Sárközy (1970),,
+1(c) AI building on literature,26,DeepMind prover agent,"6 Apr, 2026",🟢 Solution to stronger problem,full,🟢 Ruzsa,,
+1(c) AI building on literature,36,AlphaEvolve,"3 Nov, 2025",🟡 Slight improvement to past construction,partial,🟡 Haugland (2016),,
+1(c) AI building on literature,43,Aristotle,"4 Dec, 2025",🟡 New proof of partial result (Lean),partial,🟡 Barreto (2025),,
+1(c) AI building on literature,75,GPT-5.4 Pro,"12 Apr, 2026",🟡 Partial result,partial,"🟡 Erdős, Hajnal, and Szemerédi (1982)",,
+1(c) AI building on literature,198,AlphaProof,2025,🟢 New proof found,full,🟢 Baumgartner (1975),,
+1(c) AI building on literature,224,"Codex, GPT-5.2 Thinking","14 Jan, 2026",🟢 New proof found (Lean),full,🟢 Danzer and Grünbaum (1962),,
+1(c) AI building on literature,258,GPT-5.4 Pro,"14 Apr, 2026",🟢 Full solution,full,🟡 Tao and Teräväinen (2025),,
+1(c) AI building on literature,264,Aristotle,"18 Dec, 2025",🟡 New proof of partial result (Lean),partial,🟡 Kovač and Tao (2024),,
+1(c) AI building on literature,349,GPT-5.2 Thinking,"9 Mar, 2026",🟡 Improved partial result,partial,🟡 van Doorn (2026),,
+1(c) AI building on literature,379,Seed Prover 1.5,"21 Dec, 2025",🟢 New proof found,full,"🟢 Cambie, Kovač, and Tao (2025)",,
+1(c) AI building on literature,488,Aristotle,"27 Nov, 2025",🟡 New solution to variant problem (Lean),partial,🟡 Cambie (2025),,
+1(c) AI building on literature,493,"Aristotle, GPT, Seed Prover",2025,🟢 New or existing proof found (Lean),full,🟢 Seamans (2025),,
+1(c) AI building on literature,507,AlphaEvolve,"3 Nov, 2025",🟡 Surpassed some past constructions,partial,🟡 Friedman (2015),,
+1(c) AI building on literature,513,GPT-5.2 Thinking,"1 Mar, 2026",🟡 Slight improvement to past construction,partial,🟡 He and Tang (2026),,
+1(c) AI building on literature,524,"Gemini, GPT-5.2, Grok","30 Jan, 2026",🟡 Improved partial result,partial,🟡 Sawhney (2025),,
+1(c) AI building on literature,679,Aristotle,"12 Jan, 2026",🟡 Improved proof by reducing dependence on prime number theorem,partial,🟡 DottedCalculator (2025),,
+1(c) AI building on literature,729,"Aristotle, GPT-5.2 Pro","8-10 Jan, 2026",🟢 Full solution (Lean),full,"🟡 Aristotle, Barreto, and GPT-5.2 Pro (2026) (full solution to [728])",,
+1(c) AI building on literature,788,GPT-5.2 Pro,"20 Jan, 2026",🟡 New partial result,partial,🟡 Hunter (2025),,
+1(c) AI building on literature,848,"Gemini 3.1 Pro, GPT-5.2 Thinking, GPT-5.4 Thinking","5-23 Mar, 2026",🟢 Derived explicit bound; 🟡 Partial result of variant problem,full,🟢 Sawhney (2025),,
+1(c) AI building on literature,868,GPT-5.2 multi-agent system,"13 Jan, 2026",🟡 New partial result,partial,🟡 Erdős and Nathanson (1989),,
+1(c) AI building on literature,871,"Claude Opus 4.5, Gemini 3 Pro","5 Jan, 2026",🟢 Existing partial result upgraded to full solution (Lean),full,🟡 Erdős and Nathanson (1989),,
+1(c) AI building on literature,942,Gemini,"23 Nov, 2025",🟡 New proof found,partial,"🟡 Erdős (unpublished, 1976)",,
+1(c) AI building on literature,948,"Aristotle, GPT-5.5 Pro","21 Jun, 2026",🟢 Full solution (Lean),full,🟡 Erdős and Galvin (1991),,
+1(c) AI building on literature,951,AlphaEvolve,"28 Jan, 2026",🟡 New solution to variant problem,partial,"🟡 Barreto, GPT-5.2 Pro, and Price (2026) + GPT-5.2 Thinking and Sothanaphan (2026) (solution to variant problem)",,
+1(c) AI building on literature,958,Aristotle,"27 Dec, 2025",🟢 New proof found (Lean),full,"🟢 Clemen, Dumitrescu, and Liu (2025)",,
+1(c) AI building on literature,966,Aristotle,"25 Feb, 2026",🟢 Full solution (Lean),full,🟢 Spencer (unpublished),,
+1(c) AI building on literature,1004,GPT-5.5 Pro,"29 Apr, 2026",🟡 Partial result (implicit in literature),partial,"🟡 Pollack, Pomerance, and Treviño (2013)",,
+1(c) AI building on literature,1007,Aristotle,"19 Jan, 2026",🟢 New proof found (Lean),full,🟢 House (2013); 🟢 Chaffee and Noble (2016),,
+1(c) AI building on literature,1032,"Codex, GPT-5.5 Pro","7 May, 2026",🟡 Improved partial result (Lean),partial,"🟡 Luo, Ma, and Yang (2023)",,
+1(c) AI building on literature,1043,Aristotle,"28 Dec, 2025",🟢 New proof found (Lean),full,🟢 Pommerenke (1961),,
+1(c) AI building on literature,1043,GPT,"30 Dec, 2025",🟢 New proof found,full,🟢 Pommerenke (1961); Aristotle,,
+1(c) AI building on literature,1047,Aristotle,"21 Jan, 2026",🟢 New proof found (Lean),full,🟢 Goodman (1966),,
+1(c) AI building on literature,1048,Aristotle,"28 Jan, 2026","🟢 Proof found (Lean), which is a specific case of Pommerenke",full,🟢 Pommerenke (1961),,
+1(c) AI building on literature,1090,"Aristotle, Gemini 3 Flash","27 Feb, 2026",🟢 Proof found (Lean),full,"🟢 Graham and Selfridge (unpublished, ~1975)",,
+1(c) AI building on literature,1095,Aristotle,"30 Dec, 2025",🟡 New proof of (slightly weaker) partial result (Lean),partial,"🟡 Ecklund, Erdős, and Selfridge (1975)",,
+1(c) AI building on literature,1097,AlphaEvolve,"3 Nov, 2025",🟡 Slight improvement to past construction,partial,🟡 Lemm (2015),,
+1(c) AI building on literature,1197,"Aristotle, Claude Opus 4.7, GPT-5.4 Pro","13 Apr-21 Jun, 2026",🟢 Full solution (Lean),full,🟡 Buczolich and Mauldin (1999),,
+1(d) AI collaborating with humans,7,Aristotle,"2 May, 2026",🔴 Incorrect proof found,incorrect,,,Jinook Lee
+1(d) AI collaborating with humans,12,GPT-5.4 Thinking,"7 Apr, 2026",🟡 Partial result,partial,,,"Nat Sothanaphan, Terence Tao"
+1(d) AI collaborating with humans,21,"Aristotle, GPT-5.5 Pro","23 Jun, 2026",🟡 Partial result (Lean),partial,,,Varun Sivashankar
+1(d) AI collaborating with humans,25,GPT-5.4 Pro,"19 Mar, 2026",🟡 Partial result,partial,,,Przemek Chojecki
+1(d) AI collaborating with humans,42,GPT-5.5 Pro,"27 Apr, 2026",🟢 Full solution,full,,,Harjas Sandhu
+1(d) AI collaborating with humans,52,GPT-5.5 Pro,"28 May, 2026",🟡 Solution to variant problem,partial,,,"Thomas Bloom, Will Sawin, Carl Schildkraut, Dmitrii Zhelezov"
+1(d) AI collaborating with humans,52,GPT-5.5,"28 May, 2026",🟡 Improved bound to variant problem,partial,,,Ingo Althöfer
+1(d) AI collaborating with humans,52,GPT-5.5,"4 Jun, 2026",⚪ Candidate solution to variant problem,unverified,,,Boris Alexeev
+1(d) AI collaborating with humans,81,"Aristotle, GPT-5.5 Pro","19 Jun, 2026",🟡 Partial result (Lean),partial,,,Wouter van Doorn
+1(d) AI collaborating with humans,90,GPT-5.5 Pro,"21 May-9 Jun, 2026",🟢 Improved explicit bound,full,,,"Ingo Althöfer, Michael Emmerich, Paata Ivanisvili, Tomasz Kania, leloy, mlewko, Eric Naslund, norxornor, Will Sawin, Carl Schildkraut, spiderduckpig, Tseng"
+1(d) AI collaborating with humans,138,GPT-5.4 Thinking,"10 Apr, 2026",🟡 Partial result of variant problem,partial,,,Nat Sothanaphan
+1(d) AI collaborating with humans,202,GPT-5.4 Pro,"23 Apr, 2026",🟢 Full solution,full,,,Boon Suan Ho
+1(d) AI collaborating with humans,202,GPT-5.5 Pro,"30 Apr, 2026",⚪ Candidate full solution,unverified,,,Przemek Chojecki
+1(d) AI collaborating with humans,283,GPT-5.5 Pro,"3 May, 2026",🟢 Full solution,full,,,"Kevin Barreto, Liam Price"
+1(d) AI collaborating with humans,288,GPT-5.5 Thinking,"3 May, 2026",⚪ Candidate partial result,unverified,,,Ritvik Nayak
+1(d) AI collaborating with humans,306,"Claude, Claude Code","17 Jun, 2026",🟡 Partial result (Lean),partial,,,Shisheng Li
+1(d) AI collaborating with humans,306,Unspecified,"19 Jun, 2026",⚪ Candidate full solution (Lean),unverified,,,Yuren Tang
+1(d) AI collaborating with humans,326,"Aristotle, Codex, GPT-5.5","20 May-14 Jun, 2026",🟢 Full solution (Lean),full,,,Aron Bhalla
+1(d) AI collaborating with humans,327,"GPT-5.5, Rethlas","13 May, 2026",⚪ Candidate partial result,unverified,,,Yu Leon Liu
+1(d) AI collaborating with humans,330,GPT-5.5 Pro,"24 Apr, 2026",🟢 Full solution,full,,,David Turturean
+1(d) AI collaborating with humans,342,"GPT-5.2 Pro, GPT-5.4 Pro","20 Jan-23 Mar, 2026",🟡 Partial result,partial,,,Przemek Chojecki
+1(d) AI collaborating with humans,345,"Aristotle, GPT","16 May, 2026",🟡 Partial result (Lean),partial,,,Wouter van Doorn
+1(d) AI collaborating with humans,346,"Codex, GPT","21 Jun, 2026",🟢 Full solution (Lean),full,,,Kenta Kitamura
+1(d) AI collaborating with humans,347,"Aristotle, Claude Opus, Codex, GPT","25 Oct, 2025-4 Feb, 2026",🟢 Full solution (Lean),full,,,"Enrique Barschkis, Wouter van Doorn, jbbaehr22, Bartosz Naskrecki, Terence Tao"
+1(d) AI collaborating with humans,351,GPT-5.5 Pro,"3 May, 2026",🟢 Full solution,full,,,"Kevin Barreto, Liam Price"
+1(d) AI collaborating with humans,352,"GPT-5.4 Pro, GPT-5.5 Pro","29 May, 2026",🟡 Partial result of variant problem,partial,,,"Aleksandar Bulj, Vjekoslav Kovač"
+1(d) AI collaborating with humans,358,GPT-5.2 Thinking,"13-20 Feb, 2026",🔴 Argument with major gaps made,incorrect,,,Nat Sothanaphan
+1(d) AI collaborating with humans,367,"Aristotle, Gemini Deep Think","20-22 Nov, 2025",🟡 Partial result,partial,,,"Boris Alexeev, Wouter van Doorn, Terence Tao"
+1(d) AI collaborating with humans,369,GPT,"26 Mar, 2026",🟢 Full solution,full,,,Sky Yang
+1(d) AI collaborating with humans,374,GPT-5.4 Pro,"31 Mar, 2026",🟡 Partial result,partial,,,Terence Tao
+1(d) AI collaborating with humans,380,GPT-5.4 Pro,"31 Mar, 2026",🟢 Full solution,full,,,Terence Tao
+1(d) AI collaborating with humans,388,"Claude, Gemini, GPT-5.4","12-15 Mar, 2026",🔴 Incorrect proof found,incorrect,,,Malek Zribi
+1(d) AI collaborating with humans,390,GPT-5.5 Pro,"2 May, 2026",⚪ Candidate partial result,unverified,,,Samuel Mausberg
+1(d) AI collaborating with humans,393,GPT-5.5 Pro,"3 May, 2026",🟡 Conditional partial result,partial,,,David Turturean
+1(d) AI collaborating with humans,396,"Claude, Codex, GPT","15 Mar, 2026",🟡 Partial result,partial,,,Malek Zribi
+1(d) AI collaborating with humans,396,"GPT-5.4 Pro, GPT-5.4 Thinking","5-7 Apr, 2026",🟡 Related result,partial,,,"Justin Dehorty, Nat Sothanaphan"
+1(d) AI collaborating with humans,400,GPT,"22 Jun, 2026",⚪ Candidate partial result,unverified,,,Eric Li
+1(d) AI collaborating with humans,401,"Aristotle, GPT-5.2 Pro","10-11 Jan, 2026",🟢 Full solution (Lean); solution to variant problem,full,,,"Boris Alexeev, Kevin Barreto, Liam Price, Nat Sothanaphan"
+1(d) AI collaborating with humans,411,Claude,"3 Apr, 2026",🔴 Incorrect proof found,incorrect,,,hoodieuser
+1(d) AI collaborating with humans,415,GPT-5.4 Pro,"19 Apr, 2026",🟡 Partial result,partial,,,Przemek Chojecki
+1(d) AI collaborating with humans,423,"GPT-5.2 Thinking, GPT-5.4 Thinking","11-12 Mar, 2026",🟡 Partial result,partial,,,"Quanyu Tang, Nat Sothanaphan"
+1(d) AI collaborating with humans,432,GPT-5.5 Pro,"23 Jun, 2026",⚪ Candidate partial result,unverified,,,Sungchul Lee
+1(d) AI collaborating with humans,451,"Aristotle, GPT-5.5 Pro","26 Apr-19 Jun, 2026",🟡 Partial result (Lean),partial,,,"Wouter van Doorn, Quanyu Tang"
+1(d) AI collaborating with humans,456,GPT-5.5 Pro,"4 May, 2026",⚪ Candidate partial result (solutions to first part and second part; conditional solution to third part),unverified,,,David Turturean
+1(d) AI collaborating with humans,460,GPT-5.2,"13 Jan, 2026",🟡 Reduction to a simpler problem,partial,,,Przemek Chojecki
+1(d) AI collaborating with humans,488,"Aristotle, GPT-5.4","20 Mar, 2026",🟡 Partial result,partial,,,Przemek Chojecki
+1(d) AI collaborating with humans,501,GPT-5.5 Pro,"29 May-1 Jun, 2026",⚪ Candidate conditional partial result (conditional solution to first part),unverified,,,Sungchul Lee
+1(d) AI collaborating with humans,503,"Aristotle, GPT-5.4 Pro","22 Apr, 2026",🔴 Argument with major gaps made,incorrect,,,Przemek Chojecki
+1(d) AI collaborating with humans,503,GPT-5.5 Pro,"27-28 May, 2026",🟡 Partial result,partial,,,"Przemek Chojecki, Junnosuke Koizumi, RealBelgian"
+1(d) AI collaborating with humans,514,GPT-5.4 Pro,"20 Apr, 2026",🟡 Partial result (solutions to first part and second part),partial,,,Przemek Chojecki
+1(d) AI collaborating with humans,514,GPT-5.5 Pro,"28 Apr, 2026",🟡 Partial result (Lean) (solution to third part),partial,,,Yuta Oriike
+1(d) AI collaborating with humans,521,GPT-5.5 Pro,"25 Apr, 2026",🟡 Solution to variant problem,partial,,,Vjekoslav Kovač
+1(d) AI collaborating with humans,521,GPT-5.5 Pro,"30 Apr, 2026",⚪ Candidate full solution,unverified,,,Vjekoslav Kovač
+1(d) AI collaborating with humans,524,GPT-5.4 Pro,"21 Apr, 2026",🟡 Partial result,partial,,,"Brayden Letwin, Mehtaab Sawhney"
+1(d) AI collaborating with humans,535,GPT-5.5 Thinking,"27 Apr, 2026",🟡 Partial result (implicit in literature),partial,,,"Kireet Cheri, Sourish Kumrawat, Hrishi Sunder"
+1(d) AI collaborating with humans,593,GPT,"23 Jun, 2026",⚪ Candidate full solution,unverified,,,Eric Li
+1(d) AI collaborating with humans,598,"Aristotle, GPT-5.4 Pro","22 Apr, 2026",⚪ Candidate partial result,unverified,,,Przemek Chojecki
+1(d) AI collaborating with humans,603,GPT-5.4 Pro,"21 Apr, 2026",🟢 Full solution,full,,,Przemek Chojecki
+1(d) AI collaborating with humans,610,"Aristotle, GPT-5.4 Pro","21 Apr, 2026",🟢 Full solution (Lean) (implicit in literature),full,,,Przemek Chojecki
+1(d) AI collaborating with humans,623,GPT-5.5 Pro,"4 Jun, 2026",⚪ Candidate full solution,unverified,,,Sungchul Lee
+1(d) AI collaborating with humans,659,Gemini 3,"13 Jan, 2026",🟢 Full solution,full,,,Benjamin Grayzel
+1(d) AI collaborating with humans,675,GPT-5.4 Pro,"18 Apr, 2026",🟡 Partial result,partial,,,Boon Suan Ho
+1(d) AI collaborating with humans,684,GPT-5.2 Thinking,"19 Jan, 2026",🟡 Partial result,partial,,,Quanyu Tang
+1(d) AI collaborating with humans,684,GPT-5.4 Thinking,"2 Apr, 2026",🟡 Partial result,partial,,,Nat Sothanaphan
+1(d) AI collaborating with humans,686,"AlphaProof, Claude, Gemini Deep Think, GPT-5.2 Thinking, GPT-5.4 Thinking, Seed 2.0 Pro","9 Aug, 2025-15 Mar, 2026",🟡 Various partial results,partial,,,"Adenwalla, Stijn Cambie, Wouter van Doorn, Vjekoslav Kovač, Miklos, Nat Sothanaphan, Quanyu Tang, Terence Tao, vilc, Malek Zribi"
+1(d) AI collaborating with humans,689,"Codex, GPT-5.2, GPT-5.5 Pro","29 Oct, 2025-2 Jun, 2026",⚪ Candidate full solution,unverified,,,"Boris Alexeev, Przemek Chojecki, Dogmachine, jleng01, Mehtaab Sawhney, Terence Tao, Malek Zribi"
+1(d) AI collaborating with humans,690,Multiscalar Fields System,"8 May, 2026",🟢 Full solution,full,,,"Davide Crapis, Shouqiao Wang"
+1(d) AI collaborating with humans,696,"Aristotle, Claude Code, Claude Opus 4.7, GPT-5.5 Pro","26 Apr-5 Jun, 2026",🟢 Full solution (Lean),full,,,"Jake Mallen, David Turturean"
+1(d) AI collaborating with humans,731,GPT,"27 Jun, 2026",⚪ Candidate full solution,unverified,,,Eric Li
+1(d) AI collaborating with humans,749,GPT-5.4 Thinking,"4-6 Apr, 2026",🟡 Partial result; 🟡 Solution to variant problem,partial,,,Aron Bhalla
+1(d) AI collaborating with humans,750,GPT-5.5 Pro,"3 May, 2026",🟢 Full solution,full,,,Przemek Chojecki
+1(d) AI collaborating with humans,768,GPT,"22 Jun, 2026",⚪ Candidate full solution,unverified,,,Eric Li
+1(d) AI collaborating with humans,776,GPT-5.2 Thinking,"11 Feb, 2026",🟡 Partial result,partial,,,"Yixin He, Quanyu Tang"
+1(d) AI collaborating with humans,819,"GPT-5.5, Rethlas","15 May, 2026",⚪ Candidate partial result,unverified,,,Yu Leon Liu
+1(d) AI collaborating with humans,848,"Claude Opus 4.6, GPT-5.4","12-15 Mar, 2026",🔴 Incorrect proof found,incorrect,,,Malek Zribi
+1(d) AI collaborating with humans,848,GPT-5,"12 Oct-20 Nov, 2025",🟢 Full solution,full,,,"Mehtaab Sawhney, Mark Sellke"
+1(d) AI collaborating with humans,852,GPT-5.4,"15 Apr, 2026",🟡 Partial result,partial,,,Aron Bhalla
+1(d) AI collaborating with humans,852,GPT-5.5 Pro,"24 Apr, 2026",⚪ Candidate partial result,unverified,,,"Przemek Chojecki, David Turturean"
+1(d) AI collaborating with humans,856,GPT-5.4 Pro,"15 Apr, 2026",⚪ Candidate full solution,unverified,,,Przemek Chojecki
+1(d) AI collaborating with humans,858,GPT-5.4 Pro,"15 Apr, 2026",🟢 Full solution,full,,,Przemek Chojecki
+1(d) AI collaborating with humans,863,GPT-5.4 Pro,"22 Apr, 2026",🟢 Full solution,full,,,Boon Suan Ho
+1(d) AI collaborating with humans,865,GPT-5.5 Pro,"21-22 Jun, 2026",🟢 Full solution,full,,,Ricky Cipollini
+1(d) AI collaborating with humans,866,"Aristotle, GPT-5.3 Instant","4 May, 2026",🟡 Partial result (Lean),partial,,,Wouter van Doorn
+1(d) AI collaborating with humans,870,"GPT-5.4 Pro, GPT-5.5 Pro","24 Apr-May 2, 2026",⚪ Candidate full solution,unverified,,,David Turturean
+1(d) AI collaborating with humans,872,GPT-5.4 Pro,"16 Apr, 2026",🟡 Partial result,partial,,,Om_Buddhdev_sensho
+1(d) AI collaborating with humans,872,GPT-5.5 Pro,"29 Apr, 2026",⚪ Candidate partial result,unverified,,,Jonas Silva
+1(d) AI collaborating with humans,873,GPT-5.4 Thinking,"29 Apr, 2026",⚪ Candidate partial result,unverified,,,Ritvik Nayak
+1(d) AI collaborating with humans,873,GPT-5.5 Thinking,"30 Apr, 2026",⚪ Candidate partial result,unverified,,,Ingo Althöfer
+1(d) AI collaborating with humans,875,"Codex, GPT-5.5 Pro","7 May, 2026",🟡 Partial result (Lean),partial,,,Lech Mazur
+1(d) AI collaborating with humans,888,"Aristotle, GPT-5.5 Pro","25 Apr, 2026",🟢 Full solution,full,,,Przemek Chojecki
+1(d) AI collaborating with humans,896,GPT-5.5 Pro,"26 Apr, 2026",🟢 Full solution,full,,,Przemek Chojecki
+1(d) AI collaborating with humans,906,Unspecified,"25 Apr, 2026",⚪ Candidate full solution,unverified,,,Adriano Almeida
+1(d) AI collaborating with humans,906,GPT-5.5 Pro,"25 Apr, 2026",⚪ Candidate full solution,unverified,,,Przemek Chojecki
+1(d) AI collaborating with humans,931,"Claude, GPT-5.4","12 Mar-8 Jun, 2026",🟡 Partial result,partial,,,"Adenwalla, Malek Zribi"
+1(d) AI collaborating with humans,942,"Aristotle, Claude Opus 4.8, Codex, GPT-5.5","13-14 Jun, 2026",🟡 Partial result (Lean),partial,,,Scott Hughes
+1(d) AI collaborating with humans,943,GPT-5.4 Pro,"3 Feb-18 Mar, 2026",🟡 Partial result,partial,,,Przemek Chojecki
+1(d) AI collaborating with humans,953,GPT-5.5 Pro,"27 Apr, 2026",🟢 Full solution,full,,,Przemek Chojecki
+1(d) AI collaborating with humans,956,"Aristotle, GPT-5.5 Pro","27 Apr, 2026",⚪ Candidate full solution,unverified,,,Przemek Chojecki
+1(d) AI collaborating with humans,986,"Claude, OpenAI internal model","27 May-16 Jun, 2026",🟢 Full solution,full,,,Domagoj Bradač
+1(d) AI collaborating with humans,995,GPT-5.4 Pro,"21 Apr, 2026",🟡 Partial result,partial,,,Boon Suan Ho
+1(d) AI collaborating with humans,996,GPT-5.4 Pro,"21 Apr, 2026",🟢 Full solution,full,,,Boon Suan Ho
+1(d) AI collaborating with humans,951,GPT-5.2 Thinking,"28 Jan, 2026",🟡 New solution to variant problem,partial,,,Nat Sothanaphan
+1(d) AI collaborating with humans,976,GPT-5.4,"16 Apr, 2026",🟡 Conditional partial result,partial,,,Aron Bhalla
+1(d) AI collaborating with humans,1026,"AlphaEvolve, Aristotle, Gemini, GPT","8 Dec, 2025",🟢 Full solution (Lean),full,,,"Boris Alexeev, Stijn Cambie, Terence Tao, Lawrence Wu"
+1(d) AI collaborating with humans,1038,"AlphaEvolve, Claude Fable 5, Codex, GPT-5.2 Thinking, GPT-5.4 Thinking, GPT-5.5","16 Dec, 2025-10 Jun, 2026",🟡 Partial result,partial,,,"catsflowers5544, jspier, Junnosuke Koizumi, Kenneth Mendoza, Nat Sothanaphan, Terence Tao, Hua Xu"
+1(d) AI collaborating with humans,1039,"Aristotle, Claude Opus 4.6","6-8 Mar, 2026",🟡 Partial result (Lean),partial,,,Houi
+1(d) AI collaborating with humans,1041,"Claude Opus 4.6, Gemini 3.1 Pro, GPT-5.4","17-24 Mar, 2026",🔴 Argument with major gaps made,incorrect,,,shtuka
+1(d) AI collaborating with humans,1061,GPT,"24 Jun, 2026",⚪ Candidate full solution,unverified,,,Eric Li
+1(d) AI collaborating with humans,1062,GPT-5.4 Pro,"19 Apr, 2026",🟡 Partial result,partial,,,Damek Davis
+1(d) AI collaborating with humans,1070,"Codex, GPT-5.5","29 Jun, 2026",🟡 Partial result,partial,,,"Ákos Dúcz, Dániel Varga"
+1(d) AI collaborating with humans,1092,GPT-5.5 Pro,"28 Apr, 2026",🟢 Full solution,full,,,Przemek Chojecki
+1(d) AI collaborating with humans,1095,"Claude Opus 4.6, Gemini 3.1 Pro, GPT-5.4 Pro","13 Mar, 2026",🟡 Partial result,partial,,,shtuka
+1(d) AI collaborating with humans,1132,"AlphaEvolve, Claude, Gemini Pro, GPT-5.4 Pro","2 Feb-24 Mar, 2026",🟡 Partial result,partial,,,Terence Tao
+1(d) AI collaborating with humans,1133,GPT-5.5 Pro,"29 Apr, 2026",⚪ Candidate full solution,unverified,,,Przemek Chojecki
+1(d) AI collaborating with humans,1138,"GPT-5.5 Pro, GPT-5.5 Thinking","25 Apr, 2026",🟢 Full solution,full,,,"Kireet Cheri, Sourish Kumrawat, Hrishi Sunder"
+1(d) AI collaborating with humans,1139,"GPT-5.2 Pro, GPT-5.5 Pro","26 Jan-19 Jun, 2026",⚪ Candidate full solution,unverified,,,"Przemek Chojecki, gavinsherry, Liam Price, Terence Tao"
+1(d) AI collaborating with humans,1141,"GPT-5.2 Pro, GPT-5.2 Thinking","25 Jan, 2026",🟡 Partial result of variant problem,partial,,,Quanyu Tang
+1(d) AI collaborating with humans,1143,GPT-5.5 Pro,"29 Apr, 2026",🟡 Partial result (implicit in literature),partial,,,Przemek Chojecki
+1(d) AI collaborating with humans,1148,"Gemini 3 Pro, Gemini 3.1 Pro, GPT-5.2 Pro, GPT-5.2 Thinking, GPT-5.4 Pro","24 Jan-16 Mar, 2026",🟢 Full solution,full,,,"Ingo Althöfer, Przemek Chojecki, Wouter van Doorn"
+1(d) AI collaborating with humans,1148,GPT-5.5 Pro,"19 May, 2026",🟢 Solution to stronger problem,full,,,"Ingo Althöfer, Przemek Chojecki"
+1(d) AI collaborating with humans,1151,GPT-5.5 Pro,"30 Apr, 2026",🟢 Full solution,full,,,Przemek Chojecki
+1(d) AI collaborating with humans,1153,"AlphaEvolve, Claude, Gemini Pro, GPT-5.2 Thinking, GPT-5.4 Pro","2 Feb-24 Mar, 2026",🟢 Full solution,full,,,"Aron Bhalla, Nat Sothanaphan, Terence Tao"
+1(d) AI collaborating with humans,1177,GPT,"23 Jun, 2026",⚪ Candidate full solution,unverified,,,Eric Li
+1(d) AI collaborating with humans,1183,GPT-5.4 Pro,"18 Mar, 2026",🟡 Partial result,partial,,,"Przemek Chojecki, Quanyu Tang"
+1(d) AI collaborating with humans,1190,GPT-5.4 Pro,"23 Apr, 2026",🟢 Full solution,full,,,Boon Suan Ho
+1(d) AI collaborating with humans,1190,GPT-5.5 Pro,"30 Apr, 2026",⚪ Candidate full solution,unverified,,,Przemek Chojecki
+1(d) AI collaborating with humans,1194,"Codex, GPT-5.5 Pro","2 May, 2026",🟡 Partial result (Lean),partial,,,Lech Mazur
+1(d) AI collaborating with humans,1195,GPT-5.4 Pro,"19 Apr, 2026",🟢 Full solution,full,,,Boon Suan Ho
+1(d) AI collaborating with humans,1196,GPT-5.4 Thinking,"16 Apr, 2026",🟢 Full solution (stronger than literature),full,,,Nat Sothanaphan
+1(d) AI collaborating with humans,1201,GPT-5.5 Pro,"30 Apr, 2026",⚪ Candidate full solution,unverified,,,Przemek Chojecki
+1(d) AI collaborating with humans,1208,GPT-5.5 Pro,"14 Jun, 2026",⚪ Candidate partial result,unverified,,,Sungchul Lee
+1(d) AI collaborating with humans,1209,GPT-5.4 Pro,"15 Apr, 2026",🟡 Partial result (Lean),partial,,,Enrique Barschkis
+2(a) Literature search,35,GPT-5,"13 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,66,GPT-5,"13 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,94,GPT-5,"2 Nov, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,120,GPT-5.4 Thinking,"14 Mar, 2026",🟢 Solution to variant problem found,full,,,
+2(a) Literature search,167,GPT-5,"12 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,188,GPT-5,"13 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,214,"ChatGPT Deep research, Gemini Deep Research","20 Feb, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,223,GPT-5,"13 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,306,GPT-5.2 Thinking,"25 Feb, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,325,ChatGPT Deep research,"9 Mar, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,330,"ChatGPT Deep research, Claude, Gemini Deep Research","19 Dec, 2025",🔴 Partial results found with inaccuracies; literature proof not found,incorrect,,,
+2(a) Literature search,333,GPT-5.2 Pro,"25 Dec, 2025",🔴 Incorrect proof claimed; literature proof not found,incorrect,,,
+2(a) Literature search,333,Aletheia,"1 Feb, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,339,GPT-5,"11 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,347,ChatGPT Deep research,"25 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,354,ChatGPT Deep research,"19 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,370,"ChatGPT Deep research, Gemini, Gemini Deep Research","17 Oct, 2025",🟡 Problem found to be misstated; solutions to variant problems found,partial,,,
+2(a) Literature search,387,ChatGPT Deep research,"1 Nov, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,397,ChatGPT Deep research,"10 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,481,"ChatGPT Deep research, Gemini Deep Research","1 Dec, 2025",🟡 Unwittingly reproduced existing proof,partial,,,
+2(a) Literature search,481,GPT,"3 Dec, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,494,GPT-5,"13 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,515,GPT-5,"15 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,516,"ChatGPT Deep research, Claude, Gemini Deep Research","28 Dec, 2025",🟢 Problem found to be misstated; full solution to actual problem found,full,,,
+2(a) Literature search,524,GPT-5.2 Pro,"27 Dec, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,533,GPT,"26 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,559,"ChatGPT Deep research, Gemini Deep Research","26 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,574,GPT-5.4 Pro,"28 Mar, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,575,GPT,"14 Jan, 2026",🟡 Paper identifying a misstatement to the problem found,partial,,,
+2(a) Literature search,591,ChatGPT Deep research,"17 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,591,Aletheia,"1 Feb, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,602,GPT-5.4 Thinking,"20 Apr, 2026",🟡 Related results found,partial,,,
+2(a) Literature search,621,GPT-5,"13 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,645,GPT-5,"20 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,650,ChatGPT Deep research,"6 Mar, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,652,GPT-5.2 Pro,"17 Jan, 2026",🟢 Full solution by applying literature results,full,,,
+2(a) Literature search,652,Aletheia,"2 Feb, 2026",🟢 Full solution by applying literature results,full,,,
+2(a) Literature search,659,Gemini Deep Research,"13 Jan, 2026","🟡 Partial results, upgradeable to full solution, found",partial,,,
+2(a) Literature search,672,GPT,"7 Jan, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,705,GPT,"26 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,705,Aletheia,"1 Feb, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,729,ChatGPT Deep research,"Jan 10, 2026",🟡 Related results found,partial,,,
+2(a) Literature search,737,GPT-5,"30 Sep, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,749,GPT-5.4 Thinking,"3 Apr, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,750,GPT-5,"13 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,788,GPT-5,"14 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,793,ChatGPT Deep research,"30 Nov, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,811,GPT-5,"13 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,822,GPT-5,"13 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,827,GPT-5,"14 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,829,GPT-5,"13 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,847,GPT-5.2 Pro,"19 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,851,"ChatGPT Deep research, Claude, Gemini Deep Research","5 Feb, 2026",🔴🔴 Confused with another problem; 🟡 Partial results found,incorrect,,,
+2(a) Literature search,871,ChatGPT Deep research,"6 Dec, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,903,GPT-5,"14 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,915,ChatGPT Deep research,"26 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,942,ChatGPT Deep research,"23 Nov, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,965,GPT,"2 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,971,Claude,"31 Jan, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,985,GPT-5.4 Thinking,"6 Mar, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,990,"ChatGPT Deep research, Gemini Deep Research","20 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,992,Aletheia,"1 Feb, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,1008,GPT-5,"29 Sep, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,1011,GPT-5,"13 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,1016,"ChatGPT Deep research, Gemini Deep Research","18 Oct, 2025",🟡 Partial results found,partial,,,
+2(a) Literature search,1019,"ChatGPT Deep research, Gemini Deep Research","18 Oct, 2025","🟡 Solution claim found, but precise citation not found",partial,,,
+2(a) Literature search,1021,GPT,"21 Jan, 2026",🟢 Full solution (which was previously noted) found,full,,,
+2(a) Literature search,1043,GPT-5,"12 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,1079,GPT-5,"13 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,1084,GPT,"21 Jan, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,1099,"ChatGPT Deep research, Gemini, Gemini Deep Research","19 Oct, 2025",🟢 Full solution found,full,,,
+2(a) Literature search,1105,ChatGPT Deep research,"19 Jan, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,1105,Aletheia,"1 Feb, 2026",🟢 Full solution found; 🔴 Gave some wrong references,full,,,
+2(a) Literature search,1123,Gemini Deep Research,"31 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,1124,GPT,"31 Dec, 2025",🟢 Solution to variant problem found,full,,,
+2(a) Literature search,1129,GPT-5.2 Pro,"17 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,1130,GPT-5.2 Pro,"17 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,1147,GPT-5.2 Thinking,"26 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,1150,Gemini Deep Research,"4 Feb, 2026",🟡 Claimed solution found (likely incorrect),partial,,,
+2(a) Literature search,1154,GPT-5.2 Thinking,"24 Jan, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,1161,GPT-5.2 Thinking,"24 Jan, 2026",🟢 Full solution found,full,,,
+2(a) Literature search,1198,GPT-5.4,"16 Apr, 2026",🟡 Partial results found,partial,,,
+2(a) Literature search,1216,ChatGPT Deep research,"10 Mar, 2026",🟢 Solution stronger than problem found,full,,,
+2(a) Literature search,1216,GPT-5.4 Thinking,"12 Apr, 2026",🟡 Related results found,partial,,,
+2(b) Formalization,16,"Antigravity, Gemini 3.1 Pro","25 Feb, 2026",,,,,
+2(b) Formalization,24,Aristotle,"23 Apr-26 May, 2026",,,,,
+2(b) Formalization,26,Aristotle,"28 Dec, 2025",,,,,
+2(b) Formalization,31,"Aristotle, GPT","24 Nov, 2025",,,,,
+2(b) Formalization,34,Aristotle,"5 Feb, 2026",,,,,
+2(b) Formalization,38,Aristotle,"1 May, 2026",,,,,
+2(b) Formalization,42,"Codex, GPT-5.5 Pro","10 May, 2026",,,,,
+2(b) Formalization,43,"Aristotle, Claude","21 Dec, 2025",,,,,
+2(b) Formalization,56,"Aristotle, GPT","25 Nov, 2025-27 May, 2026",,,,,
+2(b) Formalization,71,"Aristotle, Claude Opus 4.7, GPT-5.5","24 May, 2026",,,,,
+2(b) Formalization,90,Aleph Prover,"28 May-12 Jun, 2026",,,,,
+2(b) Formalization,93,"Aristotle, Claude Opus 4.5, Claude Opus 4.6, Gemini 3 Flash, Gemini 3 Pro, Numina Lean Agent","17 Feb, 2026",,,,,
+2(b) Formalization,94,"Codex, GPT-5.2 Thinking; Seed Prover","15 Jan, 2026",,,,,
+2(b) Formalization,105,"Aristotle, GPT Pro","17 Nov, 2025",,,,,
+2(b) Formalization,106,Aristotle,"10 Dec, 2025",,,,,
+2(b) Formalization,115,"Aristotle, Claude Opus 4.6, Claude Sonnet 4.6, Gemini 3 Flash, Gemini 3.1 Pro, ulam.ai scaffold with Gemini 3 Flash and Gemini 3.1 Pro","3 Mar, 2026",,,,,
+2(b) Formalization,134,Aristotle,"7 Feb, 2026",,,,,
+2(b) Formalization,150,Aristotle,"31 Mar, 2026",,,,,
+2(b) Formalization,154,"Aristotle, GPT","6 Feb, 2026",,,,,
+2(b) Formalization,164,Codex,"4 May, 2026",,,,,
+2(b) Formalization,165,Trellis,"10 Jun, 2026",,,,,
+2(b) Formalization,178,Aristotle,"21 Apr, 2026",,,,,
+2(b) Formalization,189,"Aristotle, Gemini 3 Pro","17 Dec, 2025",,,,,
+2(b) Formalization,192,Aristotle,"9-10 May, 2026",,,,,
+2(b) Formalization,194,Aristotle,"15 Apr, 2026",,,,,
+2(b) Formalization,198,"Aristotle, GPT","24 Nov, 2025",,,,,
+2(b) Formalization,199,Aristotle,"24 Feb, 2026",,,,,
+2(b) Formalization,202,Unspecified,"14 May, 2026",,,,,
+2(b) Formalization,204,Aristotle,"15 Mar, 2026",,,,,
+2(b) Formalization,206,Aristotle,"28 Apr, 2026",,,,,
+2(b) Formalization,209,AxiomProver,"19 Jun, 2026",,,,,
+2(b) Formalization,214,Aristotle,"2 Mar, 2026",,,,,
+2(b) Formalization,221,Aristotle,"31 Jan, 2026",,,,,
+2(b) Formalization,226,Aristotle,"29 Dec, 2025",,,,,
+2(b) Formalization,229,Aristotle,"28 Dec, 2025",,,,,
+2(b) Formalization,231,Aristotle,"9 May, 2026",,,,,
+2(b) Formalization,237,Aristotle,"4 Apr, 2026",,,,,
+2(b) Formalization,246,Aristotle,"28 Dec, 2025",,,,,
+2(b) Formalization,258,Aristotle,"14 Apr, 2026",,,,,
+2(b) Formalization,259,Aristotle,"21 Apr, 2026",,,,,
+2(b) Formalization,268,Aristotle,"13 Apr-26 May, 2026",,,,,
+2(b) Formalization,275,Aristotle,"20 Jan, 2026",,,,,
+2(b) Formalization,280,Aristotle,"18 Apr, 2026",,,,,
+2(b) Formalization,281,"Aristotle, Gemini 3 Flash","19 Jan, 2026",,,,,
+2(b) Formalization,283,Aristotle,"28 Mar, 2026",,,,,
+2(b) Formalization,283,"Claude Opus 4.7, GPT-5.5 Pro","6 May, 2026",,,,,
+2(b) Formalization,290,Aristotle,"14 Jan, 2026",,,,,
+2(b) Formalization,296,Aristotle,"22 Apr-26 May, 2026",,,,,
+2(b) Formalization,303,Seed Prover,"21 Dec, 2025",,,,,
+2(b) Formalization,314,Aristotle,"1 Apr, 2026",,,,,
+2(b) Formalization,315,Aristotle,"31 Jan, 2026",,,,,
+2(b) Formalization,328,AxiomProver,"19 Jun, 2026",,,,,
+2(b) Formalization,330,"Codex, GPT-5.5 Pro","5 May, 2026",,,,,
+2(b) Formalization,331,Aristotle,"31 Jan, 2026",,,,,
+2(b) Formalization,337,Aristotle,"10 Dec, 2025",,,,,
+2(b) Formalization,350,"Aristotle, GPT","25 Nov, 2025",,,,,
+2(b) Formalization,351,"Claude Opus 4.7, GPT-5.5 Pro","6 May, 2026",,,,,
+2(b) Formalization,353,Aristotle,"19-20 Jun, 2026",,,,,
+2(b) Formalization,355,"Aristotle, Gemini 3","30 Jan-13 Mar, 2026",,,,,
+2(b) Formalization,363,Aristotle,"10 Mar, 2026",,,,,
+2(b) Formalization,367,Aristotle,"22 Nov, 2025",,,,,
+2(b) Formalization,368,Aristotle,"17 Feb, 2026",,,,,
+2(b) Formalization,369,Aristotle,"27 Mar, 2026",,,,,
+2(b) Formalization,370,"Aristotle, GPT","24 Nov, 2025",,,,,
+2(b) Formalization,392,Various,"6 Jan-23 Feb, 2026",,,,,
+2(b) Formalization,399,Codex,Feb 2026,,,,,
+2(b) Formalization,403,AxiomProver,"19 Jun, 2026",,,,,
+2(b) Formalization,418,"Aristotle, GPT","22 Nov, 2025",,,,,
+2(b) Formalization,419,Aristotle,"31 Jan, 2026",,,,,
+2(b) Formalization,425,"Aristotle, GPT","5-17 May, 2026",,,,,
+2(b) Formalization,426,Aristotle,"20 Apr, 2026",,,,,
+2(b) Formalization,427,Aristotle,"26 Apr, 2026",,,,,
+2(b) Formalization,429,Aristotle,"29 Jan, 2026",,,,,
+2(b) Formalization,433,"Aristotle, Claude Opus 4.8, Claude Sonnet 4.6, Gemini 3 Flash, Gemini 3.1 Pro, Project Numina","24 Feb-29 May, 2026",,,,,
+2(b) Formalization,434,"Aristotle, Claude Opus 4.8","24 Feb-29 May, 2026",,,,,
+2(b) Formalization,435,Aristotle,"4 Feb, 2026",,,,,
+2(b) Formalization,441,AxiomProver,"19 Jun, 2026",,,,,
+2(b) Formalization,443,Aristotle,"4 Feb, 2026",,,,,
+2(b) Formalization,447,Aristotle,"10 Feb, 2026",,,,,
+2(b) Formalization,453,Aristotle,"31 Jan, 2026",,,,,
+2(b) Formalization,459,Aristotle,"11 Mar, 2026",,,,,
+2(b) Formalization,464,Aristotle,"21 Jun, 2026",,,,,
+2(b) Formalization,476,Aristotle,"31 Dec, 2025",,,,,
+2(b) Formalization,480,Aristotle,"28 Nov, 2025",,,,,
+2(b) Formalization,481,"Aristotle, Claude","1 Dec, 2025",,,,,
+2(b) Formalization,484,Aristotle,"15 Apr, 2026",,,,,
+2(b) Formalization,487,Aristotle,"16 Feb, 2026",,,,,
+2(b) Formalization,490,"Aristotle, GPT-5.5 Pro","17 May, 2026",,,,,
+2(b) Formalization,497,Aristotle,"4 Feb, 2026",,,,,
+2(b) Formalization,498,"Aristotle, Claude Opus, Gemini Flash, Gemini Pro","Jan 27, 2026",,,,,
+2(b) Formalization,499,Aristotle,"29 Nov, 2025",,,,,
+2(b) Formalization,502,Aristotle,"2 Feb, 2026",,,,,
+2(b) Formalization,505,Aristotle,"2 Feb, 2026",,,,,
+2(b) Formalization,512,Aristotle,"22 Jun, 2026",,,,,
+2(b) Formalization,519,Aristotle,"19 Apr, 2026",,,,,
+2(b) Formalization,537,Aristotle,"6 Feb, 2026",,,,,
+2(b) Formalization,540,Aristotle,"15 Apr, 2026",,,,,
+2(b) Formalization,541,"Aristotle, GPT","30 Dec, 2025",,,,,
+2(b) Formalization,582,Aristotle,"5 Feb, 2026",,,,,
+2(b) Formalization,603,"Codex, GPT-5.5","17 May, 2026",,,,,
+2(b) Formalization,613,GPT Pro,"4 Nov, 2025",,,,,
+2(b) Formalization,618,Aristotle,"8 Feb, 2026",,,,,
+2(b) Formalization,621,Aristotle,"19 Apr, 2026",,,,,
+2(b) Formalization,639,Aristotle,"3 May, 2026",,,,,
+2(b) Formalization,645,"Aristotle, GPT","23 Nov, 2025",,,,,
+2(b) Formalization,646,Aristotle,"27 Feb, 2026",,,,,
+2(b) Formalization,648,Aristotle,"4 Feb, 2026",,,,,
+2(b) Formalization,649,"Aristotle, GPT","7 Feb-1 Jun, 2026",,,,,
+2(b) Formalization,650,Aristotle,"6-8 Mar, 2026",,,,,
+2(b) Formalization,658,Aristotle,"20 Apr, 2026",,,,,
+2(b) Formalization,659,Aristotle,"14 Jan, 2026",,,,,
+2(b) Formalization,666,Aristotle,"6 Feb, 2026",,,,,
+2(b) Formalization,678,Aristotle,"7 Jan, 2026",,,,,
+2(b) Formalization,692,Aristotle,"2 Apr, 2026",,,,,
+2(b) Formalization,694,"Aristotle, Claude Code, Claude Opus 4.7, GPT-5.5 Pro","3 May-5 Jun, 2026",,,,,
+2(b) Formalization,698,Aristotle,"16 Jan, 2026",,,,,
+2(b) Formalization,707,GPT,"23 Nov, 2025",,,,,
+2(b) Formalization,716,Aristotle,"20 Jun, 2026",,,,,
+2(b) Formalization,728,Aristotle,"22 Jan, 2026",,,,,
+2(b) Formalization,750,"Claude Code, Claude Opus 4.7, GPT-5.5 Pro","4 May, 2026",,,,,
+2(b) Formalization,751,"GPT-5.2-Codex, GPT-5.2 Thinking","27 Jan, 2026",,,,,
+2(b) Formalization,753,Aristotle,"14 Apr, 2026",,,,,
+2(b) Formalization,756,Aristotle,"15 Mar, 2026",,,,,
+2(b) Formalization,760,Aristotle,"23 Apr-2 Jun, 2026",,,,,
+2(b) Formalization,762,"Aristotle, Claude Opus 4.7, GPT","8 Feb-3 Jun, 2026",,,,,
+2(b) Formalization,765,Aristotle,"16 May, 2026",,,,,
+2(b) Formalization,775,Aristotle,"19 Apr-3 Jun, 2026",,,,,
+2(b) Formalization,785,Aristotle,"6 Mar, 2026",,,,,
+2(b) Formalization,788,Aristotle,"20 Jan, 2026",,,,,
+2(b) Formalization,794,Aristotle,"5 Feb, 2026",,,,,
+2(b) Formalization,798,Aristotle,"8 May, 2026",,,,,
+2(b) Formalization,818,Aristotle,"25 Apr, 2026",,,,,
+2(b) Formalization,835,AlphaProof,"26 Dec, 2025",,,,,
+2(b) Formalization,844,Aristotle,"26 Apr, 2026",,,,,
+2(b) Formalization,845,Aristotle,"8 Jan, 2026 (one form of result), 21 Jan, 2026 (second form)",,,,,
+2(b) Formalization,848,"Aristotle, Claude, GPT-5.2","28 Jan, 2026",,,,,
+2(b) Formalization,862,Aristotle,"21 Jan, 2026",,,,,
+2(b) Formalization,867,Aristotle,"7 Apr, 2026",,,,,
+2(b) Formalization,897,Aristotle,"27 Nov, 2025",,,,,
+2(b) Formalization,898,"Aristotle, Gemini 3 Flash","28 Jan, 2026",,,,,
+2(b) Formalization,904,Aristotle,"18 Apr, 2026",,,,,
+2(b) Formalization,905,"Aristotle, GPT-5.4","7 Apr, 2026",,,,,
+2(b) Formalization,907,Aristotle,"7 Apr, 2026",,,,,
+2(b) Formalization,914,Aristotle,"15 Apr, 2026",,,,,
+2(b) Formalization,923,Aristotle,"20 Apr, 2026",,,,,
+2(b) Formalization,927,Aristotle,"5 Jun, 2026",,,,,
+2(b) Formalization,947,"Aristotle, GPT","2 Feb, 2026",,,,,
+2(b) Formalization,958,Seed Prover 1.5,"19 Dec, 2025",,,,,
+2(b) Formalization,964,"Antigravity, Aristotle, Gemini","14 Feb, 2026",,,,,
+2(b) Formalization,967,Aristotle,"19 Dec, 2025",,,,,
+2(b) Formalization,974,Aristotle,"27 Apr, 2026",,,,,
+2(b) Formalization,986,Trellis,"10 Jun, 2026",,,,,
+2(b) Formalization,990,GPT-5.4 Pro,"10 Apr, 2026",,,,,
+2(b) Formalization,997,Aristotle,"1 Apr, 2026",,,,,
+2(b) Formalization,1000,"Aristotle, GPT","28 Dec, 2025",,,,,
+2(b) Formalization,1007,Aristotle,"19 Jan, 2026",,,,,
+2(b) Formalization,1008,Aristotle,"17 Jan, 2026",,,,,
+2(b) Formalization,1022,Aristotle,"22 Jan, 2026",,,,,
+2(b) Formalization,1023,Aristotle,"10 Feb, 2026",,,,,
+2(b) Formalization,1028,Aristotle,"19 Jan, 2026",,,,,
+2(b) Formalization,1034,Aristotle,"4 Dec, 2025",,,,,
+2(b) Formalization,1036,Aristotle,"20 Jan, 2026",,,,,
+2(b) Formalization,1037,Aristotle,"19 Jan, 2026",,,,,
+2(b) Formalization,1039,"Codex, GPT-5.5","15 May, 2026",,,,,
+2(b) Formalization,1044,Aristotle,"28 Apr, 2026",,,,,
+2(b) Formalization,1048,Aristotle,"27 Jan, 2026",,,,,
+2(b) Formalization,1067,"Aleph Prover, Aristotle","28 Jan, 2026",,,,,
+2(b) Formalization,1071,"Aleph Prover, Aristotle, GPT","29 Jan, 2026 (second part); 12 Feb, 2026 (first part)",,,,,
+2(b) Formalization,1080,Aristotle,"28 Dec, 2025",,,,,
+2(b) Formalization,1095,Aristotle,"20 Jun, 2026",,,,,
+2(b) Formalization,1098,Aristotle,"25 Apr, 2026",,,,,
+2(b) Formalization,1102,Aristotle,"23 Feb, 2026",,,,,
+2(b) Formalization,1121,Aristotle,"16 Apr, 2026",,,,,
+2(b) Formalization,1125,Aristotle,"11 Apr, 2026",,,,,
+2(b) Formalization,1126,Aristotle,"27 Feb, 2026",,,,,
+2(b) Formalization,1134,AxiomProver,"19 Jun, 2026",,,,,
+2(b) Formalization,1136,Aristotle,"19 Apr, 2026",,,,,
+2(b) Formalization,1138,Aristotle,"4 May, 2026",,,,,
+2(b) Formalization,1141,GPT-5.4 Pro,"11 Apr, 2026",,,,,
+2(b) Formalization,1148,"Claude Opus 4.6, Gemini 3.1, GPT-5.4, UlamAI Prover","17 Mar, 2026",,,,,
+2(b) Formalization,1151,"Codex, GPT","6 May, 2026",,,,,
+2(b) Formalization,1187,"Codex, GPT-5.5","12 May, 2026",,,,,
+2(b) Formalization,1190,Unspecified,"14 May, 2026",,,,,
+2(b) Formalization,1193,Aristotle,"13 Apr, 2026",,,,,
+2(b) Formalization,1196,Gauss,"16 Apr, 2026",,,,,
+2(c) Rewriting,281,"Gemini 3 Pro, GPT-5.2 Pro","17 Jan, 2026",,,,,
+2(c) Rewriting,392,GPT-5.2 Thinking,"27 Feb, 2026",,,,,
+2(c) Rewriting,457,GPT-5.2 Thinking,"3 Mar, 2026",,,,,
+2(c) Rewriting,543,GPT-5.2 Thinking,"23 Jan, 2026",,,,,
+2(c) Rewriting,728,"Aristotle, GPT-5.2 Thinking","5-7 Jan, 2026",,,,,
+2(c) Rewriting,783,GPT-5.2 Thinking,"24 Jan, 2026",,,,,
+2(c) Rewriting,783,GPT-5.2 Thinking,"21 Feb, 2026",,,,,
+2(c) Rewriting,846,GPT-5.2 Thinking,"25 Feb, 2026",,,,,
+2(c) Rewriting,1039,GPT-5.5 Thinking,"8 May, 2026",,,,,
+2(c) Rewriting,1196,GPT-5.4 Thinking,"20 Apr, 2026",,,,,
+2(d) Computation,396,"Claude Opus 4.6, Gemini 3.1 Deep Think, GPT-5.4 Pro","23 Mar-4 Apr, 2026",,,,,
+2(d) Computation,513,GPT-5.2 Pro,"12 Feb, 2026",,,,,
+2(d) Computation,650,AlphaEvolve,"7 Mar, 2026",,,,,

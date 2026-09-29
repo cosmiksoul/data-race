@@ -1,0 +1,54 @@
+model,lab,set,release_date,training_flop,confidence,cost_usd,is_record_at_date,source,claim_id
+Meena,Google Brain,передовая (Epoch frontier),2020-01-28,1.12e+23,Confident,214809.91213508436,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+GPT-3 175B (davinci),OpenAI,передовая (Epoch frontier),2020-05-28,3.14e+23,Confident,2116866.242839016,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+iGPT-XL,OpenAI,передовая (Epoch frontier),2020-06-17,3.3e+22,Likely,100796.41431883824,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+GShard (dense),Google,передовая (Epoch frontier),2020-06-30,4.765e+22,Confident,266200.0315979732,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+mT5-XXL,"Google,Google Research",передовая (Epoch frontier),2020-10-20,8.2e+22,Confident,179442.0291399545,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Switch,Google,передовая (Epoch frontier),2021-01-11,8.22e+22,Confident,145100.89767585773,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Wu Dao 2.0,Beijing Academy of Artificial Intelligence / BAAI,передовая (Epoch frontier),2021-05-31,1.54350000000001e+24,Speculative,2870839.8244998017,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Jurassic-1-Jumbo,AI21 Labs,передовая (Epoch frontier),2021-08-11,3.7e+23,Confident,836700.050829598,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+FLAN 137B,Google Research,передовая (Epoch frontier),2021-09-03,2.047e+24,Confident,,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+HyperCLOVA 204B,NAVER,передовая (Epoch frontier),2021-09-10,2.0000000001e+23,Speculative,441770.0038182093,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Megatron-Turing NLG 530B,"Microsoft,Nvidia",передовая (Epoch frontier),2021-10-11,8.586e+23,Confident,3848505.625647173,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Yuan 1.0,Inspur,передовая (Epoch frontier),2021-10-12,3.5380000000001e+23,Confident,591664.5798708292,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Gopher (280B),DeepMind,передовая (Epoch frontier),2021-12-08,6.31e+23,Confident,640616.8522346151,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+EXAONE 1.0,LG,передовая (Epoch frontier),2021-12-14,1.6956e+24,Speculative,2702636.289081865,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+ERNIE 3.0 Titan,"Baidu,Peng Cheng Laboratory",передовая (Epoch frontier),2021-12-23,1.0421e+24,Confident,,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+GPT-3.5 (davinci-002),OpenAI,передовая (Epoch frontier),2022-03-15,2.578e+24,Speculative,4897551.634095244,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+PaLM (540B),Google Research,передовая (Epoch frontier),2022-04-04,2.5272e+24,Confident,3060364.5969860666,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Minerva (540B),Google,флагман,2022-06-29,2.742e+24,Confident,,True,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026); рекорд, действовавший на 01.11.2022 (якорь линии)",11-42
+Flan-PaLM 540B,Google,передовая (Epoch frontier),2022-10-20,2.540000000001e+24,Confident,,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+U-PaLM (540B),Google,передовая (Epoch frontier),2022-10-20,2.53e+24,Confident,,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+LLaMA-65B,Meta,флагман,2023-02-24,5.5e+23,Confident,578026.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+GPT-4 (Mar 2023),OpenAI,флагман,2023-03-15,2.1e+25,Likely,37334305.0,True,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-44
+SenseChat,SenseTime,передовая (Epoch frontier),2023-04-10,3.89e+24,Speculative,5328550.47393551,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+PaLM 2,Google,флагман,2023-05-10,7.34e+24,Likely,5014267.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+GPT-4 (Jun 2023),OpenAI,передовая (Epoch frontier),2023-06-13,2.1e+25,Likely,,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Claude 2,Anthropic,флагман,2023-07-11,3.866e+24,Speculative,4902644.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Llama 2-70B,Meta,флагман,2023-07-18,8.1e+23,Confident,1102561.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Falcon-180B,Technology Innovation Institute,передовая (Epoch frontier),2023-09-06,3.76e+24,Confident,10743500.868805485,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Amazon Titan,Amazon,передовая (Epoch frontier),2023-09-28,4.7999999999999996e+24,Likely,7933464.673729055,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Grok-1,xAI,флагман,2023-11-04,2.9e+24,Likely,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Inflection-2,Inflection AI,передовая (Epoch frontier),2023-11-22,1.001e+25,Confident,13461144.182562498,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Gemini 1.0 Ultra,Google,флагман,2023-12-06,5e+25,Speculative,30719420.0,True,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-42
+DeepSeek LLM 67B,DeepSeek,флагман,2024-01-05,8.04e+23,Confident,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Grok-1.5,xAI,флагман,2024-03-28,9.26e+24,Speculative,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Llama 3-70B,Meta,флагман,2024-04-18,7.861e+24,Confident,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+DeepSeek-V2 (MoE-236B),DeepSeek,флагман,2024-05-07,1.02e+24,Confident,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Nemotron-4 340B,Nvidia,передовая (Epoch frontier),2024-06-14,1.7999999999999999e+25,Confident,21271017.96222655,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Claude 3.5 Sonnet,Anthropic,флагман,2024-06-20,2.7e+25,Speculative,25870993.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Llama 3.1-405B,Meta,флагман,2024-07-23,3.8e+25,Confident,52885434.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-51
+Grok-2,xAI,флагман,2024-08-13,2.9599999999999996e+25,Confident,31602311.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+DeepSeek-V3,DeepSeek,флагман,2024-12-24,3.3e+24,Confident,5390000.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+DeepSeek-R1,DeepSeek,флагман,2025-01-20,3.4999999999999997e+24,Confident,6770000.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Grok 3,xAI,флагман,2025-02-17,3.5000000000000006e+26,Likely,217835546.0,True,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-48
+Claude 3.7 Sonnet,Anthropic,флагман,2025-02-24,3.3499999999999998e+25,Likely,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+GPT-4.5,OpenAI,флагман,2025-02-27,3.8e+26,Likely,366010628.0,True,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-48
+Llama Nemotron Ultra 253B,Nvidia,передовая (Epoch frontier),2025-03-18,3.911001e+25,Likely,,,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Llama 4 Behemoth (preview),Meta,флагман,2025-04-05,5.184e+25,Likely,44588964.0,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-48
+Llama 4 Maverick,Meta,флагман,2025-04-05,2.244e+24,Likely,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+Grok 4,xAI,флагман,2025-07-09,5e+26,Speculative,387842678.0,True,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-48
+GPT-5,OpenAI,флагман,2025-08-07,6.6e+25,Speculative,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-48
+DeepSeek-V3.2,DeepSeek,флагман,2025-12-01,4.1999999999999997e+24,Likely,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",
+DeepSeek-V4-Pro,DeepSeek,флагман,2026-04-24,9.702e+24,Likely,,False,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-49
+GPT-6 Astra,OpenAI,флагман,2026-09-03,1e+27,Likely,,True,"https://epoch.ai/data/ai-models (Epoch AI, CC BY 4.0; набор от 28.09.2026)",11-45

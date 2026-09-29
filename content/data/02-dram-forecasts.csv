@@ -1,0 +1,9 @@
+target_quarter,forecast_date,kind,qoq_low_pct,qoq_high_pct,base_level,level_low,level_high,source,claim_id
+4Q25,2025-09-24,прогноз,8,13,1.0,1.08,1.13,https://www.trendforce.com/presscenter/news/20250924-12733.html,02-41
+4Q25,2025-10-29,прогноз,18,23,1.0,1.18,1.23,https://www.trendforce.com/presscenter/news/20251029-12758.html,02-41
+4Q25,2025-11-26,прогноз,45,50,1.0,1.45,1.5,https://www.trendforce.com/presscenter/news/20251126-12802.html,02-41
+4Q25,2026-02-26,итог,45,50,1.0,1.45,1.5,https://www.trendforce.com/presscenter/news/20260226-12937.html,02-40
+1Q26,2026-01-05,прогноз,55,60,1.475,2.286,2.36,https://www.trendforce.com/presscenter/news/20260105-12860.html,02-44
+1Q26,2026-01-22,прогноз («свыше 60%»),60,,1.475,2.36,,https://www.trendforce.com/presscenter/news/20260122-12893.html,02-44
+1Q26,2026-02-02,прогноз,90,95,1.475,2.803,2.876,https://www.trendforce.com/presscenter/news/20260202-12911.html,02-44
+1Q26,2026-06-01,итог,93,98,1.475,2.847,2.921,https://www.trendforce.com/presscenter/news/20260601-13070.html,02-43

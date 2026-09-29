@@ -1,0 +1,7 @@
+delivery_year,auction_date,price_rto_ucap,cap_ucap,floor_ucap,at_cap,no_collar_sim,auction_cost_bn,dc_share_pct,dc_cost_bn,note,source,claim_id
+2024/25,2023-02-27,28.92,,,нет,,,,,коллара не было; доли ДЦ монитор рынка не считал,https://www.pjm.com/-/media/DotCom/markets-ops/rpm/rpm-auction-info/2024-2025/2024-2025-base-residual-auction-report.ashx,03-02
+2025/26,2024-07-30,269.92,,,нет,,14.7,63.0,9.3,"коллара не было; зоны BGE $466,35 и Dominion $444,26",https://www.pjm.com/-/media/DotCom/markets-ops/rpm/rpm-auction-info/2025-2026/2025-2026-base-residual-auction-report.pdf,03-03; 03-14
+2026/27,2025-07-22,329.17,329.17,177.24,да,388.57,16.1,45.0,7.3,на потолке коллара,https://www.pjm.com/-/media/DotCom/markets-ops/rpm/rpm-auction-info/2026-2027/2026-2027-bra-report.pdf,03-04; 03-15; 03-89
+2027/28,2025-12-17,333.44,333.44,179.55,да,529.8,16.4,40.0,6.5,на потолке коллара; недобор к требованию надёжности 6 623 МВт,https://www.pjm.com/-/media/DotCom/markets-ops/rpm/rpm-auction-info/2027-2028/2027-2028-bra-report.pdf,03-05; 03-12; 03-89
+2028/29,2026-07-14,325.0,325.0,175.0,да,554.72,16.4,38.2,6.3,на потолке коллара; недобор 6 831 МВт,https://www.pjm.com/-/media/DotCom/markets-ops/rpm/rpm-auction-info/2028-2029/2028-2029-bra-results-report.pdf,03-06; 03-13; 03-89
+2029/30,2026-12,,,,,,,,,аукцион в декабре 2026 года; коллар продлён FERC 28.04.2026,https://insidelines.pjm.com/ferc-approves-capacity-auction-price-collar-to-next-two-capacity-auctions/,03-88
